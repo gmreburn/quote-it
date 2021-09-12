@@ -1,0 +1,41 @@
+{
+	"manifest_version": 2,
+
+	"name": "Quote It",
+
+	"version": "1.0",
+
+	"default_locale": "en",
+
+	"browser_specific_settings": {
+		"gecko": {
+			"strict_min_version": "57.0"
+		}
+	},
+
+	"description": "Save quotes from across the web.",
+
+	"icons": {
+		"48": "icons/quotes-48.png"
+	},
+
+	"background": {
+		"scripts": ["background.js"]
+	},
+
+	"permissions": ["menus", "activeTab", "storage", "tabs", "find"],
+
+	"sidebar_action": {
+		"default_icon": "icons/quotes-48.png",
+		"default_title": "Quotes",
+		"default_panel": "sidebar/panel.html"
+	},
+
+	"commands": {
+		"_execute_sidebar_action": {
+			"suggested_key": {
+				"default": "Ctrl+Q"
+			}
+		}
+	}
+}

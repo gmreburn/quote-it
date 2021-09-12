@@ -1,0 +1,41 @@
+html,
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	height: 90%;
+	font: caption;
+	background-color: #f4f7f8;
+}
+
+p {
+	margin: 1em 2em;
+}
+/* 
+.space-x > :not([hidden]) ~ :not([hidden]) {
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+.space-y > :not([hidden]) ~ :not([hidden]) {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+} */
+
+li {
+	list-style: none;
+}
+li a {
+	color: #444;
+}
+
+div {
+	font-size: 1.25rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	margin-left: 0;
+	margin-right: 0;
+}

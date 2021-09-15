@@ -1,34 +1,30 @@
 {
-	"name": "quote-it",
-	"version": "1.0.1",
-	"description": "Save quotes from across the web.",
-	"main": "background.js",
-	"directories": {
-		"lib": "lib"
-	},
+	"name": "webpack-demo",
+	"version": "1.0.0",
+	"description": "",
+	"private": true,
 	"scripts": {
-		"build": "tailwindcss -i ./node_modules/tailwindcss/src/tailwind.css -o ./dist/tailwind.css",
+		"build": "webpack",
+		"watch": "webpack --watch",
+		"start": "webpack serve --open",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/gmreburn/quote-it.git"
-	},
-	"keywords": [
-		"research",
-		"quotes",
-		"bookmark",
-		"highlight"
-	],
-	"author": "Gregory Reburn <gmreburn@gmail.com>",
+	"keywords": [],
+	"author": "",
 	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/gmreburn/quote-it/issues"
-	},
-	"homepage": "https://github.com/gmreburn/quote-it#readme",
 	"devDependencies": {
 		"autoprefixer": "^10.3.4",
+		"css-loader": "^6.2.0",
+		"html-webpack-plugin": "^5.3.2",
 		"postcss": "^8.3.6",
-		"tailwindcss": "^2.2.15"
+		"postcss-loader": "^6.1.1",
+		"react-app-polyfill": "^2.0.0",
+		"style-loader": "^3.2.1",
+		"tailwindcss": "^2.2.15",
+		"webpack": "^5.52.1",
+		"webpack-cli": "^4.8.0"
+	},
+	"dependencies": {
+		"lodash": "^4.17.21"
 	}
 }

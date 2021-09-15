@@ -1,4 +1,5 @@
 // moz-extension://63d4e716-a90b-4791-ba81-74a0d32e0915/sidebar/panel.html
+import "./tailwind.css";
 var myWindowId;
 const contentBox = document.querySelector("#content");
 
@@ -29,10 +30,8 @@ function updateContent() {
 			const quotes = storedInfo[Object.keys(storedInfo)[0]]; // contentBox.textContent=
 
 			// reset content
-			var div = document.getElementById("quotes");
-			while (div.firstChild) {
-				div.removeChild(div.firstChild);
-			}
+			var div = document.getElementsByTagName("body")[0];
+			div.innerHTML = "";
 
 			if (!quotes || !quotes.length) {
 				div.className = "text-center m-3";

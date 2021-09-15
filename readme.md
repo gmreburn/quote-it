@@ -12,3 +12,19 @@ Reviewer Links to libraries:
 
 Could not find link to tailwind. They allow webpack/npm from what I can tell so either install from npm or use webpack.
 POC with webpack here: C:\src\firefox-addons\webpack-demo
+
+---
+
+# Dev notes
+
+output: ./dist
+everything in this directory is deleted on `npm run build` from `clean: true,` in webpack.config.js in output section
+
+had to copy \_locales, icons and manifest.json. Had to update paths in manifest. Need to get webpack to handle this.
+
+firefox throws error about no eval() allowed. Need to see how to overcome this.
+
+# Third party libraries that may be useful later:
+
+- [webextension-polyfill](https://www.npmjs.com/package/webextension-polyfill)
+- [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill)

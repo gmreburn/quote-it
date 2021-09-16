@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 	mode: "development", // production - see https://webpack.js.org/configuration/devtool/
@@ -11,7 +12,7 @@ module.exports = {
 	output: {
 		filename: "[name].bundle.js",
 		path: path.resolve(__dirname, "dist"),
-		clean: false,
+		clean: true,
 	},
 	devServer: {
 		static: "./dist",
@@ -26,6 +27,13 @@ module.exports = {
 			template: "src/sidebar/panel.html",
 			chunks: ["sidebar"],
 			inject: "body",
+		}),
+		new CopyPlugin({
+			patterns: [
+				{ from: "src/icons", to: "icons" },
+				{ from: "src/_locales", to: "_locales" },
+				{ from: "src/manifest.json", to: "manifest.json" },
+			],
 		}),
 	],
 	module: {

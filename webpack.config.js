@@ -6,7 +6,7 @@ module.exports = {
 	devtool: "cheap-module-source-map",
 	entry: {
 		background: "./src/background.js",
-		sidebar: "./src/sidebar/panel.js",
+		sidebar: "./src/sidebar/index.jsx",
 	},
 	output: {
 		filename: "[name].bundle.js",
@@ -25,6 +25,7 @@ module.exports = {
 			filename: "sidebar.html",
 			template: "src/sidebar/panel.html",
 			chunks: ["sidebar"],
+			inject: "body",
 		}),
 	],
 	module: {
@@ -43,6 +44,16 @@ module.exports = {
 					// },
 					"postcss-loader",
 				],
+			},
+			{
+				test: /\.m?jsx?$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: "babel-loader",
+					options: {
+						presets: ["@babel/preset-env", "@babel/preset-react"],
+					},
+				},
 			},
 		],
 	},

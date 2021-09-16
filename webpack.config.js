@@ -7,7 +7,10 @@ module.exports = {
 	devtool: "cheap-module-source-map",
 	entry: {
 		background: "./src/background.js",
-		sidebar: "./src/sidebar/index.jsx",
+		sidebar: {
+			import: "./src/sidebar/index.jsx",
+			filename: "sidebar/panel.bundle.js",
+		},
 	},
 	output: {
 		filename: "[name].bundle.js",
@@ -23,7 +26,7 @@ module.exports = {
 		}),
 		new HtmlWebpackPlugin({
 			title: "Output Management",
-			filename: "sidebar.html",
+			filename: "sidebar/panel.html",
 			template: "src/sidebar/panel.html",
 			chunks: ["sidebar"],
 			inject: "body",

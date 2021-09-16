@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FolderAddIcon } from "@heroicons/react/outline";
 import SidebarQuote from "./SidebarQuote.jsx";
-import useQuotes from "./hooks/useQuotes.js";
+import useQuotes from "../hooks/useQuotes.js";
+import NoQuotesYet from "./NoQuotesYet.jsx";
 
 function Sidebar({ windowId }) {
 	const [url, setUrl] = useState("");
@@ -57,22 +57,6 @@ function Sidebar({ windowId }) {
 		});
 	}, []);
 
-	// const editQuote = () => {
-	// 	const newQuotes = quotes.slice();
-	// 	// saveQuotes(newQuotes);
-	// 	// setQuotes(newQuotes);
-	// };
-	// const deleteQuote = (quote) => {
-	// 	const newQuotes = quotes.filter((q) => quote != q);
-	// 	// saveQuotes(newQuotes);
-	// 	// setQuotes(newQuotes);
-	// };
-	// function saveQuotes(quotes) {
-	// 	let contentToStore = {};
-	// 	contentToStore[url] = quotes;
-	// 	browser.storage.local.set(contentToStore);
-	// }
-
 	if (quotes === false) {
 		return null; // loading indicator..?
 	} else if (Array.isArray(quotes) && quotes.length === 0) {
@@ -80,6 +64,7 @@ function Sidebar({ windowId }) {
 	}
 	return (
 		<>
+			{/* TODO: set key={i} on each notification */}
 			{notifications.map((notification) => notification)}
 			<ul role="list" className="divide-y divide-gray-200">
 				{quotes.map((quote, i) => (
@@ -87,6 +72,7 @@ function Sidebar({ windowId }) {
 						quote={quote}
 						key={i}
 						addNotification={addNotification}
+						url={url}
 					/>
 				))}
 			</ul>
@@ -95,20 +81,3 @@ function Sidebar({ windowId }) {
 }
 
 export default Sidebar;
-
-function NoQuotesYet() {
-	return (
-		<div className="flex justify-center mt-20">
-			<div>
-				<FolderAddIcon className="mx-auto h-12 w-12 text-gray-400" />
-				<h3 className="mt-2 font-bold text-gray-900 text-center">
-					No quotes yet
-				</h3>
-				<p className="mt-1 mx-8 text-gray-500 text-center">
-					Get started by right-clicking selected text on the webpage to save the
-					selection as a new quote.
-				</p>
-			</div>
-		</div>
-	);
-}

@@ -11,6 +11,7 @@ module.exports = {
 			import: "./src/sidebar/index.jsx",
 			filename: "sidebar/panel.bundle.js",
 		},
+		homepage: "./src/index.jsx",
 	},
 	output: {
 		filename: "[name].bundle.js",
@@ -19,17 +20,25 @@ module.exports = {
 	},
 	devServer: {
 		static: "./dist",
+		inject: "body",
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: "Explorer",
+			title: "Quote Explorer",
+			chunks: ["homepage"],
+			inject: "body",
+			meta: {
+				viewport: "width=device-width, initial-scale=1, shrink-to-fit=no",
+			},
 		}),
 		new HtmlWebpackPlugin({
-			title: "Output Management",
+			title: "Quote Sidebar",
 			filename: "sidebar/panel.html",
-			template: "src/sidebar/panel.html",
 			chunks: ["sidebar"],
 			inject: "body",
+			meta: {
+				viewport: "width=device-width, initial-scale=1, shrink-to-fit=no",
+			},
 		}),
 		new CopyPlugin({
 			patterns: [

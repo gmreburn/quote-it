@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "../tailwind.css";
+import "./tailwind.css";
 
 const pages = [
 	{
@@ -25,5 +25,5 @@ ReactDOM.render(
 			))}
 		</ul>
 	</>,
-	document.getElementById("app")
+	document.body
 );

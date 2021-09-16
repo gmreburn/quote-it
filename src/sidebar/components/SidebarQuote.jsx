@@ -6,9 +6,9 @@ import {
 	PencilIcon,
 	TrashIcon,
 } from "@heroicons/react/outline";
-import SimpleNotification from "./components/SimpleNotification.jsx";
+import SimpleNotification from "./SimpleNotification.jsx";
 
-function SidebarQuote({ quote: q, addNotification }) {
+function SidebarQuote({ quote: q, addNotification, url }) {
 	const [quote, setQuote] = useState(q);
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
@@ -22,14 +22,25 @@ function SidebarQuote({ quote: q, addNotification }) {
 	const onDeleteClicked = () => {
 		// TODO: confirm delete first
 		// TODO: presist to storage
-
-		setQuote(null);
-		addNotification(
-			<SimpleNotification
-				title="Quote deleted!"
-				message="The quote was deleted successfully."
-			/>
-		);
+		browser.storage.local
+			.get(url)
+			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]] || [])
+			.then((quotes) => {
+				const newQuotes = quotes.filter(
+					(q) => !(quote.created == q.created && quote.text == q.text)
+				);
+				console.log("onDeleteClicked", newQuotes);
+				let contentToStore = {};
+				contentToStore[url] = newQuotes;
+				browser.storage.local.set(contentToStore);
+				setQuote(null);
+				addNotification(
+					<SimpleNotification
+						title="Quote deleted!"
+						message="The quote was deleted successfully."
+					/>
+				);
+			});
 	};
 	const onEditClicked = () => {};
 	const onFindClicked = () => {
@@ -43,6 +54,18 @@ function SidebarQuote({ quote: q, addNotification }) {
 				}
 			});
 	};
+	// const editQuote = () => {
+	// 	const newQuotes = quotes.slice();
+	// 	// saveQuotes(newQuotes);
+	// 	// setQuotes(newQuotes);
+	// };
+	// const deleteQuote = (quote) => {
+	//
+	// 	// saveQuotes(newQuotes);
+	// 	// setQuotes(newQuotes);
+	// };
+	// function saveQuotes(quotes) {
+	// }
 
 	if (!quote) return null;
 

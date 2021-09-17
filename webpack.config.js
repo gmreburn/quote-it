@@ -9,12 +9,12 @@ module.exports = {
 		background: "./src/background.js",
 		sidebar: {
 			import: "./src/sidebar/index.jsx",
-			filename: "sidebar/panel.bundle.js",
+			filename: "sidebar/panel.js",
 		},
 		homepage: "./src/index.jsx",
 	},
 	output: {
-		filename: "[name].bundle.js",
+		filename: "[name].js",
 		path: path.resolve(__dirname, "dist"),
 		clean: true,
 	},

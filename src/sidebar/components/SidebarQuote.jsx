@@ -3,7 +3,6 @@ import Moment from "react-moment";
 import {
 	ClipboardCopyIcon,
 	DocumentSearchIcon,
-	PencilIcon,
 	TrashIcon,
 } from "@heroicons/react/outline";
 import SimpleNotification from "./SimpleNotification.jsx";
@@ -21,15 +20,12 @@ function SidebarQuote({ quote: q, addNotification, url }) {
 	};
 	const onDeleteClicked = () => {
 		// TODO: confirm delete first
-		// TODO: presist to storage
 		browser.storage.local
 			.get(url)
 			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]] || [])
 			.then((quotes) => {
-				const newQuotes = quotes.filter(
-					(q) => !(quote.created == q.created && quote.text == q.text)
-				);
-				console.log("onDeleteClicked", newQuotes);
+				const newQuotes = quotes.filter((q) => !(quote.id == q.id));
+
 				let contentToStore = {};
 				contentToStore[url] = newQuotes;
 				browser.storage.local.set(contentToStore);
@@ -54,18 +50,6 @@ function SidebarQuote({ quote: q, addNotification, url }) {
 				}
 			});
 	};
-	// const editQuote = () => {
-	// 	const newQuotes = quotes.slice();
-	// 	// saveQuotes(newQuotes);
-	// 	// setQuotes(newQuotes);
-	// };
-	// const deleteQuote = (quote) => {
-	//
-	// 	// saveQuotes(newQuotes);
-	// 	// setQuotes(newQuotes);
-	// };
-	// function saveQuotes(quotes) {
-	// }
 
 	if (!quote) return null;
 

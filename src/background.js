@@ -1,3 +1,5 @@
+const { nanoid } = require("nanoid");
+
 browser.menus.create({
 	id: "save-selection",
 	title: browser.i18n.getMessage("menuItemSaveQuote"),
@@ -14,6 +16,7 @@ browser.menus.onClicked.addListener(function (info, tab) {
 			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]] || [])
 			.then((quotes) => {
 				const quote = {
+					id: nanoid(),
 					text: selectionText.trim(),
 					created: new Date().toISOString(),
 				};

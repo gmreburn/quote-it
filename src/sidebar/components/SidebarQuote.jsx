@@ -13,8 +13,8 @@ function SidebarQuote({ quote: q, addNotification, url }) {
 		navigator.clipboard.writeText(quote.text);
 		addNotification(
 			<SimpleNotification
-				title="Quote copied!"
-				message="The quote was successfully copied to your clipboard."
+				title={browser.i18n.getMessage("QuoteCopiedTitle")}
+				message={browser.i18n.getMessage("QuoteCopied")}
 			/>
 		);
 	};
@@ -32,13 +32,12 @@ function SidebarQuote({ quote: q, addNotification, url }) {
 				setQuote(null);
 				addNotification(
 					<SimpleNotification
-						title="Quote deleted!"
-						message="The quote was deleted successfully."
+						title={browser.i18n.getMessage("QuoteDeletedTitle")}
+						message={browser.i18n.getMessage("QuoteDeleted")}
 					/>
 				);
 			});
 	};
-	const onEditClicked = () => {};
 	const onFindClicked = () => {
 		browser.find
 			.find(quote.text, {
@@ -77,16 +76,8 @@ function SidebarQuote({ quote: q, addNotification, url }) {
 			<div className="flex justify-between space-x-3 mt-2">
 				<div className="min-w-0 flex-1"></div>
 				<div className="flex flex-shrink-0 whitespace-nowrap text-sm text-gray-500 space-x-2">
-					{/* <button
-						title="Edit quote metadata"
-						type="button"
-						className="hover:text-gray-600"
-						onClick={onEditClicked}
-					>
-						<PencilIcon className="h-6 w-6" />
-					</button> */}
 					<button
-						title="Copy quote to clipboard"
+						title={browser.i18n.getMessage("btnCopyQuote")}
 						type="button"
 						className="hover:text-gray-600"
 						onClick={onCopyClicked}
@@ -94,7 +85,7 @@ function SidebarQuote({ quote: q, addNotification, url }) {
 						<ClipboardCopyIcon className="h-6 w-6" />
 					</button>
 					<button
-						title="Highlight quote in webpage"
+						title={browser.i18n.getMessage("btnHighlightQuote")}
 						type="button"
 						className="hover:text-gray-600"
 						onClick={onFindClicked}
@@ -102,7 +93,7 @@ function SidebarQuote({ quote: q, addNotification, url }) {
 						<DocumentSearchIcon className="h-6 w-6" />
 					</button>
 					<button
-						title="Delete quote"
+						title={browser.i18n.getMessage("btnDeleteQuote")}
 						type="button"
 						className="hover:text-gray-600"
 						onClick={onDeleteClicked}

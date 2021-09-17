@@ -3,10 +3,7 @@ import { Transition } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import { XIcon } from "@heroicons/react/solid";
 
-export default function SimpleNotification({
-	title = "Successfully saved!",
-	message = "Anyone with a link can now view this file.",
-}) {
+export default function SimpleNotification({ title, message }) {
 	const [show, setShow] = useState(true);
 
 	return (
@@ -49,7 +46,9 @@ export default function SimpleNotification({
 												setShow(false);
 											}}
 										>
-											<span className="sr-only">Close</span>
+											<span className="sr-only">
+												{browser.i18n.getMessage("CloseDialog")}
+											</span>
 											<XIcon className="h-5 w-5" aria-hidden="true" />
 										</button>
 									</div>

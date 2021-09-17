@@ -41,6 +41,7 @@ export default function SimpleNotification({
 										<p className="text-sm font-medium text-gray-900">{title}</p>
 										<p className="mt-1 text-sm text-gray-500">{message}</p>
 									</div>
+
 									<div className="ml-4 flex-shrink-0 flex">
 										<button
 											className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"

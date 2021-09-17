@@ -6,7 +6,7 @@ import NoQuotesYet from "./NoQuotesYet.jsx";
 function Sidebar({ windowId }) {
 	const [url, setUrl] = useState("");
 	const [notifications, setNotifications] = useState([]);
-	const quotes = useQuotes(url);
+	const [quotes, setQuotes] = useQuotes(url);
 	const handleActiveTabChange = useCallback(
 		(activeInfo) => {
 			if (activeInfo.windowId === windowId) {
@@ -40,6 +40,11 @@ function Sidebar({ windowId }) {
 		},
 		[windowId]
 	);
+	const runtimeMessageReducer = (msg) => {
+		if (msg && msg.type === "NEW_QUOTE") {
+			setQuotes([...quotes, msg.quote]);
+		}
+	};
 
 	useEffect(() => {
 		browser.tabs.onUpdated.addListener(handleOnUpdated, {
@@ -47,37 +52,37 @@ function Sidebar({ windowId }) {
 			properties: ["url"],
 		});
 		browser.tabs.onActivated.addListener(handleActiveTabChange);
-		browser.runtime.onMessage.addListener((msg) => {
-			if ((msg && msg.type === "NEW_QUOTE") || msg.type == "QUOTE_DELETED") {
-				// for now, redraw content
-				// updateContent();
-				console.log(msg);
-				refresh();
-			}
-		});
 	}, []);
+	useEffect(() => {
+		browser.runtime.onMessage.addListener(runtimeMessageReducer);
+		return () => {
+			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
+		};
+	}, [quotes]);
 
 	if (quotes === false) {
-		return null; // loading indicator..?
+		return null;
 	} else if (Array.isArray(quotes) && quotes.length === 0) {
 		return <NoQuotesYet />;
-	}
-	return (
-		<>
-			{/* TODO: set key={i} on each notification */}
-			{notifications.map((notification) => notification)}
-			<ul role="list" className="divide-y divide-gray-200">
-				{quotes.map((quote, i) => (
-					<SidebarQuote
-						quote={quote}
-						key={i}
-						addNotification={addNotification}
-						url={url}
-					/>
+	} else {
+		return (
+			<>
+				{notifications.map((notification, i) => (
+					<div key={i}>{notification}</div>
 				))}
-			</ul>
-		</>
-	);
+				<ul role="list" className="divide-y divide-gray-200">
+					{quotes.map((quote) => (
+						<SidebarQuote
+							quote={quote}
+							key={quote.id}
+							addNotification={addNotification}
+							url={url}
+						/>
+					))}
+				</ul>
+			</>
+		);
+	}
 }
 
 export default Sidebar;

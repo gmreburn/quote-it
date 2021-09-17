@@ -1,0 +1,50 @@
+{
+	"extensionName": {
+		"message": "Quote It",
+		"description": "Name of the extension."
+	},
+	"menuItemSaveQuote": {
+		"message": "Save quote",
+		"description": "Title of context menu item that saves the selected text when clicked."
+	},
+	"btnHighlightQuote": {
+		"message": "Highlight quote in webpage",
+		"description": "A button that highlights the quote on the webpage."
+	},
+	"btnCopyQuote": {
+		"message": "Copy quote to clipboard",
+		"description": "A button that copies a quote to the user's clipboard."
+	},
+	"btnDeleteQuote": {
+		"message": "Delete quote",
+		"description": "A button that deletes a quote."
+	},
+	"QuoteCopiedTitle": {
+		"message": "Quote copied!",
+		"description": "A title shown in a notification when the user copies a quote to their clipboard."
+	},
+	"QuoteCopied": {
+		"message": "The quote was successfully copied to your clipboard.",
+		"description": "A paragraph shown in a notification when the user copies a quote to their clipboard."
+	},
+	"QuoteDeletedTitle": {
+		"message": "Quote deleted!",
+		"description": "A title shown in a notification when the user copies a quote to their clipboard."
+	},
+	"QuoteDeleted": {
+		"message": "The quote was deleted successfully.",
+		"description": "A paragraph shown in a notification when the user copies a quote to their clipboard."
+	},
+	"NoQuotesYet": {
+		"message": "No quotes yet",
+		"description": "Title shown in sidebar when webpage does not have any quotes saved yet."
+	},
+	"NoQuotes_GetStarted": {
+		"message": "Get started by right-clicking selected text on the webpage to save the selection as a new quote.",
+		"description": "Paragraph shown in sidebar when webpage does not have any quotes yet."
+	},
+	"CloseDialog": {
+		"message": "Close",
+		"description": "Caption for screen readers to close a dialog."
+	}
+}

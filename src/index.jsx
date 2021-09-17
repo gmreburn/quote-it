@@ -2,28 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./tailwind.css";
 
-const pages = [
-	{
-		name: "Sidebar",
-		description: "",
-		href: "sidebar.html",
-	},
-];
-
 ReactDOM.render(
 	<>
-		<ul role="list" className="divide-y divide-gray-200">
-			{pages.map((page) => (
-				<li key={page.name} className="py-4 flex">
-					<div className="ml-3">
-						<p className="text-sm font-medium text-gray-900">
-							<a href={page.href}>{page.name}</a>
-						</p>
-						<p className="text-sm text-gray-500">{page.description}</p>
-					</div>
-				</li>
-			))}
-		</ul>
+		<div className="md:flex md:items-center md:justify-between">
+			<div className="flex-1 min-w-0">
+				<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+					Quote Explorer
+				</h2>
+			</div>
+		</div>
 	</>,
 	document.body
 );

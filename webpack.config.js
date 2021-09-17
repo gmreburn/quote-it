@@ -15,15 +15,11 @@ module.exports = {
 	},
 	output: {
 		filename: "[name].js",
-		path: path.resolve(__dirname, "dist"),
+		path: path.resolve(__dirname, "addon"),
 		clean: true,
 	},
 	optimization: {
 		runtimeChunk: "multiple",
-	},
-	devServer: {
-		static: "./dist",
-		inject: "body",
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

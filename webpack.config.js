@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-	mode: "development", // production - see https://webpack.js.org/configuration/devtool/
+	mode: "production", // production - see https://webpack.js.org/configuration/devtool/
 	devtool: "cheap-module-source-map",
 	entry: {
 		background: "./src/background.js",
@@ -17,6 +17,9 @@ module.exports = {
 		filename: "[name].js",
 		path: path.resolve(__dirname, "dist"),
 		clean: true,
+	},
+	optimization: {
+		runtimeChunk: "multiple",
 	},
 	devServer: {
 		static: "./dist",

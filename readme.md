@@ -1,30 +1,29 @@
-Go to about:debugging#/runtime/this-firefox
-Click Load Temporary Add-on...
-Browse for and select the manifest.json in this directory
+# Quote It
 
-Select text on a webpage and right click.. see option in menu
-CTRL+SHIFT+J opens the console log window. See messages there
-You might need to click the gear icon/settings then "Show Content Messages" in the Browser Console window
+Select text on a webpage and right click then select save quote. Quote should apear in the sidebar (CTRL+Q) to open sidebar. Quotes can be deleted, highlighted and copied to clipboard.
 
-Reviewer Links to libraries:
+# Dev Guide
 
-- https://github.com/moment/moment/blob/2.29.1/dist/moment.js
+## Prerequisites
 
-Could not find link to tailwind. They allow webpack/npm from what I can tell so either install from npm or use webpack.
-POC with webpack here: C:\src\firefox-addons\webpack-demo
+- [nodejs v14](https://nodejs.org/en/)
 
----
+## Getting started
 
-# Dev notes
+```
+# npm install && npm run build
+```
 
 output: ./dist
-everything in this directory is deleted on `npm run build` from `clean: true,` in webpack.config.js in output section
+Zip this directory and upload to addons.mozilla.org
 
-had to copy \_locales, icons and manifest.json. Had to update paths in manifest. Need to get webpack to handle this.
+Everything in this directory is deleted on `npm run build` from `clean: true` in webpack.config.js in output section.
 
-firefox throws error about no eval() allowed. Need to see how to overcome this.
+# How to debug
 
-# Third party libraries that may be useful later:
+- Go to about:debugging#/runtime/this-firefox
+- Click Load Temporary Add-on...
+- Browse for and select the manifest.json in this directory
 
-- [webextension-polyfill](https://www.npmjs.com/package/webextension-polyfill)
-- [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill)
+CTRL+SHIFT+J opens the console log window. `Console.log` messages will show there.
+You might need to click the gear icon/settings then "Show Content Messages" in the Browser Console window

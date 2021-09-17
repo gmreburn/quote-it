@@ -27,5 +27,3 @@ Everything in this directory is deleted on `npm run build` from `clean: true` in
 
 CTRL+SHIFT+J opens the console log window. `Console.log` messages will show there.
 You might need to click the gear icon/settings then "Show Content Messages" in the Browser Console window
-
----

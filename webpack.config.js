@@ -26,7 +26,7 @@ if (fs.existsSync(pages_path)) {
 			}))
 	);
 }
-console.log("manifest_pages", manifest_pages);
+
 const jsxEntries = manifest_pages
 	.filter((page) => path.extname(page[Object.keys(page)[0]]) === ".jsx")
 	.map((page) => {
@@ -39,7 +39,7 @@ const jsxEntries = manifest_pages
 			},
 		};
 	});
-console.log(jsxEntries);
+
 module.exports = {
 	mode: "production", // production - see https://webpack.js.org/configuration/devtool/
 	devtool: "cheap-module-source-map",

@@ -25,10 +25,20 @@
 
 	"permissions": ["menus", "activeTab", "storage", "tabs", "find"],
 
+	"optional_permissions": ["<all_urls>", "notifications"],
+
+	"page_action": {
+		"browser_style": false,
+		"default_icon": "icons/quotes-48.png",
+		"default_title": "Whereami?",
+		"default_popup": "pageAction/editQuote.jsx",
+		"show_matches": ["<all_urls>"]
+	},
+
 	"sidebar_action": {
 		"default_icon": "icons/quotes-48.png",
 		"default_title": "Quotes",
-		"default_panel": "sidebar/panel.html"
+		"default_panel": "sidebar/panel.jsx"
 	},
 
 	"commands": {

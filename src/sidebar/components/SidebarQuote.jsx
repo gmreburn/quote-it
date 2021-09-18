@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/outline";
 import SimpleNotification from "./SimpleNotification.jsx";
 
-function SidebarQuote({ quote: q, addNotification, url, tabId }) {
+function SidebarQuote({ quote: q, addNotification, url }) {
 	const [quote, setQuote] = useState(q);
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);

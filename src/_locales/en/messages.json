@@ -11,10 +11,6 @@
 		"message": "Highlight quote in webpage",
 		"description": "A button that highlights the quote on the webpage."
 	},
-	"btnEditQuote": {
-		"message": "Edit quote metadata",
-		"description": "A button that opens a page action to edit metadata about the quote."
-	},
 	"btnCopyQuote": {
 		"message": "Copy quote to clipboard",
 		"description": "A button that copies a quote to the user's clipboard."

@@ -3,7 +3,7 @@
 
 	"name": "Quote It",
 
-	"version": "1.0.2",
+	"version": "1.0.3",
 
 	"default_locale": "en",
 
@@ -28,7 +28,7 @@
 	"sidebar_action": {
 		"default_icon": "icons/quotes-48.png",
 		"default_title": "Quotes",
-		"default_panel": "sidebar/panel.html"
+		"default_panel": "sidebar/panel.jsx"
 	},
 
 	"commands": {

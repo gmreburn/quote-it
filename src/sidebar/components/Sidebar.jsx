@@ -7,7 +7,6 @@ function Sidebar({ windowId }) {
 	const [url, setUrl] = useState("");
 	const [notifications, setNotifications] = useState([]);
 	const [quotes, setQuotes] = useQuotes(url);
-	const [tabId, setTabId] = useState(false);
 	const handleActiveTabChange = useCallback(
 		(activeInfo) => {
 			if (activeInfo.windowId === windowId) {
@@ -17,7 +16,6 @@ function Sidebar({ windowId }) {
 					if (newUrl !== url) {
 						setUrl(newUrl);
 					}
-					setTabId(tab.id);
 				});
 			}
 		},
@@ -79,7 +77,6 @@ function Sidebar({ windowId }) {
 							key={quote.id}
 							addNotification={addNotification}
 							url={url}
-							tabId={tabId}
 						/>
 					))}
 				</ul>

@@ -45,8 +45,6 @@ function Sidebar({ tab: t }) {
 					<SidebarQuote
 						quote={quote}
 						key={quote.id}
-						url={tab.url}
-						tabId={tab.id}
 						deleteQuote={deleteQuote}
 					/>
 				))}

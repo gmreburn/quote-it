@@ -8,12 +8,8 @@
 		"description": "Title of context menu item that saves the selected text when clicked."
 	},
 	"btnHighlightQuote": {
-		"message": "Highlight quote in page",
+		"message": "Highlight quote on page",
 		"description": "A button that highlights the quote on the page."
-	},
-	"btnEditQuote": {
-		"message": "Edit quote metadata",
-		"description": "A button that opens a page action to edit metadata about the quote."
 	},
 	"btnCopyQuote": {
 		"message": "Copy quote to clipboard",

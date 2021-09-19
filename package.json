@@ -10,6 +10,7 @@
 		"build": "webpack",
 		"postbuild": "npm run-script lint",
 		"lint": "cd addon && web-ext lint",
+		"prepack": "npm run-script build",
 		"pack": "cd addon && web-ext build -o",
 		"watch": "webpack --watch",
 		"prestart": "npm run-script build",

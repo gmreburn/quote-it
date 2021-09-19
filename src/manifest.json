@@ -3,7 +3,7 @@
 
 	"name": "Quote It",
 
-	"version": "1.0.3",
+	"version": "1.0.4",
 
 	"default_locale": "en",
 
@@ -43,6 +43,7 @@
 		"default_popup": "pageAction/panel.jsx",
 		"show_matches": ["<all_urls>"]
 	},
+
 
 	"sidebar_action": {
 		"browser_style": true,

@@ -5,38 +5,32 @@ import {
 	DocumentSearchIcon,
 	TrashIcon,
 } from "@heroicons/react/outline";
-import SimpleNotification from "./SimpleNotification.jsx";
 
-function SidebarQuote({ quote: q, addNotification, url }) {
-	const [quote, setQuote] = useState(q);
+function SidebarQuote({ quote, deleteQuote }) {
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
-		addNotification(
-			<SimpleNotification
-				title={browser.i18n.getMessage("QuoteCopiedTitle")}
-				message={browser.i18n.getMessage("QuoteCopied")}
-			/>
-		);
+
+		browser.notifications.create(`${quote.id}-copied`, {
+			type: "basic",
+			title: browser.i18n.getMessage("QuoteCopiedTitle"),
+			message: browser.i18n.getMessage("QuoteCopied"),
+		});
+		setTimeout(() => {
+			browser.notifications.clear(`${quote.id}-copied`);
+		}, 7000);
 	};
 	const onDeleteClicked = () => {
-		// TODO: confirm delete first
-		browser.storage.local
-			.get(url)
-			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]] || [])
-			.then((quotes) => {
-				const newQuotes = quotes.filter((q) => !(quote.id == q.id));
-
-				let contentToStore = {};
-				contentToStore[url] = newQuotes;
-				browser.storage.local.set(contentToStore);
-				setQuote(null);
-				addNotification(
-					<SimpleNotification
-						title={browser.i18n.getMessage("QuoteDeletedTitle")}
-						message={browser.i18n.getMessage("QuoteDeleted")}
-					/>
-				);
+		// TODO: confirm delete before delete or add undo button to notification
+		deleteQuote(quote).then(() => {
+			browser.notifications.create(`${quote.id}-deleted`, {
+				type: "basic",
+				title: browser.i18n.getMessage("QuoteDeletedTitle"),
+				message: browser.i18n.getMessage("QuoteDeleted"),
 			});
+			setTimeout(() => {
+				browser.notifications.clear(`${quote.id}-deleted`);
+			}, 7000);
+		});
 	};
 	const onFindClicked = () => {
 		browser.find

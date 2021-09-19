@@ -20,10 +20,11 @@
 	},
 
 	"background": {
-		"scripts": ["background.js"]
+		"scripts": ["background.js"],
+		"persistent": false
 	},
 
-	"permissions": ["menus", "activeTab", "storage", "tabs", "find"],
+	"permissions": ["menus", "activeTab", "storage", "tabs", "find", "notifications"],
 
 	"sidebar_action": {
 		"default_icon": "icons/quotes-48.png",

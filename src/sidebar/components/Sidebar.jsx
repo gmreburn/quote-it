@@ -3,62 +3,36 @@ import SidebarQuote from "./SidebarQuote.jsx";
 import useQuotes from "../hooks/useQuotes.js";
 import NoQuotesYet from "./NoQuotesYet.jsx";
 
-function Sidebar({ windowId }) {
-	const [url, setUrl] = useState("");
-	const [notifications, setNotifications] = useState([]);
-	const [quotes, setQuotes] = useQuotes(url);
+function Sidebar({ tab: t }) {
+	const [tab, setTab] = useState(t);
+	const [quotes, deleteQuote] = useQuotes(tab);
+
 	const handleActiveTabChange = useCallback(
 		(activeInfo) => {
-			if (activeInfo.windowId === windowId) {
-				browser.tabs.get(activeInfo.tabId).then((tab) => {
-					const tabUrl = new URL(tab.url);
-					const newUrl = tabUrl.hostname + tabUrl.pathname;
-					if (newUrl !== url) {
-						setUrl(newUrl);
-					}
-				});
+			console.debug("handleActiveTabChange", activeInfo);
+			if (activeInfo.windowId === tab.windowId) {
+				browser.tabs.get(activeInfo.tabId).then(setTab);
 			}
 		},
-		[windowId]
+		[tab]
 	);
-	const addNotification = (notification, timeout = 8000) => {
-		setNotifications([notification, ...notifications]);
-		setTimeout(
-			() => {
-				setNotifications(notifications.filter((n) => n !== notification));
-			},
-			!isNaN(Number(timeout)) ? timeout : 8000
-		);
-	};
 	const handleOnUpdated = useCallback(
 		(tabId, changeInfo, tab) => {
-			const tabUrl = new URL(tab.url);
-			const newUrl = tabUrl.hostname + tabUrl.pathname;
-			if (newUrl !== url) {
-				setUrl(newUrl);
+			console.debug("handleOnUpdated", tab);
+			if (tab.windowId === tab.windowId) {
+				setTab(tab);
 			}
 		},
-		[windowId]
+		[tab]
 	);
-	const runtimeMessageReducer = (msg) => {
-		if (msg && msg.type === "NEW_QUOTE") {
-			setQuotes([...quotes, msg.quote]);
-		}
-	};
 
 	useEffect(() => {
 		browser.tabs.onUpdated.addListener(handleOnUpdated, {
-			windowId,
+			windowId: tab.windowId,
 			properties: ["url"],
 		});
 		browser.tabs.onActivated.addListener(handleActiveTabChange);
 	}, []);
-	useEffect(() => {
-		browser.runtime.onMessage.addListener(runtimeMessageReducer);
-		return () => {
-			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
-		};
-	}, [quotes]);
 
 	if (quotes === false) {
 		return null;
@@ -66,21 +40,17 @@ function Sidebar({ windowId }) {
 		return <NoQuotesYet />;
 	} else {
 		return (
-			<>
-				{notifications.map((notification, i) => (
-					<div key={i}>{notification}</div>
+			<ul role="list" className="divide-y divide-gray-200">
+				{quotes.map((quote) => (
+					<SidebarQuote
+						quote={quote}
+						key={quote.id}
+						url={tab.url}
+						tabId={tab.id}
+						deleteQuote={deleteQuote}
+					/>
 				))}
-				<ul role="list" className="divide-y divide-gray-200">
-					{quotes.map((quote) => (
-						<SidebarQuote
-							quote={quote}
-							key={quote.id}
-							addNotification={addNotification}
-							url={url}
-						/>
-					))}
-				</ul>
-			</>
+			</ul>
 		);
 	}
 }

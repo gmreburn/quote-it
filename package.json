@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"description": "",
 	"private": true,
+	"config": {
+		"start_url": "https://www.wsj.com/articles/facebook-drug-cartels-human-traffickers-response-is-weak-documents-11631812953?mod=hp_lead_pos7"
+	},
 	"scripts": {
 		"build": "webpack",
 		"postbuild": "npm run-script lint",
@@ -39,6 +42,7 @@
 	"dependencies": {
 		"@headlessui/react": "^1.4.1",
 		"@heroicons/react": "^1.0.4",
+		"@tailwindcss/forms": "^0.3.3",
 		"@tailwindcss/line-clamp": "^0.2.1",
 		"moment": "^2.29.1",
 		"nanoid": "^3.1.25",

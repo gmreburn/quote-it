@@ -8,8 +8,8 @@
 		"description": "Title of context menu item that saves the selected text when clicked."
 	},
 	"btnHighlightQuote": {
-		"message": "Highlight quote in webpage",
-		"description": "A button that highlights the quote on the webpage."
+		"message": "Highlight quote in page",
+		"description": "A button that highlights the quote on the page."
 	},
 	"btnEditQuote": {
 		"message": "Edit quote metadata",
@@ -20,7 +20,7 @@
 		"description": "A button that copies a quote to the user's clipboard."
 	},
 	"btnDeleteQuote": {
-		"message": "Delete quote",
+		"message": "Delete this quote",
 		"description": "A button that deletes a quote."
 	},
 	"QuoteCopiedTitle": {
@@ -41,11 +41,11 @@
 	},
 	"NoQuotesYet": {
 		"message": "No quotes yet",
-		"description": "Title shown in sidebar when webpage does not have any quotes saved yet."
+		"description": "Title shown in sidebar when the current page does not have any quotes saved yet."
 	},
 	"NoQuotes_GetStarted": {
-		"message": "Get started by right-clicking selected text on the webpage to save the selection as a new quote.",
-		"description": "Paragraph shown in sidebar when webpage does not have any quotes yet."
+		"message": "Get started by selecting text on the page.",
+		"description": "Paragraph shown in sidebar when page does not have any quotes yet."
 	},
 	"CloseDialog": {
 		"message": "Close",

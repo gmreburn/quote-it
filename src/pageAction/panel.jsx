@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "../tailwind.css";
-import Sidebar from "./components/Sidebar.jsx";
+import EditPageMetadata from "./components/EditPageMetadata.jsx";
 
 browser.windows.getCurrent({ populate: true }).then((windowInfo) => {
 	console.debug(
-		"wininfo",
+		"page_action",
 		windowInfo.tabs.find((tab) => tab.active)
 	);
 	ReactDOM.render(
-		<Sidebar tab={windowInfo.tabs.find((tab) => tab.active)} />,
+		<EditPageMetadata tab={windowInfo.tabs.find((tab) => tab.active)} />,
 		document.body
 	);
 });

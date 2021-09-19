@@ -6,8 +6,7 @@ import {
 	TrashIcon,
 } from "@heroicons/react/outline";
 
-function SidebarQuote({ quote: q, url, deleteQuote }) {
-	const [quote, setQuote] = useState(q);
+function SidebarQuote({ quote, deleteQuote }) {
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 

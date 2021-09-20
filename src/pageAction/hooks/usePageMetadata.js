@@ -2,30 +2,19 @@ import { useEffect, useState } from "react";
 
 function usePageMetadata(tab) {
 	const [pageMetadata, setPageMetadata] = useState({});
+	const [pageMetadataFromUser, setPageMetadataFromUser] = useState({});
 	const url = new URL(tab.url);
-	const id = `meta-${url.hostname}${url.pathname}`;
-
-	const updatePageMetadata = (newPageMetadata) => {
-		let contentToStore = {
-			[id]: Object.assign({}, pageMetadata, newPageMetadata),
-		};
-
-		return browser.storage.local
-			.set(contentToStore)
-			.then(() => setPageMetadata(contentToStore[id]));
-	};
+	const id = `${url.hostname}${url.pathname}`;
 
 	useEffect(() => {
-		browser.storage.local
-			.get(id)
-			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]])
-			.then((pageMetadata) => {
-				// TODO: send message to fetch metadata from page if we don't have anything stored yet
-				console.log("registering content script", JSON.stringify(url));
-
+		Promise.all([
+			Promise.all([
+				browser.storage.local
+					.get(`page-${id}`)
+					.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]]),
 				browser.tabs
 					.executeScript({
-						file: `../user_scripts/meta-reader.js`,
+						file: `../contentScripts/meta-reader.js`,
 					})
 					.then((result) => result[0])
 					.then((metadata) => ({
@@ -45,20 +34,28 @@ function usePageMetadata(tab) {
 							(Array.isArray(metadata.author) &&
 								metadata.author.map((author) => author.name)) ||
 							[],
-					}))
-					.then(setPageMetadata);
-
-				// if (!pageMetadata) {
-				// 	return browser.runtime
-				// 		.sendMessage("fetchPageMetadata")
-				// 		.then(updatePageMetadata);
+					})),
+			]).then((values) => Object.assign({}, ...values)),
+			browser.storage.local
+				.get(`user-${id}`)
+				.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]])
+				.then(setPageMetadataFromUser),
+		])
+			.then((values) => Object.assign({}, ...values))
+			.then((pageMetadata) => {
+				// if (
+				// 	pageMetadata.published &&
+				// 	!(pageMetadata.published instanceof Date)
+				// ) {
+				// 	pageMetadata.published2 = pageMetadata.published;
+				// 	pageMetadata.published = new Date(pageMetadata.published);
 				// }
-
-				// return setPageMetadata(pageMetadata);
-			});
+				return pageMetadata;
+			})
+			.then(setPageMetadata);
 	}, [tab]);
 
-	return [pageMetadata];
+	return [pageMetadata, pageMetadataFromUser];
 }
 
 export default usePageMetadata;

@@ -16,7 +16,8 @@
 	"description": "Save quotes from across the web.",
 
 	"icons": {
-		"48": "icons/quotes-48.png"
+		"48": "icons/annotation.svg",
+		"96": "icons/annotation.svg"
 	},
 
 	"background": {
@@ -37,17 +38,16 @@
 	"optional_permissions": [],
 
 	"page_action": {
-		"browser_style": false,
-		"default_icon": "icons/quotes-48.png",
+		"browser_style": true,
+		"default_icon": "icons/annotation.svg",
 		"default_title": "View and manage this page's metadata.",
 		"default_popup": "pageAction/panel.jsx",
 		"show_matches": ["<all_urls>"]
 	},
 
-
 	"sidebar_action": {
 		"browser_style": true,
-		"default_icon": "icons/quotes-48.png",
+		"default_icon": "icons/annotation.svg",
 		"default_title": "Quotes",
 		"default_panel": "sidebar/panel.jsx"
 	},

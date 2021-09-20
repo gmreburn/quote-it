@@ -126,6 +126,11 @@ module.exports = {
 						ignore: ["**/*.jsx"],
 					},
 				},
+				{
+					from: "(contentScripts|userScripts)/**/*.js",
+					context: "src",
+					noErrorOnMissing: true,
+				},
 				...manifest_pages
 					.filter((manifest_page) => {
 						const file = manifest_page[Object.keys(manifest_page)[0]];

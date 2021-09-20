@@ -11,11 +11,11 @@ function setSidebarStyle(theme) {
 	}
 }
 
-browser.windows.getCurrent({ populate: true }).then((sidebarWindow) => {
+browser.windows.getCurrent({ populate: true }).then((windowInfo) => {
 	var appElement = document.createElement("div");
 	document.body.appendChild(appElement);
 	ReactDOM.render(
-		<Sidebar tab={sidebarWindow.tabs.find((tab) => tab.active)} />,
+		<Sidebar tab={windowInfo.tabs.find((tab) => tab.active)} />,
 		appElement
 	);
 	browser.theme.onUpdated.addListener(({ theme, windowId }) => {
@@ -24,7 +24,7 @@ browser.windows.getCurrent({ populate: true }).then((sidebarWindow) => {
 		  If a windowId is passed during an update, it means that the theme is applied to that specific window.
 		  Otherwise, the theme is applied globally to all windows.
 		*/
-		if (!windowId || windowId == sidebarWindow.id) {
+		if (!windowId || windowId == windowInfo.id) {
 			setSidebarStyle(theme);
 		}
 	});

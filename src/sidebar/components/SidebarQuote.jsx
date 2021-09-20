@@ -47,7 +47,7 @@ function SidebarQuote({ quote, deleteQuote }) {
 	if (!quote) return null;
 
 	return (
-		<li className="relative bg-white py-5 px-4 hover:bg-gray-50">
+		<li className="relative py-5 px-4">
 			<div className="flex justify-between space-x-3">
 				<div className="min-w-0 flex-1">
 					<a href="#" className="block focus:outline-none">
@@ -65,11 +65,11 @@ function SidebarQuote({ quote, deleteQuote }) {
 				</Moment>
 			</div>
 			<div className="mt-1">
-				<p className="line-clamp-2 text-sm text-gray-700">"{quote.text}"</p>
+				<p className="line-clamp-5">"{quote.text}"</p>
 			</div>
 			<div className="flex justify-between space-x-3 mt-2">
 				<div className="min-w-0 flex-1"></div>
-				<div className="flex flex-shrink-0 whitespace-nowrap text-sm text-gray-500 space-x-2">
+				<div className="flex flex-shrink-0 whitespace-nowrap space-x-2">
 					<button
 						title={browser.i18n.getMessage("btnCopyQuote")}
 						type="button"

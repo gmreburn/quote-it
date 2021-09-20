@@ -40,7 +40,7 @@ function Sidebar({ tab: t }) {
 		return <NoQuotesYet />;
 	} else {
 		return (
-			<ul role="list" className="divide-y divide-gray-200">
+			<ul role="list" className="divide-y">
 				{quotes.map((quote) => (
 					<SidebarQuote
 						quote={quote}

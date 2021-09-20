@@ -3,13 +3,13 @@
 
 	"name": "Quote It",
 
-	"version": "1.0.4",
+	"version": "1.0.5",
 
 	"default_locale": "en",
 
 	"browser_specific_settings": {
 		"gecko": {
-			"strict_min_version": "57.0"
+			"strict_min_version": "58.0a1"
 		}
 	},
 

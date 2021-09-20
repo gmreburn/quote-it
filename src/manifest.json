@@ -16,7 +16,8 @@
 	"description": "Save quotes from across the web.",
 
 	"icons": {
-		"48": "icons/quotes-48.png"
+		"48": "icons/annotation.svg",
+		"96": "icons/annotation.svg"
 	},
 
 	"background": {
@@ -34,7 +35,7 @@
 	],
 
 	"sidebar_action": {
-		"default_icon": "icons/quotes-48.png",
+		"default_icon": "icons/annotation.svg",
 		"default_title": "Quotes",
 		"default_panel": "sidebar/panel.jsx"
 	},

@@ -3,18 +3,31 @@ import ReactDOM from "react-dom";
 import "../tailwind.css";
 import Sidebar from "./components/Sidebar.jsx";
 
-browser.windows.getCurrent({ populate: true }).then((windowInfo) => {
-	browser.theme.getCurrent().then((styles) => {
-		console.log(styles.colors);
-		if (styles.colors) {
-			document.body.style = `background: ${styles.colors.sidebar}; color: ${styles.colors.sidebar_text}; border-color: ${styles.colors.sidebar_border}`;
-			// TODO: respect color from styles.colors.icons for icons
-		}
-	});
+function setSidebarStyle(theme) {
+	if (theme.colors) {
+		document.body.style = `background: ${theme.colors.frame}; color: ${theme.colors.sidebar_text}; border-color: ${theme.colors.sidebar_border}`;
+	} else {
+		document.body.style = ``;
+	}
+}
+
+browser.windows.getCurrent({ populate: true }).then((sidebarWindow) => {
 	var appElement = document.createElement("div");
 	document.body.appendChild(appElement);
 	ReactDOM.render(
-		<Sidebar tab={windowInfo.tabs.find((tab) => tab.active)} />,
+		<Sidebar tab={sidebarWindow.tabs.find((tab) => tab.active)} />,
 		appElement
 	);
+	browser.theme.onUpdated.addListener(({ theme, windowId }) => {
+		/*
+		  Only update theme if it applies to the window the sidebar is in.
+		  If a windowId is passed during an update, it means that the theme is applied to that specific window.
+		  Otherwise, the theme is applied globally to all windows.
+		*/
+		if (!windowId || windowId == sidebarWindow.id) {
+			setSidebarStyle(theme);
+		}
+	});
 });
+
+browser.theme.getCurrent().then(setSidebarStyle);

@@ -3,20 +3,21 @@
 
 	"name": "Quote It",
 
-	"version": "1.0.4",
+	"version": "1.0.5",
 
 	"default_locale": "en",
 
 	"browser_specific_settings": {
 		"gecko": {
-			"strict_min_version": "57.0"
+			"strict_min_version": "58.0a1"
 		}
 	},
 
 	"description": "Save quotes from across the web.",
 
 	"icons": {
-		"48": "icons/quotes-48.png"
+		"48": "icons/annotation.svg",
+		"96": "icons/annotation.svg"
 	},
 
 	"background": {
@@ -34,7 +35,7 @@
 	],
 
 	"sidebar_action": {
-		"default_icon": "icons/quotes-48.png",
+		"default_icon": "icons/annotation.svg",
 		"default_title": "Quotes",
 		"default_panel": "sidebar/panel.jsx"
 	},

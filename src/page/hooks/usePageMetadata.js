@@ -19,7 +19,7 @@ function usePageMetadata(tab) {
 					.then((result) => result[0])
 					.then((metadata) => ({
 						articleTitle: metadata.headline || metadata.title || "",
-						websiteTitle: metadata?.isPartOf["name"] || "",
+						websiteTitle: metadata?.isPartOf?.name || "",
 						publisher:
 							metadata.publisher?.name ||
 							(typeof metadata.publisher === "string" && metadata.publisher) ||
@@ -34,7 +34,11 @@ function usePageMetadata(tab) {
 							(Array.isArray(metadata.author) &&
 								metadata.author.map((author) => author.name)) ||
 							[],
-					})),
+					}))
+					.then((m) => {
+						console.log("metadata!!", m);
+						return m;
+					}),
 			]).then((values) => Object.assign({}, ...values)),
 			browser.storage.local
 				.get(`user-${id}`)

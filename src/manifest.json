@@ -13,7 +13,7 @@
 		}
 	},
 
-	"description": "Save quotes from across the web.",
+	"description": "Collect quotes from across the web.",
 
 	"icons": {
 		"48": "icons/annotation.svg",
@@ -50,6 +50,10 @@
 		"default_icon": "icons/annotation.svg",
 		"default_title": "Quotes",
 		"default_panel": "sidebar/panel.jsx"
+	},
+
+	"options_ui": {
+		"page": "options/options.jsx"
 	},
 
 	"commands": {

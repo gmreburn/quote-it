@@ -10,8 +10,8 @@ function router({ tab }) {
 			button_primary: "#0061e0",
 			button_primary_color: "rgb(251,251,254)",
 		},
-		images: null,
-		properties: null,
+		images: {},
+		properties: {},
 	});
 	console.log("router", theme);
 	// const handleThemeUpdateEvent = ({ theme, windowId }) => {
@@ -23,10 +23,9 @@ function router({ tab }) {
 	useEffect(() => {
 		// browser.theme.onUpdated.addListener(handleThemeUpdateEvent);
 		browser.theme.getCurrent().then((browserTheme) => {
-			Object.assign(theme.colors, browserTheme.colors);
-			Object.assign(theme.images, browserTheme.images);
-			Object.assign(theme.properties, browserTheme.properties);
-			setTheme(Object.assign({}, theme, browserTheme));
+			if (browserTheme.colors) {
+				setTheme(Object.assign({}, theme, browserTheme));
+			}
 		});
 		return () => {
 			// browser.theme.onUpdated.removeListener(handleThemeUpdateEvent);

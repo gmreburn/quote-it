@@ -3,9 +3,18 @@ import usePageMetadata from "../hooks/usePageMetadata";
 import Metadata from "./Metadata.jsx";
 import ThemeContext from "../../components/ThemeContext.js";
 
+const metadataKeys = [
+	"articleTitle",
+	"websiteTitle",
+	"publisher",
+	"url",
+	"published",
+	"contributors",
+];
+
 function ViewPageMetadata({ tab }) {
 	const [pageMetadata] = usePageMetadata(tab);
-	console.log("pageMetadata", pageMetadata);
+	// console.log("pageMetadata", pageMetadata);
 
 	return (
 		<ThemeContext.Consumer>
@@ -20,30 +29,14 @@ function ViewPageMetadata({ tab }) {
 						</h1>
 					</div>
 					<div className="pt-2" style={{ borderColor: colors?.popup_border }}>
-						<Metadata
-							label={browser.i18n.getMessage("Article title")}
-							data={pageMetadata.articleTitle}
-						/>
-						<Metadata
-							label={browser.i18n.getMessage("Website title")}
-							data={pageMetadata.websiteTitle}
-						/>
-						<Metadata
-							label={browser.i18n.getMessage("Publisher")}
-							data={pageMetadata.publisher}
-						/>
-						<Metadata
-							label={browser.i18n.getMessage("Canonical address")}
-							data={pageMetadata.url}
-						/>
-						<Metadata
-							label={browser.i18n.getMessage("Publish date")}
-							data={pageMetadata.published}
-						/>
-						<Metadata
-							label={browser.i18n.getMessage("Contributors")}
-							data={pageMetadata.contributors}
-						/>
+						{metadataKeys.map((metadataKey) => (
+							<Metadata
+								key={metadataKey}
+								label={metadataKey}
+								data={pageMetadata[metadataKey]}
+								url={tab.url}
+							/>
+						))}
 					</div>
 				</div>
 			)}

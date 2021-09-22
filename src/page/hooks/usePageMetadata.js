@@ -1,65 +1,51 @@
 import { useEffect, useState } from "react";
+import PageMetadataAPI from "../api/PageMetadataAPI.js";
 
 function usePageMetadata(tab) {
 	const [pageMetadata, setPageMetadata] = useState({});
-	const [pageMetadataFromUser, setPageMetadataFromUser] = useState({});
-	const url = new URL(tab.url);
-	const id = `${url.hostname}${url.pathname}`;
+	const api = PageMetadataAPI(tab.url);
 
 	useEffect(() => {
 		Promise.all([
-			Promise.all([
-				browser.storage.local
-					.get(`page-${id}`)
-					.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]]),
-				browser.tabs
-					.executeScript({
-						file: `../contentScripts/meta-reader.js`,
-					})
-					.then((result) => result[0])
-					.then((metadata) => ({
-						articleTitle: metadata.headline || metadata.title || "",
-						websiteTitle: metadata?.isPartOf?.name || "",
-						publisher:
-							metadata.publisher?.name ||
-							(typeof metadata.publisher === "string" && metadata.publisher) ||
-							"",
-						url:
-							(metadata.mainEntityOfPage &&
-								metadata.mainEntityOfPage["@type"] === "WebPage" &&
-								metadata.mainEntityOfPage["@id"]) ||
-							metadata.url,
-						published: metadata.datePublished || metadata.dateCreated || "",
-						contributors:
-							(Array.isArray(metadata.author) &&
-								metadata.author.map((author) => author.name)) ||
-							[],
-					}))
-					.then((m) => {
-						console.log("metadata!!", m);
-						return m;
-					}),
-			]).then((values) => Object.assign({}, ...values)),
-			browser.storage.local
-				.get(`user-${id}`)
-				.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]])
-				.then(setPageMetadataFromUser),
+			browser.tabs
+				.executeScript({
+					file: `../contentScripts/meta-reader.js`,
+				})
+				.then((result) => result[0])
+				.then((metadata) => ({
+					articleTitle: metadata.headline || metadata.title || "",
+					websiteTitle: metadata?.isPartOf?.name || "",
+					publisher:
+						metadata.publisher?.name ||
+						(typeof metadata.publisher === "string" && metadata.publisher) ||
+						"",
+					url:
+						(metadata.mainEntityOfPage &&
+							metadata.mainEntityOfPage["@type"] === "WebPage" &&
+							metadata.mainEntityOfPage["@id"]) ||
+						metadata.url,
+					published: metadata.datePublished || metadata.dateCreated || "",
+					contributors:
+						(Array.isArray(metadata.author) &&
+							metadata.author.map((author) => author.name)) ||
+						[],
+				}))
+				.then((newMetadata) => api.save("page", newMetadata)),
+			api.get("user"),
 		])
-			.then((values) => Object.assign({}, ...values))
+			.then((values) => {
+				console.log("values", values);
+				return Object.assign({}, ...values);
+			})
 			.then((pageMetadata) => {
-				// if (
-				// 	pageMetadata.published &&
-				// 	!(pageMetadata.published instanceof Date)
-				// ) {
-				// 	pageMetadata.published2 = pageMetadata.published;
-				// 	pageMetadata.published = new Date(pageMetadata.published);
-				// }
+				console.log("metadata from webpage", pageMetadata);
+
 				return pageMetadata;
 			})
 			.then(setPageMetadata);
 	}, [tab]);
 
-	return [pageMetadata, pageMetadataFromUser];
+	return [pageMetadata, api];
 }
 
 export default usePageMetadata;

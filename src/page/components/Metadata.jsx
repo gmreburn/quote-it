@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeContext from "../../components/ThemeContext.js";
 
-function Metadata({ label, data }) {
+function Metadata({ label, data, url }) {
 	const [isActive, setIsActive] = useState(false);
 	return (
 		<ThemeContext.Consumer>
 			{({ colors }) => (
 				<div className="mx-3 py-2">
-					<div className="ml-2 mb-1">{label}</div>
+					<div className="ml-2 mb-1">{browser.i18n.getMessage(label)}</div>
 					<Link
 						className="flex justify-between rounded p-2"
-						to={{ pathname: "/edit", state: { label, data } }}
+						to={{ pathname: "/edit", state: { label, data, url } }}
 						state={{ label, data }}
 						style={{
 							background:

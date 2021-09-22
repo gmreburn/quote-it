@@ -69,28 +69,50 @@
 			}
 		}
 	},
-	"Article title": {
+	"articleTitle": {
 		"message": "Article title",
 		"description": "Label for the title of an article."
 	},
-	"Website title": {
+	"websiteTitle": {
 		"message": "Website title",
 		"description": "Label for the title of the website"
 	},
-	"Publisher": {
+	"publisher": {
 		"message": "Publisher",
 		"description": "Label for the name of the article's publisher or sponsor"
 	},
-	"Canonical address": {
+	"url": {
 		"message": "Canonical address",
 		"description": "Label for the absolute URL for the article."
 	},
-	"Publish date": {
+	"published": {
 		"message": "Publish date",
 		"description": "Label for the date the article was published online."
 	},
-	"Contributors": {
+	"contributors": {
 		"message": "Contributors",
 		"description": "Label for contributors (author, editor, illustrator, etc) to the article."
+	},
+	"MetadataUpdatedTitle": {
+		"message": "$LABEL$ has been updated",
+		"description": "Title of a notification shown when user updates a page metadata element.",
+		"placeholders": {
+			"label": {
+				"content": "$1",
+				"example": "Article title"
+			}
+		}
+	},
+	"MetadataUpdated": {
+		"message": "This updated information will be used when exporting quotes.",
+		"description": "Message of a notification shown when user updates a page metadata element."
+	},
+	"removeCustomization": {
+		"message": "Delete customization. Value will load from webpage if available.",
+		"description": "Title for a button that deletes custom metadata applied previously by the user"
+	},
+	"CustomizationRemoved": {
+		"message": "The customization has been removed. This metadata element will come from page metadata if available.",
+		"description": "Notification message when the user removes a metadata customization."
 	}
 }

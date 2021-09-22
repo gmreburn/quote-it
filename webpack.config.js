@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const pkg = require("./package.json");
 const manifest = require("./src/manifest.json");
 
 const manifest_pages = [
@@ -41,7 +42,7 @@ const jsxEntries = manifest_pages
 	});
 
 module.exports = {
-	mode: "production", // production - see https://webpack.js.org/configuration/devtool/
+	mode: "production", // development - see https://webpack.js.org/configuration/devtool/
 	devtool: "cheap-module-source-map",
 	entry: Object.assign(
 		{},
@@ -85,6 +86,7 @@ module.exports = {
 					to: "manifest.json",
 					transform: (content) => {
 						const manifest = JSON.parse(content.toString());
+						manifest.version = pkg.version;
 						manifest_pages.forEach((page) => {
 							const key = Object.keys(page)[0];
 							console.log(key);

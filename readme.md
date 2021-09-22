@@ -16,10 +16,14 @@ npm start
 ## Package for addons.mozilla.org
 
 ```sh
-npm run pack
+npm run package
 ```
 
-The extension will be packaged as a zip file using the name and version found in the `./src/manifest.json`. The output is saved to `./addon/web-ext-artifacts/`
+### Outputs
+
+- `./addon/web-ext-artifacts/[name][version].zip` - The extension is packaged using the name found in the `./src/manifest.json` and version found in `./package.json`. The output is saved to `./addon/web-ext-artifacts/`.
+
+- `./[name][version].zip` - The sources are packaged next to this readme.md based on the name and version found in `./package.json`.
 
 # Development Guide
 

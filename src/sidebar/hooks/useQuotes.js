@@ -1,42 +1,18 @@
 import { nanoid } from "nanoid";
 import { useCallback, useEffect, useState } from "react";
+import QuoteAPI from "../../api/QuoteAPI";
 
 function useQuotes(tab) {
 	const [quotes, setQuotes] = useState([]);
 	const url = new URL(tab.url);
-	const id = url.hostname + url.pathname;
+	const api = QuoteAPI(url.hostname + url.pathname);
 
-	const addQuote = (quote) => {
-		return browser.storage.local
-			.get(id)
-			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]] || [])
-			.then((quotes) => {
-				quotes.push(quote);
-				let contentToStore = {};
-				contentToStore[id] = quotes;
-				browser.storage.local.set(contentToStore);
-				setQuotes(quotes);
-			});
-	};
-	const deleteQuote = (quote) => {
-		return browser.storage.local
-			.get(id)
-			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]] || [])
-			.then((quotes) => {
-				let contentToStore = {
-					[id]: quotes.filter((q) => !(quote.id == q.id)),
-				};
-				browser.storage.local.set(contentToStore);
-				setQuotes(contentToStore[id]);
-			});
-	};
+	const addQuote = (quote) => api.create(quote).then(setQuotes);
+	const deleteQuote = (quote) => api.delete(quote.id).then(setQuotes);
 
 	useEffect(() => {
 		console.debug("loading quotes for", tab.url);
-		browser.storage.local
-			.get(id)
-			.then((storedInfo) => storedInfo[Object.keys(storedInfo)[0]] || [])
-			.then(setQuotes);
+		api.get().then(setQuotes);
 		browser.runtime.onMessage.addListener(runtimeMessageReducer);
 		return () => {
 			browser.runtime.onMessage.removeListener(runtimeMessageReducer);

@@ -3,8 +3,6 @@
 
 	"name": "Quote It",
 
-	"version": "1.0.5",
-
 	"default_locale": "en",
 
 	"browser_specific_settings": {
@@ -21,7 +19,7 @@
 	},
 
 	"background": {
-		"scripts": ["background.js"],
+		"scripts": ["background.js", "omnibox.js"],
 		"persistent": false
 	},
 
@@ -38,6 +36,10 @@
 		"default_icon": "icons/annotation.svg",
 		"default_title": "Quotes",
 		"default_panel": "sidebar/panel.jsx"
+	},
+
+	"omnibox": {
+		"keyword": "quotes"
 	},
 
 	"commands": {

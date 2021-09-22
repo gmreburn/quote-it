@@ -10,7 +10,7 @@
 		"build": "webpack",
 		"postbuild": "npm run-script lint",
 		"lint": "cd addon && web-ext lint",
-		"prepack": "npm run-script build",
+		"prepackage": "npm run-script build",
 		"package": "cd addon && web-ext build -o",
 		"postpackage": "npm-build-zip --source=. --destination=.",
 		"watch": "webpack --watch",

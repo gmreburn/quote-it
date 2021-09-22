@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"description": "",
 	"private": true,
+	"config": {
+		"start_url": "https://www.wsj.com/articles/facebook-drug-cartels-human-traffickers-response-is-weak-documents-11631812953?mod=hp_lead_pos7"
+	},
 	"scripts": {
 		"build": "webpack",
 		"postbuild": "npm run-script lint",

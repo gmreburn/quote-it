@@ -114,5 +114,9 @@
 	"CustomizationRemoved": {
 		"message": "The customization has been removed. This metadata element will come from page metadata if available.",
 		"description": "Notification message when the user removes a metadata customization."
+	},
+	"DefaultSuggestion": {
+		"message": "Start typing to find a quote.",
+		"description": "Shown when the user activates the extension omnibox"
 	}
 }

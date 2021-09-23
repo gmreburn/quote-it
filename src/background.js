@@ -9,3 +9,7 @@ browser.menus.onClicked.addListener(function (info, tab) {
 		browser.runtime.sendMessage({ info, tab });
 	}
 });
+
+browser.browserAction.onClicked.addListener(() => {
+	browser.tabs.create({ url: "/pages/home.html" });
+});

@@ -10,12 +10,14 @@ function useQuotes(tab) {
 	const deleteQuote = (quote) => api.delete(quote.id).then(setQuotes);
 
 	useEffect(() => {
-		console.debug("loading quotes for", tab.url);
+		console.debug("loading quotes for", tab ? tab.url : "global");
 		api.get().then(setQuotes);
-		browser.runtime.onMessage.addListener(runtimeMessageReducer);
-		return () => {
-			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
-		};
+		if (tab) {
+			browser.runtime.onMessage.addListener(runtimeMessageReducer);
+			return () => {
+				browser.runtime.onMessage.removeListener(runtimeMessageReducer);
+			};
+		}
 	}, [tab]);
 
 	const runtimeMessageReducer = useCallback(

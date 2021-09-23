@@ -32,6 +32,15 @@
 		"notifications"
 	],
 
+	"browser_action": {
+		"browser_style": true,
+		"default_icon": {
+			"16": "icons/quotes-256.png",
+			"32": "icons/quotes-256.png"
+		},
+		"default_title": "View all quotes"
+	},
+
 	"sidebar_action": {
 		"default_icon": "icons/annotation.svg",
 		"default_title": "Quotes",

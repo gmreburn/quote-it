@@ -5,7 +5,7 @@ import NoQuotesYet from "./NoQuotesYet.jsx";
 
 function Sidebar({ tab: t }) {
 	const [tab, setTab] = useState(t);
-	const [quotes, deleteQuote] = useQuotes(tab.url);
+	const [quotes, deleteQuote] = useQuotes(tab);
 
 	const handleActiveTabChange = useCallback(
 		(activeInfo) => {

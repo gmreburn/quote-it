@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SidebarQuote from "./SidebarQuote.jsx";
-import useQuotes from "../hooks/useQuotes.js";
+import useQuotes from "../../hooks/useQuotes.js";
 import NoQuotesYet from "./NoQuotesYet.jsx";
 
 function Sidebar({ tab: t }) {
 	const [tab, setTab] = useState(t);
-	const [quotes, deleteQuote] = useQuotes(tab);
+	const [quotes, deleteQuote] = useQuotes(tab.url);
 
 	const handleActiveTabChange = useCallback(
 		(activeInfo) => {

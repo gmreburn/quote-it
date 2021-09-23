@@ -1,4 +1,5 @@
-function QuoteAPI(pageId) {
+function QuoteAPI(uri) {
+	const pageId = uri && new URL(uri).hostname + new URL(uri).pathname;
 	return {
 		get: function () {
 			return browser.storage.local

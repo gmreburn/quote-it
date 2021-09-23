@@ -1,11 +1,10 @@
 import { nanoid } from "nanoid";
 import { useCallback, useEffect, useState } from "react";
-import QuoteAPI from "../../api/QuoteAPI";
+import QuoteAPI from "../api/QuoteAPI.js";
 
 function useQuotes(tab) {
 	const [quotes, setQuotes] = useState([]);
-	const url = new URL(tab.url);
-	const api = QuoteAPI(url.hostname + url.pathname);
+	const api = QuoteAPI(tab && tab.url);
 
 	const addQuote = (quote) => api.create(quote).then(setQuotes);
 	const deleteQuote = (quote) => api.delete(quote.id).then(setQuotes);

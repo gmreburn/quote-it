@@ -6,14 +6,17 @@ function HomeQuote({ quote, deleteQuote }) {
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
-		browser.notifications.create(`${quote.id}-copied`, {
-			type: "basic",
-			title: browser.i18n.getMessage("QuoteCopiedTitle"),
-			message: browser.i18n.getMessage("QuoteCopied"),
-		});
-		setTimeout(() => {
-			browser.notifications.clear(`${quote.id}-copied`);
-		}, 7000);
+		browser.notifications
+			.create(`${quote.id}-copied`, {
+				type: "basic",
+				title: browser.i18n.getMessage("QuoteCopiedTitle"),
+				message: browser.i18n.getMessage("QuoteCopied"),
+			})
+			.then(() =>
+				setTimeout(() => {
+					browser.notifications.clear(`${quote.id}-copied`);
+				}, 7000)
+			);
 	};
 	const onDeleteClicked = () => deleteQuote(quote);
 
@@ -45,7 +48,6 @@ function HomeQuote({ quote, deleteQuote }) {
 			</a>
 
 			<div className="flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500">
-				{/* TODO: make toolbar component, pass quote to it */}
 				<ExportQuoteButton onClick={onCopyClicked} />
 				<DeleteQuoteButton onClick={onDeleteClicked} />
 			</div>

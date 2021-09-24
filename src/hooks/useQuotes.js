@@ -7,22 +7,17 @@ function useQuotes(tab) {
 
 	const runtimeMessageReducer = useCallback(
 		function (msg) {
-			console.log("msg received", tab?.url, msg.quote.tab.url);
-
 			if (tab === undefined || tab.url === msg.quote.tab.url) {
 				switch (msg.type) {
 					case "QUOTE_DELETED":
-						console.log("QUOTE_DELETED", quotes, msg.quote);
-
 						setQuotes(quotes.filter((q) => q.id !== msg.quote.id));
 						break;
 					case "QUOTE_ADDED":
-						console.log("QUOTE_ADDED", quotes, msg.quote);
 						setQuotes([...quotes, msg.quote]);
 						break;
 
 					default:
-						console.log("no such type");
+						console.debug("no such type", msg.type, msg);
 						break;
 				}
 			}
@@ -31,8 +26,13 @@ function useQuotes(tab) {
 	);
 	const deleteQuote = (quote) =>
 		api.delete(quote).then(() => {
-			runtimeMessageReducer({ type: "QUOTE_DELETED", quote });
-			browser.runtime.sendMessage({ type: "QUOTE_DELETED", quote }).then(() =>
+			const msg = { type: "QUOTE_DELETED", quote };
+			runtimeMessageReducer(msg); // process message to self - runtime.sendMessage will not fire for self
+
+			// TODO: This is probably only necessary when user is on home page to notify the open sidebar
+			// or sidebar to send to homepage that is open. Another scenario might be when same url open in separate
+			// window. Need to experiment.
+			browser.runtime.sendMessage(msg).then(() =>
 				browser.notifications
 					.create(`${quote.id}-deleted`, {
 						type: "basic",
@@ -48,7 +48,7 @@ function useQuotes(tab) {
 		});
 
 	useEffect(() => {
-		console.debug("loading quotes for", tab ? tab.url : "global");
+		console.debug("loading quotes for", tab ? tab.url : "every website");
 		api.get(tab?.url).then(setQuotes);
 	}, [tab]);
 

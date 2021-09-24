@@ -5,10 +5,6 @@ import useQuotes from "../hooks/useQuotes";
 import "../tailwind.css";
 import NoQuotesYet from "../sidebar/components/NoQuotesYet.jsx";
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(" ");
-}
-
 function Home() {
 	const [quotes, deleteQuote] = useQuotes();
 
@@ -26,9 +22,14 @@ function Home() {
 				</div>
 				<div className="mt-12 grid gap-16 pt-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
 					{quotes.length === 0 && <NoQuotesYet />}
-					{quotes?.map((quote) => (
-						<HomeQuote key={quote.id} quote={quote} deleteQuote={deleteQuote} />
-					))}
+					{quotes.length > 0 &&
+						quotes?.map((quote) => (
+							<HomeQuote
+								key={quote.id}
+								quote={quote}
+								deleteQuote={deleteQuote}
+							/>
+						))}
 				</div>
 			</div>
 		</div>
@@ -36,3 +37,4 @@ function Home() {
 }
 
 ReactDOM.render(<Home />, document.body);
+document.title = "Saved quotes";

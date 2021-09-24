@@ -1,16 +1,12 @@
 import { TrashIcon } from "@heroicons/react/outline";
 import React from "react";
+import Button from "./Button.jsx";
 
 function DeleteQuoteButton({ onClick }) {
 	return (
-		<button
-			title={browser.i18n.getMessage("btnDeleteQuote")}
-			type="button"
-			className="hover:text-gray-600"
-			onClick={onClick}
-		>
+		<Button title={browser.i18n.getMessage("btnDeleteQuote")} onClick={onClick}>
 			<TrashIcon className="h-6 w-6" />
-		</button>
+		</Button>
 	);
 }
 

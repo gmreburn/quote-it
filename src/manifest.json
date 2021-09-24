@@ -11,7 +11,7 @@
 		}
 	},
 
-	"description": "Save quotes from across the web.",
+	"description": "Collect quotes from across the web.",
 
 	"icons": {
 		"48": "icons/annotation.svg",
@@ -35,10 +35,22 @@
 	"browser_action": {
 		"browser_style": true,
 		"default_icon": {
-			"16": "icons/quotes-256.png",
-			"32": "icons/quotes-256.png"
+			"16": "icons/quotes-16.png",
+			"32": "icons/quotes-32.png"
 		},
-		"default_title": "View all quotes"
+		"default_title": "View all quotes",
+		"theme_icons": [
+			{
+				"light": "icons/quotes-16.png",
+				"dark": "icons/quotes-16-dark.png",
+				"size": 16
+			},
+			{
+				"light": "icons/quotes-32.png",
+				"dark": "icons/quotes-32-dark.png",
+				"size": 32
+			}
+		]
 	},
 
 	"sidebar_action": {

@@ -32,6 +32,11 @@ function Sidebar({ tab: t }) {
 			properties: ["url"],
 		});
 		browser.tabs.onActivated.addListener(handleActiveTabChange);
+
+		return () => {
+			browser.tabs.onUpdated.removeListener(handleOnUpdated);
+			browser.tabs.onActivated.removeListener(handleActiveTabChange);
+		};
 	}, []);
 
 	if (quotes === false) {

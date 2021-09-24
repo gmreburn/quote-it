@@ -29,7 +29,6 @@ browser.omnibox.onInputChanged.addListener((input, suggest) => {
 });
 
 browser.omnibox.onInputEntered.addListener((url, disposition) => {
-	url = `https://${url}`;
 	switch (disposition) {
 		case "currentTab":
 			browser.tabs.update({ url });

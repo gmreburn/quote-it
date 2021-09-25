@@ -14,8 +14,8 @@
 	"description": "Collect quotes from across the web.",
 
 	"icons": {
-		"48": "icons/annotation.svg",
-		"96": "icons/annotation.svg"
+		"48": "icons/quotes-48.png",
+		"96": "icons/quotes-96.png"
 	},
 
 	"background": {

@@ -37,7 +37,9 @@ const jsxEntries = manifest_pages
 		return {
 			[key]: {
 				import: path.resolve(__dirname, "src", page[key]),
-				filename: `${page[key].substr(0, page[key].length - 4)}.js`,
+				filename: `${page[key]
+					.replace(path.win32.sep, path.posix.sep)
+					.substr(0, page[key].length - 4)}.js`,
 			},
 		};
 	});

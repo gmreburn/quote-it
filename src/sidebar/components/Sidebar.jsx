@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SidebarQuote from "./SidebarQuote.jsx";
-import useQuotes from "../hooks/useQuotes.js";
+import useQuotes from "../../hooks/useQuotes.js";
 import NoQuotesYet from "./NoQuotesYet.jsx";
 
 function Sidebar({ tab: t }) {
 	const [tab, setTab] = useState(t);
-	const [quotes, deleteQuote] = useQuotes(tab);
+	const [quotes, saveAnnotation, deleteQuote] = useQuotes(tab);
 
 	const handleActiveTabChange = useCallback(
 		(activeInfo) => {
@@ -32,6 +32,11 @@ function Sidebar({ tab: t }) {
 			properties: ["url"],
 		});
 		browser.tabs.onActivated.addListener(handleActiveTabChange);
+
+		return () => {
+			browser.tabs.onUpdated.removeListener(handleOnUpdated);
+			browser.tabs.onActivated.removeListener(handleActiveTabChange);
+		};
 	}, []);
 
 	if (quotes === false) {
@@ -45,6 +50,7 @@ function Sidebar({ tab: t }) {
 					<SidebarQuote
 						quote={quote}
 						key={quote.id}
+						saveAnnotation={saveAnnotation}
 						deleteQuote={deleteQuote}
 					/>
 				))}

@@ -33,6 +33,27 @@
 		"<all_urls>"
 	],
 
+	"browser_action": {
+		"browser_style": true,
+		"default_icon": {
+			"16": "icons/quotes-16.png",
+			"32": "icons/quotes-32.png"
+		},
+		"default_title": "View all quotes",
+		"theme_icons": [
+			{
+				"light": "icons/quotes-16.png",
+				"dark": "icons/quotes-16-dark.png",
+				"size": 16
+			},
+			{
+				"light": "icons/quotes-32.png",
+				"dark": "icons/quotes-32-dark.png",
+				"size": 32
+			}
+		]
+	},
+
 	"optional_permissions": [],
 
 	"page_action": {
@@ -44,16 +65,15 @@
 	},
 
 	"sidebar_action": {
-		"browser_style": true,
-		"default_icon": "icons/annotation.svg",
+		"default_icon": "icons/quotes-16.png",
 		"default_title": "Quotes",
 		"default_panel": "sidebar/panel.jsx"
 	},
 
 	"options_ui": {
 		"page": "options/options.jsx"
-  },
-  
+	},
+
 	"omnibox": {
 		"keyword": "quotes"
 	},

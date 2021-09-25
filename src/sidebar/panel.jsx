@@ -12,11 +12,9 @@ function setSidebarStyle(theme) {
 }
 
 browser.windows.getCurrent({ populate: true }).then((windowInfo) => {
-	var appElement = document.createElement("div");
-	document.body.appendChild(appElement);
 	ReactDOM.render(
 		<Sidebar tab={windowInfo.tabs.find((tab) => tab.active)} />,
-		appElement
+		document.body
 	);
 	browser.theme.onUpdated.addListener(({ theme, windowId }) => {
 		/*

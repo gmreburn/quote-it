@@ -27,24 +27,22 @@ function useQuotes(tab) {
 	const deleteQuote = (quote) =>
 		api.delete(quote).then(() => {
 			const msg = { type: "QUOTE_DELETED", quote };
-			runtimeMessageReducer(msg); // process message to self - runtime.sendMessage will not fire for self
+			runtimeMessageReducer(msg); // Inform self - runtime.sendMessage will not fire for self
 
-			// TODO: This is probably only necessary when user is on home page to notify the open sidebar
-			// or sidebar to send to homepage that is open. Another scenario might be when same url open in separate
-			// window. Need to experiment.
-			browser.runtime.sendMessage(msg).then(() =>
-				browser.notifications
-					.create(`${quote.id}-deleted`, {
-						type: "basic",
-						title: browser.i18n.getMessage("QuoteDeletedTitle"),
-						message: browser.i18n.getMessage("QuoteDeleted"),
-					})
-					.then(() =>
-						setTimeout(() => {
-							browser.notifications.clear(`${quote.id}-deleted`);
-						}, 7000)
-					)
-			);
+			// Informs other tabs or homepage of the deleted quote
+			browser.runtime.sendMessage(msg);
+
+			browser.notifications
+				.create(`${quote.id}-deleted`, {
+					type: "basic",
+					title: browser.i18n.getMessage("QuoteDeletedTitle"),
+					message: browser.i18n.getMessage("QuoteDeleted"),
+				})
+				.then(() =>
+					setTimeout(() => {
+						browser.notifications.clear(`${quote.id}-deleted`);
+					}, 7000)
+				);
 		});
 
 	useEffect(() => {

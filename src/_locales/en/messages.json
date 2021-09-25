@@ -8,8 +8,8 @@
 		"description": "Title of context menu item that saves the selected text when clicked."
 	},
 	"btnHighlightQuote": {
-		"message": "Highlight quote on page",
-		"description": "A button that highlights the quote on the page."
+		"message": "Highlight occurrences on page",
+		"description": "A button that highlights all occurrences of the quote on the page."
 	},
 	"btnCopyQuote": {
 		"message": "Copy quote to clipboard",
@@ -50,5 +50,9 @@
 	"DefaultSuggestion": {
 		"message": "Start typing to find a quote.",
 		"description": "Shown when the user activates the extension omnibox"
+	},
+	"View all quotes": {
+		"message": "View all quotes",
+		"description": "Browser action hover title. Takes user to homepage showing quotes that have been saved on any webpage."
 	}
 }

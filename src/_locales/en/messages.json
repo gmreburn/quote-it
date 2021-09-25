@@ -12,7 +12,7 @@
 		"description": "A button that highlights all occurrences of the quote on the page."
 	},
 	"btnCopyQuote": {
-		"message": "Copy quote to clipboard",
+		"message": "Copy to clipboard",
 		"description": "A button that copies a quote to the user's clipboard."
 	},
 	"btnDeleteQuote": {
@@ -62,5 +62,9 @@
 	"QuoteAddedMessage": {
 		"message": "Access the quote in the quote sidebar (CTRL+Q).",
 		"description": "A paragraph shown in a notification when the user creates a new quote from highlighted text on a webpage."
+	},
+	"btnAnnotate": {
+		"message": "Annotate",
+		"description": "Title for button when clicked opens an input text box for user to type notes about the quote."
 	}
 }

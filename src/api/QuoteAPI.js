@@ -2,6 +2,27 @@ import { nanoid } from "nanoid";
 
 function QuoteAPI() {
 	return {
+		saveAnnotation: function (quote, annotationText) {
+			return this.get(quote.tab.url).then((quotes) => {
+				const pageId = this.getPageId(quote.tab.url);
+				const updatedQuotes = quotes.map((q) => {
+					if (q.id === quote.id) {
+						q.annotation = Object.assign({}, q.annotation, {
+							text: annotationText,
+							created: q.annotation?.created || new Date().toISOString(),
+							updated: new Date().toISOString(),
+						});
+					}
+					return q;
+				});
+
+				return browser.storage.local
+					.set({ [pageId]: updatedQuotes })
+					.then(() => {
+						return updatedQuotes;
+					});
+			});
+		},
 		getPageId: function (uri) {
 			if (uri) {
 				const url = new URL(uri);
@@ -9,7 +30,7 @@ function QuoteAPI() {
 			}
 		},
 		get: function (url) {
-			console.log("api get", url);
+			console.debug("api get", url);
 			return browser.storage.local
 				.get(this.getPageId(url))
 				.then((storedInfo) =>
@@ -18,14 +39,10 @@ function QuoteAPI() {
 							storedInfo[key].map((quote) => Object.assign(quote, { url: key }))
 						)
 					)
-				)
-				.then((quotes) => {
-					console.log("quotes", this.getPageId(url), quotes);
-					return quotes;
-				});
+				);
 		},
 		create: function (quoteText, tab) {
-			console.log("api create", quoteText);
+			console.debug("api create", quoteText);
 			if (quoteText && tab && tab.url) {
 				const pageId = this.getPageId(tab.url);
 				const quote = {
@@ -45,7 +62,7 @@ function QuoteAPI() {
 			}
 		},
 		delete: function (quote) {
-			console.log("api delete", quote);
+			console.debug("api delete", quote);
 			if (quote && quote.id && quote.tab && quote.tab.url) {
 				const key = this.getPageId(quote.tab.url);
 				return this.get(quote.tab.url).then((quotes) => {

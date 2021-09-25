@@ -1,12 +1,20 @@
+import Button from "../../components/Button.jsx";
+import DeleteQuoteButton from "../../components/DeleteQuoteButton.jsx";
+import ExportQuoteButton from "../../components/ExportQuoteButton.jsx";
 import React, { useState } from "react";
 import Moment from "react-moment";
-import {
-	ClipboardCopyIcon,
-	DocumentSearchIcon,
-	TrashIcon,
-} from "@heroicons/react/outline";
+import { AnnotationIcon, DocumentSearchIcon } from "@heroicons/react/outline";
+import Annotation from "../../components/Annotation.jsx";
 
-function SidebarQuote({ quote, deleteQuote }) {
+function SidebarQuote({ quote, saveAnnotation, deleteQuote }) {
+	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
+	const onAnnotationBlurred = (quoteText) => {
+		saveAnnotation(quote, quoteText);
+		setShowAnnotationInput(false);
+	};
+	const onAnnotationClicked = () => {
+		setShowAnnotationInput(true);
+	};
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -61,32 +69,29 @@ function SidebarQuote({ quote, deleteQuote }) {
 			<div className="flex justify-between space-x-3 mt-2">
 				<div className="min-w-0 flex-1"></div>
 				<div className="flex flex-shrink-0 whitespace-nowrap space-x-2">
-					<button
-						title={browser.i18n.getMessage("btnCopyQuote")}
-						type="button"
-						className="hover:text-gray-600"
-						onClick={onCopyClicked}
+					<Button
+						onClick={onAnnotationClicked}
+						title={browser.i18n.getMessage("btnAnnotate")}
 					>
-						<ClipboardCopyIcon className="h-6 w-6" />
-					</button>
-					<button
+						<AnnotationIcon className="h-6 w-6" />
+					</Button>
+					<ExportQuoteButton onClick={onCopyClicked} />
+					<Button
 						title={browser.i18n.getMessage("btnHighlightQuote")}
-						type="button"
-						className="hover:text-gray-600"
 						onClick={onFindClicked}
 					>
 						<DocumentSearchIcon className="h-6 w-6" />
-					</button>
-					<button
-						title={browser.i18n.getMessage("btnDeleteQuote")}
-						type="button"
-						className="hover:text-gray-600"
-						onClick={onDeleteClicked}
-					>
-						<TrashIcon className="h-6 w-6" />
-					</button>
+					</Button>
+					<DeleteQuoteButton onClick={onDeleteClicked} />
 				</div>
 			</div>
+
+			<Annotation
+				quote={quote}
+				showAnnotationInput={showAnnotationInput}
+				setShowAnnotationInput={setShowAnnotationInput}
+				onAnnotationBlurred={onAnnotationBlurred}
+			/>
 		</li>
 	);
 }

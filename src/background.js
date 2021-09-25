@@ -8,7 +8,7 @@ browser.menus.create({
 
 browser.menus.onClicked.addListener(function (info, tab) {
 	if (info.menuItemId == "save-selection") {
-		console.log("save selection", info, tab);
+		console.debug("save selection", info, tab);
 		QuoteAPI()
 			.create(info.selectionText, tab)
 			.then((quote) => {

@@ -49,7 +49,6 @@ function useQuotes(tab) {
 	};
 
 	useEffect(() => {
-		console.debug("loading quotes for", tab ? tab.url : "every website");
 		api.get(tab?.url).then(setQuotes);
 	}, [tab]);
 

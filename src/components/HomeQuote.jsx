@@ -43,7 +43,8 @@ function HomeQuote({ quote, deleteQuote }) {
 					{quote.websiteTitle}
 				</p>
 				<p className="mt-3 text-base text-gray-900">
-					{quote.published} &mdash; "{quote.text}"
+					{quote.published} &mdash;{" "}
+					<span className="italic">"{quote.text}"</span>
 				</p>
 			</a>
 

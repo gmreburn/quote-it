@@ -64,7 +64,7 @@ function SidebarQuote({ quote, saveAnnotation, deleteQuote }) {
 				</Moment>
 			</div>
 			<div className="mt-1">
-				<p className="line-clamp-5">"{quote.text}"</p>
+				<p className="line-clamp-5 italic">"{quote.text}"</p>
 			</div>
 			<div className="flex justify-between space-x-3 mt-2">
 				<div className="min-w-0 flex-1"></div>

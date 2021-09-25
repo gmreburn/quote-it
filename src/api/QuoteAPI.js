@@ -2,6 +2,28 @@ import { nanoid } from "nanoid";
 
 function QuoteAPI() {
 	return {
+		saveAnnotation: function (quote, annotationText) {
+			return this.get(quote.tab.url).then((quotes) => {
+				const pageId = this.getPageId(quote.tab.url);
+				quotes.find;
+				const updatedQuotes = quotes.map((q) => {
+					if (q.id === quote.id) {
+						q.annotation = Object.assign({}, q.annotation, {
+							text: annotationText,
+							created: q.annotation?.created || new Date().toISOString(),
+							updated: new Date().toISOString(),
+						});
+					}
+					return q;
+				});
+				console.log("updatedq", updatedQuotes);
+				return browser.storage.local
+					.set({ [pageId]: updatedQuotes })
+					.then(() => {
+						return updatedQuotes;
+					});
+			});
+		},
 		getPageId: function (uri) {
 			if (uri) {
 				const url = new URL(uri);

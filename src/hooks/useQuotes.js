@@ -44,6 +44,9 @@ function useQuotes(tab) {
 					}, 7000)
 				);
 		});
+	const saveAnnotation = (quote, annotationText) => {
+		return QuoteAPI().saveAnnotation(quote, annotationText).then(setQuotes);
+	};
 
 	useEffect(() => {
 		console.debug("loading quotes for", tab ? tab.url : "every website");
@@ -57,7 +60,7 @@ function useQuotes(tab) {
 		};
 	}, [tab, quotes]);
 
-	return [quotes, deleteQuote];
+	return [quotes, saveAnnotation, deleteQuote];
 }
 
 export default useQuotes;

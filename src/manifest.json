@@ -54,7 +54,7 @@
 	},
 
 	"sidebar_action": {
-		"default_icon": "icons/annotation.svg",
+		"default_icon": "icons/quotes-16.png",
 		"default_title": "Quotes",
 		"default_panel": "sidebar/panel.jsx"
 	},

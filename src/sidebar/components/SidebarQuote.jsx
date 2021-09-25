@@ -21,16 +21,7 @@ function SidebarQuote({ quote, deleteQuote }) {
 	};
 	const onDeleteClicked = () => {
 		// TODO: confirm delete before delete or add undo button to notification
-		deleteQuote(quote).then(() => {
-			browser.notifications.create(`${quote.id}-deleted`, {
-				type: "basic",
-				title: browser.i18n.getMessage("QuoteDeletedTitle"),
-				message: browser.i18n.getMessage("QuoteDeleted"),
-			});
-			setTimeout(() => {
-				browser.notifications.clear(`${quote.id}-deleted`);
-			}, 7000);
-		});
+		deleteQuote(quote);
 	};
 	const onFindClicked = () => {
 		browser.find

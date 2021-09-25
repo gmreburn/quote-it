@@ -20,19 +20,19 @@
 		"description": "A button that deletes a quote."
 	},
 	"QuoteCopiedTitle": {
-		"message": "Quote copied!",
+		"message": "Quote copied",
 		"description": "A title shown in a notification when the user copies a quote to their clipboard."
 	},
 	"QuoteCopied": {
-		"message": "The quote was successfully copied to your clipboard.",
+		"message": "The quote was copied to your clipboard.",
 		"description": "A paragraph shown in a notification when the user copies a quote to their clipboard."
 	},
 	"QuoteDeletedTitle": {
-		"message": "Quote deleted!",
+		"message": "Quote deleted",
 		"description": "A title shown in a notification when the user copies a quote to their clipboard."
 	},
 	"QuoteDeleted": {
-		"message": "The quote was deleted successfully.",
+		"message": "The quote was deleted",
 		"description": "A paragraph shown in a notification when the user copies a quote to their clipboard."
 	},
 	"NoQuotesYet": {
@@ -54,5 +54,13 @@
 	"View all quotes": {
 		"message": "View all quotes",
 		"description": "Browser action hover title. Takes user to homepage showing quotes that have been saved on any webpage."
+	},
+	"QuoteaddedTitle": {
+		"message": "Quote saved",
+		"description": "A title shown in a notification hen the user creates a new quote from highlighted text on a webpage."
+	},
+	"QuoteAddedMessage": {
+		"message": "Access the quote in the quote sidebar (CTRL+Q).",
+		"description": "A paragraph shown in a notification when the user creates a new quote from highlighted text on a webpage."
 	}
 }

@@ -39,6 +39,15 @@ function QuoteAPI() {
 							storedInfo[key].map((quote) => Object.assign(quote, { url: key }))
 						)
 					)
+				)
+				.then((quotes) =>
+					// Backward compatibility: Map quote to new format
+					quotes.map((quote) => {
+						if (!quote.tab) {
+							quote.tab = { url: `http://${quote.url}` };
+						}
+						return quote;
+					})
 				);
 		},
 		create: function (quoteText, tab) {

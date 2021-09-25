@@ -50,7 +50,7 @@ You can create custom pages from JSX or HTML syntax by placing them in the `./sr
 
 ## Debugging
 
-The `npm start` command will automatically open firefox and watch for changes to source files. The extension in the browser will be reloaded when changes are detected. New source files may not be detected by the watcher so you will need to restart the `npm start` process until this is fixed. The start URL is configured in `./package.json`. See `config.start_url`.
+The `npm start` command will open firefox automatically then watch for changes to source files. The extension in the browser will reload as changes are detected. New source files may not be detected by the watcher so you will need to restart the `npm start` process until this is fixed. The start URL is configured in `./package.json`. See `config.start_url`.
 
 CTRL+SHIFT+J in Firefox opens the console log window. `Console.log` messages will show there. You might need to click the gear icon/settings then "Show Content Messages" in the Browser Console window.
 

@@ -5,7 +5,6 @@ function QuoteAPI() {
 		saveAnnotation: function (quote, annotationText) {
 			return this.get(quote.tab.url).then((quotes) => {
 				const pageId = this.getPageId(quote.tab.url);
-				quotes.find;
 				const updatedQuotes = quotes.map((q) => {
 					if (q.id === quote.id) {
 						q.annotation = Object.assign({}, q.annotation, {
@@ -16,7 +15,7 @@ function QuoteAPI() {
 					}
 					return q;
 				});
-				console.log("updatedq", updatedQuotes);
+
 				return browser.storage.local
 					.set({ [pageId]: updatedQuotes })
 					.then(() => {
@@ -31,7 +30,7 @@ function QuoteAPI() {
 			}
 		},
 		get: function (url) {
-			console.log("api get", url);
+			console.debug("api get", url);
 			return browser.storage.local
 				.get(this.getPageId(url))
 				.then((storedInfo) =>
@@ -40,14 +39,10 @@ function QuoteAPI() {
 							storedInfo[key].map((quote) => Object.assign(quote, { url: key }))
 						)
 					)
-				)
-				.then((quotes) => {
-					console.log("quotes", this.getPageId(url), quotes);
-					return quotes;
-				});
+				);
 		},
 		create: function (quoteText, tab) {
-			console.log("api create", quoteText);
+			console.debug("api create", quoteText);
 			if (quoteText && tab && tab.url) {
 				const pageId = this.getPageId(tab.url);
 				const quote = {
@@ -67,7 +62,7 @@ function QuoteAPI() {
 			}
 		},
 		delete: function (quote) {
-			console.log("api delete", quote);
+			console.debug("api delete", quote);
 			if (quote && quote.id && quote.tab && quote.tab.url) {
 				const key = this.getPageId(quote.tab.url);
 				return this.get(quote.tab.url).then((quotes) => {

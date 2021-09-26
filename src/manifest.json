@@ -53,6 +53,11 @@
 		]
 	},
 
+	"developer": {
+		"name": "Gregory Reburn",
+		"url": "https://github.com/gmreburn"
+	},
+
 	"sidebar_action": {
 		"default_icon": "icons/quotes-16.png",
 		"default_title": "Quotes",

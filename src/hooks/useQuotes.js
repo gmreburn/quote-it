@@ -17,7 +17,6 @@ function useQuotes(tab) {
 						break;
 					case "QUOTE_ANNOTATION":
 					case "QUOTE_HIGHLIGHT":
-						console.log("msg quotes", msg.quotes);
 						setQuotes(msg.quotes);
 						break;
 

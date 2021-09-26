@@ -15,7 +15,6 @@ function QuoteAPI() {
 					}
 					return q;
 				});
-				console.log("updatedQuotes", updatedQuotes);
 
 				return browser.storage.local
 					.set({ [pageId]: updatedQuotes })

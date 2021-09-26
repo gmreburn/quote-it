@@ -70,5 +70,9 @@
 	"btnAnnotate": {
 		"message": "Annotate",
 		"description": "Title for button when clicked opens an input text box for user to type notes about the quote."
+	},
+	"Quotes from across the web": {
+		"message": "Quotes from across the web",
+		"description": "Title on homepage"
 	}
 }

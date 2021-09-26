@@ -42,7 +42,7 @@ function HomeQuote({ quote, deleteQuote }) {
 				className="block mt-4 text-gray-500"
 				target="_blank"
 			>
-				<p>{quote.tab.url.substr(0, 40)}</p>
+				<p>{quote.tab.url}</p>
 				<p className="text-xl font-semibold text-gray-500">
 					{quote.websiteTitle}
 				</p>

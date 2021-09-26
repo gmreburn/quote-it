@@ -2,6 +2,31 @@ import { nanoid } from "nanoid";
 
 function QuoteAPI() {
 	return {
+		saveHighlighterColor: function (quote, color) {
+			return this.get(quote.tab.url).then((quotes) => {
+				const pageId = this.getPageId(quote.tab.url);
+				const updatedQuotes = quotes.map((q) => {
+					if (q.id === quote.id) {
+						q.highlighter = Object.assign({}, q.highlighter, {
+							color,
+							created: q.highlighter?.created || new Date().toISOString(),
+							updated: new Date().toISOString(),
+						});
+					}
+					return q;
+				});
+				console.log("updatedQuotes", updatedQuotes);
+
+				return browser.storage.local
+					.set({ [pageId]: updatedQuotes })
+					.then(() => {
+						return {
+							quotes: updatedQuotes,
+							quote: updatedQuotes.find((q) => q.id === quote.id),
+						};
+					});
+			});
+		},
 		saveAnnotation: function (quote, annotationText) {
 			return this.get(quote.tab.url).then((quotes) => {
 				const pageId = this.getPageId(quote.tab.url);
@@ -19,7 +44,10 @@ function QuoteAPI() {
 				return browser.storage.local
 					.set({ [pageId]: updatedQuotes })
 					.then(() => {
-						return updatedQuotes;
+						return {
+							quotes: updatedQuotes,
+							quote: updatedQuotes.find((q) => q.id === quote.id),
+						};
 					});
 			});
 		},

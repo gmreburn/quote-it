@@ -5,7 +5,8 @@ import NoQuotesYet from "./NoQuotesYet.jsx";
 
 function Sidebar({ tab: t }) {
 	const [tab, setTab] = useState(t);
-	const [quotes, saveAnnotation, deleteQuote] = useQuotes(tab);
+	const [quotes, saveAnnotation, saveHighlighterColor, deleteQuote] =
+		useQuotes(tab);
 
 	const handleActiveTabChange = useCallback(
 		(activeInfo) => {
@@ -52,6 +53,7 @@ function Sidebar({ tab: t }) {
 						key={quote.id}
 						saveAnnotation={saveAnnotation}
 						deleteQuote={deleteQuote}
+						saveHighlighterColor={saveHighlighterColor}
 					/>
 				))}
 			</ul>

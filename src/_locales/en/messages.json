@@ -11,6 +11,10 @@
 		"message": "Highlight occurrences on page",
 		"description": "A button that highlights all occurrences of the quote on the page."
 	},
+	"mnuHighlightQuote": {
+		"message": "Highlight occurrences",
+		"description": "A menu item button that highlights all occurrences of the quote on the page. Needs to be short to display properly."
+	},
 	"btnCopyQuote": {
 		"message": "Copy to clipboard",
 		"description": "A button that copies a quote to the user's clipboard."
@@ -51,8 +55,8 @@
 		"message": "Start typing to find a quote.",
 		"description": "Shown when the user activates the extension omnibox"
 	},
-	"View all quotes": {
-		"message": "View all quotes",
+	"View saved quotes": {
+		"message": "View saved quotes",
 		"description": "Browser action hover title. Takes user to homepage showing quotes that have been saved on any webpage."
 	},
 	"QuoteaddedTitle": {

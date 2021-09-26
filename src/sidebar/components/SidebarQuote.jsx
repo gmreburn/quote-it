@@ -1,12 +1,18 @@
 import Button from "../../components/Button.jsx";
-import DeleteQuoteButton from "../../components/DeleteQuoteButton.jsx";
-import ExportQuoteButton from "../../components/ExportQuoteButton.jsx";
 import React, { useState } from "react";
 import Moment from "react-moment";
-import { AnnotationIcon, DocumentSearchIcon } from "@heroicons/react/outline";
+import { AnnotationIcon } from "@heroicons/react/outline";
 import Annotation from "../../components/Annotation.jsx";
+import HighlighterSelector from "../../components/HighlighterSelector.jsx";
+import Toolbar from "./Toolbar.jsx";
+import TextHighlighter from "../../components/TextHighlighter.jsx";
 
-function SidebarQuote({ quote, saveAnnotation, deleteQuote }) {
+function SidebarQuote({
+	quote,
+	saveAnnotation,
+	saveHighlighterColor,
+	deleteQuote,
+}) {
 	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
 	const onAnnotationBlurred = (quoteText) => {
 		saveAnnotation(quote, quoteText);
@@ -15,32 +21,8 @@ function SidebarQuote({ quote, saveAnnotation, deleteQuote }) {
 	const onAnnotationClicked = () => {
 		setShowAnnotationInput(true);
 	};
-	const onCopyClicked = () => {
-		navigator.clipboard.writeText(quote.text);
-
-		browser.notifications.create(`${quote.id}-copied`, {
-			type: "basic",
-			title: browser.i18n.getMessage("QuoteCopiedTitle"),
-			message: browser.i18n.getMessage("QuoteCopied"),
-		});
-		setTimeout(() => {
-			browser.notifications.clear(`${quote.id}-copied`);
-		}, 7000);
-	};
-	const onDeleteClicked = () => {
-		// TODO: confirm delete before delete or add undo button to notification
-		deleteQuote(quote);
-	};
-	const onFindClicked = () => {
-		browser.find
-			.find(quote.text, {
-				caseSensitive: true,
-			})
-			.then((finds) => {
-				if (finds.count > 0) {
-					browser.find.highlightResults({ noScroll: false });
-				}
-			});
+	const onHighlighterChanged = (newColor) => {
+		saveHighlighterColor(quote, newColor);
 	};
 
 	if (!quote) return null;
@@ -64,7 +46,11 @@ function SidebarQuote({ quote, saveAnnotation, deleteQuote }) {
 				</Moment>
 			</div>
 			<div className="mt-1">
-				<p className="line-clamp-5 italic">"{quote.text}"</p>
+				<p className="line-clamp-5 italic">
+					<TextHighlighter color={quote?.highlighter?.color}>
+						"{quote.text}"
+					</TextHighlighter>
+				</p>
 			</div>
 			<div className="flex justify-between space-x-3 mt-2">
 				<div className="min-w-0 flex-1"></div>
@@ -75,14 +61,8 @@ function SidebarQuote({ quote, saveAnnotation, deleteQuote }) {
 					>
 						<AnnotationIcon className="h-6 w-6" />
 					</Button>
-					<ExportQuoteButton onClick={onCopyClicked} />
-					<Button
-						title={browser.i18n.getMessage("btnHighlightQuote")}
-						onClick={onFindClicked}
-					>
-						<DocumentSearchIcon className="h-6 w-6" />
-					</Button>
-					<DeleteQuoteButton onClick={onDeleteClicked} />
+					<HighlighterSelector onChange={onHighlighterChanged} />
+					<Toolbar quote={quote} deleteQuote={deleteQuote} />
 				</div>
 			</div>
 

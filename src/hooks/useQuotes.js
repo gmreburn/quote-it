@@ -17,7 +17,11 @@ function useQuotes(tab) {
 						break;
 					case "QUOTE_ANNOTATION":
 					case "QUOTE_HIGHLIGHT":
-						setQuotes(msg.quotes);
+						setQuotes(
+							quotes.map(
+								(obj) => msg.quotes.find((o) => o.id === obj.id) || obj
+							)
+						);
 						break;
 
 					default:

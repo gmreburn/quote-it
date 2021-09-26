@@ -38,7 +38,7 @@
 			"16": "icons/quotes-16.png",
 			"32": "icons/quotes-32.png"
 		},
-		"default_title": "View all quotes",
+		"default_title": "View saved quotes",
 		"theme_icons": [
 			{
 				"light": "icons/quotes-16.png",

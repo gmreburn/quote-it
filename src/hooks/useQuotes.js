@@ -15,6 +15,10 @@ function useQuotes(tab) {
 					case "QUOTE_ADDED":
 						setQuotes([...quotes, msg.quote]);
 						break;
+					case "QUOTE_ANNOTATION":
+					case "QUOTE_HIGHLIGHT":
+						setQuotes(msg.quotes);
+						break;
 
 					default:
 						console.debug("no such type", msg.type, msg);
@@ -26,11 +30,7 @@ function useQuotes(tab) {
 	);
 	const deleteQuote = (quote) =>
 		api.delete(quote).then(() => {
-			const msg = { type: "QUOTE_DELETED", quote };
-			runtimeMessageReducer(msg); // Inform self - runtime.sendMessage will not fire for self
-
-			// Informs other tabs or homepage of the deleted quote
-			browser.runtime.sendMessage(msg);
+			notify({ type: "QUOTE_DELETED", quote });
 
 			browser.notifications
 				.create(`${quote.id}-deleted`, {
@@ -45,7 +45,25 @@ function useQuotes(tab) {
 				);
 		});
 	const saveAnnotation = (quote, annotationText) => {
-		return QuoteAPI().saveAnnotation(quote, annotationText).then(setQuotes);
+		return QuoteAPI()
+			.saveAnnotation(quote, annotationText)
+			.then(({ quotes, quote }) =>
+				notify({ type: "QUOTE_ANNOTATION", quotes, quote })
+			);
+	};
+	const saveHighlighterColor = (quote, newColor) => {
+		return QuoteAPI()
+			.saveHighlighterColor(quote, newColor)
+			.then(({ quotes, quote }) =>
+				notify({ type: "QUOTE_HIGHLIGHT", quotes, quote })
+			);
+	};
+	const notify = (event) => {
+		// Inform self
+		runtimeMessageReducer(event);
+
+		// Inform other tabs or homepage
+		browser.runtime.sendMessage(event);
 	};
 
 	useEffect(() => {
@@ -59,7 +77,7 @@ function useQuotes(tab) {
 		};
 	}, [tab, quotes]);
 
-	return [quotes, saveAnnotation, deleteQuote];
+	return [quotes, saveAnnotation, saveHighlighterColor, deleteQuote];
 }
 
 export default useQuotes;

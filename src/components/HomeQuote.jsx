@@ -1,6 +1,7 @@
 import React from "react";
 import DeleteQuoteButton from "../components/DeleteQuoteButton.jsx";
 import ExportQuoteButton from "../components/ExportQuoteButton.jsx";
+import TextHighlighter from "./TextHighlighter.jsx";
 
 function HomeQuote({ quote, deleteQuote }) {
 	const onCopyClicked = () => {
@@ -22,16 +23,19 @@ function HomeQuote({ quote, deleteQuote }) {
 
 	return (
 		<div>
-			{/* <a href={quote.category.href} className="inline-block">
-								<span
-									className={classNames(
-										quote.category.color,
-										"inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium"
-									)}
-								>
-									{quote.category.name}
-								</span>
-							</a> */}
+			{/* TODO: filter quotes by label
+			 {quote.highlighter && (
+				<a href="#" className="inline-block">
+					<span
+						className={classNames(
+							quote.highlighter.color,
+							"inline-flex bg-green-300 items-center px-3 py-0.5 rounded-full text-sm font-medium"
+						)}
+					>
+						{quote.highlighter.label || "review"}
+					</span>
+				</a>
+			)} */}
 
 			<a
 				href={quote.tab.url}
@@ -43,15 +47,20 @@ function HomeQuote({ quote, deleteQuote }) {
 					{quote.websiteTitle}
 				</p>
 				<p className="mt-3 text-base text-gray-900">
-					{quote.published} &mdash; "{quote.text}"
+					{quote.published} &mdash;{" "}
+					<TextHighlighter color={quote?.highlighter?.color}>
+						<span className="italic">"{quote.text}"</span>
+					</TextHighlighter>
 				</p>
 			</a>
+			{quote.annotation && <p>{quote.annotation.text}</p>}
 
-			<div className="flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500">
+			<div className="flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500 ">
 				<ExportQuoteButton onClick={onCopyClicked} />
 				<DeleteQuoteButton onClick={onDeleteClicked} />
 			</div>
-			{/* {quote.author && (
+			{/* TODO: add citation metadata
+			 {quote.author && (
 								<div className="mt-6 flex items-center">
 									<div className="ml-3">
 										<p className="text-sm font-medium text-gray-900">

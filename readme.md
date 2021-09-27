@@ -20,10 +20,21 @@ npm run package
 ```
 
 ### Outputs
-
 - `./addon/web-ext-artifacts/[name][version].zip` - The extension is packaged using the name found in the `./src/manifest.json` and version found in `./package.json`. The output is saved to `./addon/web-ext-artifacts/`.
 
 - `./[name][version].zip` - The sources are packaged next to this readme.md based on the name and version found in `./package.json`.
+
+## Permission Descriptions
+
+| Permission      | Used for                                      |
+| --------------- | --------------------------------------------- |
+| "menus"         | Right click to save quote on any webpage      |
+| "tabs"          |                                               |
+| "notifications" | Inform user when a request has been completed |
+| "find"          | Highlight quotes on webpages                  |
+| "activeTab"     |                                               |
+| "<all_urls>"    |                                               |
+
 
 # Development Guide
 
@@ -57,3 +68,4 @@ CTRL+SHIFT+J in Firefox opens the console log window. `Console.log` messages wil
 # Documentation / Links
 
 - [Mozilla Add-ons JavaScript APIs](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API)
+- [citation-js (or something similiar) might be good for pulling/formatting metadata](https://www.npmjs.com/package/citation-js)

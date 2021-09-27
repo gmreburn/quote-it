@@ -7,6 +7,7 @@ const manifest = require("./src/manifest.json");
 
 const manifest_pages = [
 	{ sidebar_action: manifest?.sidebar_action?.default_panel },
+	{ options_ui: manifest?.options_ui?.page },
 	{ page_action: manifest?.page_action?.default_popup },
 	{ browser_action: manifest?.browser_action?.default_popup },
 	{ devtools_page: manifest?.devtools_page?.devtools_page },
@@ -44,7 +45,7 @@ const jsxEntries = manifest_pages
 	});
 
 module.exports = {
-	mode: "production", // development - see https://webpack.js.org/configuration/devtool/
+	mode: "development", // production - see https://webpack.js.org/configuration/devtool/
 	devtool: "cheap-module-source-map",
 	entry: Object.assign(
 		{},
@@ -101,11 +102,12 @@ module.exports = {
 									);
 									break;
 
+								case "options_ui":
+									manifest[key].page = page[key].replace(".jsx", ".html");
+									break;
+
 								case "devtools_page":
-									manifest[key].default_panel = page[key].replace(
-										".jsx",
-										".html"
-									);
+									manifest[key] = page[key].replace(".jsx", ".html");
 									break;
 
 								case "page_action":
@@ -129,6 +131,11 @@ module.exports = {
 					globOptions: {
 						ignore: ["**/*.jsx"],
 					},
+				},
+				{
+					from: "(contentScripts|userScripts)/**/*.js",
+					context: "src",
+					noErrorOnMissing: true,
 				},
 				...manifest_pages
 					.filter((manifest_page) => {

@@ -2,6 +2,30 @@ import { nanoid } from "nanoid";
 
 function QuoteAPI() {
 	return {
+		saveHighlighterColor: function (quote, color) {
+			return this.get(quote.tab.url).then((quotes) => {
+				const pageId = this.getPageId(quote.tab.url);
+				const updatedQuotes = quotes.map((q) => {
+					if (q.id === quote.id) {
+						q.highlighter = Object.assign({}, q.highlighter, {
+							color,
+							created: q.highlighter?.created || new Date().toISOString(),
+							updated: new Date().toISOString(),
+						});
+					}
+					return q;
+				});
+
+				return browser.storage.local
+					.set({ [pageId]: updatedQuotes })
+					.then(() => {
+						return {
+							quotes: updatedQuotes,
+							quote: updatedQuotes.find((q) => q.id === quote.id),
+						};
+					});
+			});
+		},
 		saveAnnotation: function (quote, annotationText) {
 			return this.get(quote.tab.url).then((quotes) => {
 				const pageId = this.getPageId(quote.tab.url);
@@ -19,7 +43,10 @@ function QuoteAPI() {
 				return browser.storage.local
 					.set({ [pageId]: updatedQuotes })
 					.then(() => {
-						return updatedQuotes;
+						return {
+							quotes: updatedQuotes,
+							quote: updatedQuotes.find((q) => q.id === quote.id),
+						};
 					});
 			});
 		},
@@ -39,6 +66,15 @@ function QuoteAPI() {
 							storedInfo[key].map((quote) => Object.assign(quote, { url: key }))
 						)
 					)
+				)
+				.then((quotes) =>
+					// Backward compatibility: Map quote to new format
+					quotes.map((quote) => {
+						if (!quote.tab) {
+							quote.tab = { url: `http://${quote.url}` };
+						}
+						return quote;
+					})
 				);
 		},
 		create: function (quoteText, tab) {

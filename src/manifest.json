@@ -14,8 +14,8 @@
 	"description": "Collect quotes from across the web.",
 
 	"icons": {
-		"48": "icons/annotation.svg",
-		"96": "icons/annotation.svg"
+		"48": "icons/quotes-48.png",
+		"96": "icons/quotes-96.png"
 	},
 
 	"background": {
@@ -39,7 +39,7 @@
 			"16": "icons/quotes-16.png",
 			"32": "icons/quotes-32.png"
 		},
-		"default_title": "View all quotes",
+		"default_title": "View saved quotes",
 		"theme_icons": [
 			{
 				"light": "icons/quotes-16.png",
@@ -54,6 +54,7 @@
 		]
 	},
 
+
 	"optional_permissions": [],
 
 	"page_action": {
@@ -62,6 +63,11 @@
 		"default_title": "View and manage this page's metadata.",
 		"default_popup": "page/panel.jsx",
 		"show_matches": ["<all_urls>"]
+  },
+  
+	"developer": {
+		"name": "Gregory Reburn",
+		"url": "https://github.com/gmreburn"
 	},
 
 	"sidebar_action": {

@@ -7,7 +7,8 @@
 
 	"browser_specific_settings": {
 		"gecko": {
-			"strict_min_version": "58.0a1"
+			"id": "{4e332f4b-fa29-4ada-8fc4-38698c22f505}",
+			"strict_min_version": "75.0a1"
 		}
 	},
 
@@ -29,7 +30,10 @@
 		"storage",
 		"tabs",
 		"find",
-		"notifications"
+		"notifications",
+		"identity",
+		"https://quote-it.auth.us-east-1.amazoncognito.com/*",
+		"http://127.0.0.1:3000/*"
 	],
 
 	"browser_action": {

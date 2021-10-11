@@ -15,6 +15,11 @@ function useQuotes(tab) {
 					case "QUOTE_ADDED":
 						setQuotes([...quotes, msg.quote]);
 						break;
+					case "QUOTE_UPDATED":
+						setQuotes(
+							quotes.map((obj) => quotes.find((o) => o.id === obj.id) || obj)
+						);
+						break;
 					case "QUOTE_ANNOTATION":
 					case "QUOTE_HIGHLIGHT":
 						setQuotes(
@@ -32,8 +37,11 @@ function useQuotes(tab) {
 		},
 		[tab, quotes]
 	);
-	const deleteQuote = (quote) =>
-		api.delete(quote).then(() => {
+	const deleteQuote = (quote) => {
+		// TODO: handle remotePromise
+		const [localPromise, remotePromise] = api.delete(quote);
+
+		localPromise.then(() => {
 			notify({ type: "QUOTE_DELETED", quote });
 
 			browser.notifications
@@ -48,19 +56,29 @@ function useQuotes(tab) {
 					}, 7000)
 				);
 		});
+	};
 	const saveAnnotation = (quote, annotationText) => {
-		return QuoteAPI()
-			.saveAnnotation(quote, annotationText)
-			.then(({ quotes, quote }) =>
-				notify({ type: "QUOTE_ANNOTATION", quotes, quote })
-			);
+		// TODO: handle remotePromise
+		const [localPromise, remotePromise] = QuoteAPI().saveAnnotation(
+			quote,
+			annotationText
+		);
+		return localPromise.then(({ quotes, quote }) =>
+			notify({ type: "QUOTE_ANNOTATION", quotes, quote })
+		);
 	};
 	const saveHighlighterColor = (quote, newColor) => {
-		return QuoteAPI()
-			.saveHighlighterColor(quote, newColor)
-			.then(({ quotes, quote }) =>
-				notify({ type: "QUOTE_HIGHLIGHT", quotes, quote })
-			);
+		// TODO: handle remotePromise
+		const [localPromise, remotePromise] = QuoteAPI().saveHighlighterColor(
+			quote,
+			newColor
+		);
+
+		return localPromise.then(({ quotes, quote }) =>
+			notify({ type: "QUOTE_HIGHLIGHT", quotes, quote })
+		);
+
+		// remotePromise.error()
 	};
 	const notify = (event) => {
 		// Inform self
@@ -71,7 +89,11 @@ function useQuotes(tab) {
 	};
 
 	useEffect(() => {
-		api.get(tab?.url).then(setQuotes);
+		console.log("here for you");
+		const [localPromise, remotePromise] = api.get(tab?.url);
+
+		localPromise.then(setQuotes);
+		remotePromise.then(setQuotes);
 	}, [tab]);
 
 	useEffect(() => {

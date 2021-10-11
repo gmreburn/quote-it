@@ -1,5 +1,5 @@
-import QuoteAPI from "./api/QuoteAPI";
-const api = QuoteAPI();
+import LocalAPI from "./api/LocalAPI";
+const api = LocalAPI();
 const quotes = [];
 let promise;
 

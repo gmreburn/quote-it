@@ -44,7 +44,7 @@ const jsxEntries = manifest_pages
 	});
 
 module.exports = {
-	mode: "production", // development - see https://webpack.js.org/configuration/devtool/
+	mode: "development", // development - see https://webpack.js.org/configuration/devtool/
 	devtool: "cheap-module-source-map",
 	entry: Object.assign(
 		{},

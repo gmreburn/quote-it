@@ -1,10 +1,11 @@
 {
 	"name": "quote-it",
-	"version": "1.0.11",
+	"version": "1.0.12",
 	"description": "",
 	"private": true,
 	"config": {
-		"start_url": "https://www.wsj.com/articles/facebook-drug-cartels-human-traffickers-response-is-weak-documents-11631812953?mod=hp_lead_pos7"
+		"start_url": "https://www.wsj.com/articles/facebook-drug-cartels-human-traffickers-response-is-weak-documents-11631812953?mod=hp_lead_pos7",
+		"mode": "production"
 	},
 	"scripts": {
 		"build": "webpack",

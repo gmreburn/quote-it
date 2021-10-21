@@ -44,8 +44,11 @@ const jsxEntries = manifest_pages
 	});
 
 module.exports = {
-	mode: "production", // development - see https://webpack.js.org/configuration/devtool/
-	devtool: "cheap-module-source-map",
+	mode: process.env.npm_package_config_mode, // development - see https://webpack.js.org/configuration/devtool/
+	devtool:
+		process.env.npm_package_config_mode === "production"
+			? false
+			: "cheap-module-source-map",
 	entry: Object.assign(
 		{},
 		...jsxEntries,
@@ -159,6 +162,7 @@ module.exports = {
 					loader: "babel-loader",
 					options: {
 						presets: ["@babel/preset-env", "@babel/preset-react"],
+						cacheDirectory: true,
 					},
 				},
 			},

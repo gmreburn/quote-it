@@ -1,7 +1,8 @@
-const REDIRECT_URL = browser.identity.getRedirectURL();
+const REDIRECT_URL =
+	"https://12d89ac9b7b8e7cfef393b3a1d101555db9f0fed.extensions.allizom.org/";
 const CLIENT_ID = "3on50or2vn1bpbautrisvepdei";
 const SCOPES = ["openid", "email", "profile"];
-const AUTH_URL = `https://quote-it.auth.us-east-1.amazoncognito.com/oauth2/authorize\
+const AUTH_URL = `https://auth.wittingly.net/oauth2/authorize\
 ?client_id=${CLIENT_ID}\
 &response_type=token\
 &scope=${encodeURIComponent(SCOPES.join(" "))}\

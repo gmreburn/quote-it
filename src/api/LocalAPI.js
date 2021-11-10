@@ -10,6 +10,7 @@ function LocalQuoteAPI() {
 							created: q.highlighter?.created || new Date().toISOString(),
 							updated: new Date().toISOString(),
 						});
+						q.synced = false;
 					}
 					return q;
 				});
@@ -34,6 +35,7 @@ function LocalQuoteAPI() {
 							created: q.annotation?.created || new Date().toISOString(),
 							updated: new Date().toISOString(),
 						});
+						q.synced = false;
 					}
 					return q;
 				});
@@ -107,6 +109,8 @@ function LocalQuoteAPI() {
 			console.debug("api delete (local)", quote);
 			if (quote && quote.id && quote.tab && quote.tab.url) {
 				const key = this.getPageId(quote.tab.url);
+				// TODO: don't actually delete, mark as synced=false, deleted=true
+				// follow saveAnnotation implementation
 				return this.get(quote.tab.url).then((quotes) => {
 					let contentToStore = {
 						[key]: quotes.filter((q) => !(quote.id == q.id)),

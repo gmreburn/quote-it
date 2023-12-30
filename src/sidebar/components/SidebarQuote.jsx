@@ -1,7 +1,7 @@
 import Button from "../../components/Button.jsx";
 import React, { useState } from "react";
 import Moment from "react-moment";
-import { AnnotationIcon } from "@heroicons/react/outline";
+import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import Annotation from "../../components/Annotation.jsx";
 import HighlighterSelector from "../../components/HighlighterSelector.jsx";
 import Toolbar from "./Toolbar.jsx";
@@ -59,7 +59,7 @@ function SidebarQuote({
 						onClick={onAnnotationClicked}
 						title={browser.i18n.getMessage("btnAnnotate")}
 					>
-						<AnnotationIcon className='h-6 w-6' />
+						<ChatBubbleBottomCenterTextIcon className='h-6 w-6' />
 					</Button>
 					<HighlighterSelector onChange={onHighlighterChanged} />
 					<Toolbar quote={quote} deleteQuote={deleteQuote} />

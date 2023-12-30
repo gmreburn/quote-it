@@ -9,8 +9,14 @@ browser.menus.create({
 browser.menus.onClicked.addListener(function (info, tab) {
 	if (info.menuItemId == "save-selection") {
 		console.debug("save selection", info, tab);
+
+		let canonical = document.querySelector('link[rel="canonical"]');
+		if (!canonical || !canonical.href) {
+			canonical = tab.url;
+		}
+
 		QuoteAPI()
-			.create(info.selectionText, tab)
+			.create(canonical, info.selectionText, tab)
 			.then((quote) => {
 				browser.runtime.sendMessage({ type: "QUOTE_ADDED", quote });
 

@@ -4,7 +4,7 @@ function QuoteAPI() {
 	return {
 		saveHighlighterColor: function (quote, color) {
 			return this.get(quote.tab.url).then((quotes) => {
-				const pageId = this.getPageId(quote.tab.url);
+				const pageId = quote.tab.url;
 				const updatedQuotes = quotes.map((q) => {
 					if (q.id === quote.id) {
 						q.highlighter = Object.assign({}, q.highlighter, {
@@ -28,7 +28,7 @@ function QuoteAPI() {
 		},
 		saveAnnotation: function (quote, annotationText) {
 			return this.get(quote.tab.url).then((quotes) => {
-				const pageId = this.getPageId(quote.tab.url);
+				const pageId = quote.tab.url;
 				const updatedQuotes = quotes.map((q) => {
 					if (q.id === quote.id) {
 						q.annotation = Object.assign({}, q.annotation, {
@@ -50,16 +50,10 @@ function QuoteAPI() {
 					});
 			});
 		},
-		getPageId: function (uri) {
-			if (uri) {
-				const url = new URL(uri);
-				return url.hostname + url.pathname;
-			}
-		},
 		get: function (url) {
 			console.debug("api get", url);
 			return browser.storage.local
-				.get(this.getPageId(url))
+				.get(url)
 				.then((storedInfo) =>
 					[].concat(
 						...Object.keys(storedInfo).map((key) =>
@@ -77,19 +71,17 @@ function QuoteAPI() {
 					})
 				);
 		},
-		create: function (quoteText, tab) {
+		create: function (url, quoteText) {
 			console.debug("api create", quoteText);
-			if (quoteText && tab && tab.url) {
-				const pageId = this.getPageId(tab.url);
+			if (url && quoteText) {
 				const quote = {
 					id: nanoid(),
 					text: quoteText.trim(),
 					created: new Date().toISOString(),
-					tab,
 				};
 				return this.get(tab.url).then((quotes) => {
 					quotes.push(quote);
-					return browser.storage.local.set({ [pageId]: quotes }).then(() => {
+					return browser.storage.local.set({ [url]: quotes }).then(() => {
 						return quote;
 					});
 				});
@@ -100,7 +92,7 @@ function QuoteAPI() {
 		delete: function (quote) {
 			console.debug("api delete", quote);
 			if (quote && quote.id && quote.tab && quote.tab.url) {
-				const key = this.getPageId(quote.tab.url);
+				const key = quote.tab.url;
 				return this.get(quote.tab.url).then((quotes) => {
 					let contentToStore = {
 						[key]: quotes.filter((q) => !(quote.id == q.id)),

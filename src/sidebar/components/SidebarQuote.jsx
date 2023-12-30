@@ -1,5 +1,5 @@
 import Button from "../../components/Button.jsx";
-import React, { useState } from "react";
+import React from "react";
 import Moment from "react-moment";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import Annotation from "../../components/Annotation.jsx";
@@ -7,20 +7,11 @@ import HighlighterSelector from "../../components/HighlighterSelector.jsx";
 import Toolbar from "./Toolbar.jsx";
 import TextHighlighter from "../../components/TextHighlighter.jsx";
 
-function SidebarQuote({
-	quote,
-	saveAnnotation,
-	saveHighlighterColor,
-	deleteQuote,
-}) {
+function SidebarQuote({ quote, saveHighlighterColor, deleteQuote }) {
 	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
-	const onAnnotationBlurred = (quoteText) => {
-		saveAnnotation(quote, quoteText);
-		setShowAnnotationInput(false);
-	};
-	const onAnnotationClicked = () => {
-		setShowAnnotationInput(true);
-	};
+	// const onAnnotationClicked = () => {
+	// 	setShowAnnotationInput(true);
+	// };
 	const onHighlighterChanged = (newColor) => {
 		saveHighlighterColor(quote, newColor);
 	};
@@ -39,14 +30,14 @@ function SidebarQuote({
 					</a>
 				</div>
 				<Moment
-					className='flex-shrink-0 whitespace-nowrap text-sm text-gray-500'
+					className='flex-shrink-0 whitespace-nowrap text-gray-500'
 					fromNow
 				>
 					{quote.created}
 				</Moment>
 			</div>
 			<div className='mt-1'>
-				<p className='italic'>
+				<p className='italic text-lg'>
 					<TextHighlighter color={quote?.highlighter?.color}>
 						"{quote.text}"
 					</TextHighlighter>
@@ -55,23 +46,22 @@ function SidebarQuote({
 			<div className='flex justify-between space-x-3 mt-2'>
 				<div className='min-w-0 flex-1'></div>
 				<div className='flex flex-shrink-0 whitespace-nowrap space-x-2'>
-					<Button
+					{/* <Button
 						onClick={onAnnotationClicked}
 						title={browser.i18n.getMessage("btnAnnotate")}
 					>
 						<ChatBubbleBottomCenterTextIcon className='h-6 w-6' />
-					</Button>
+					</Button> */}
 					<HighlighterSelector onChange={onHighlighterChanged} />
 					<Toolbar quote={quote} deleteQuote={deleteQuote} />
 				</div>
 			</div>
 
-			<Annotation
+			{/* <Annotation
 				quote={quote}
 				showAnnotationInput={showAnnotationInput}
 				setShowAnnotationInput={setShowAnnotationInput}
-				onAnnotationBlurred={onAnnotationBlurred}
-			/>
+			/> */}
 		</li>
 	);
 }

@@ -1,11 +1,11 @@
-import { ClipboardCopyIcon } from "@heroicons/react/outline";
+import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import Button from "./Button.jsx";
 
 function ExportQuoteButton({ onClick }) {
 	return (
 		<Button title={browser.i18n.getMessage("btnCopyQuote")} onClick={onClick}>
-			<ClipboardCopyIcon className="h-6 w-6" />
+			<ClipboardDocumentIcon className='h-6 w-6' />
 		</Button>
 	);
 }

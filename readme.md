@@ -1,6 +1,6 @@
 # Quote It
 
-Right-click highlighted text on any webpage to quote it. Quotes appear in the sidebar (CTRL+Q to open the sidebar). Quotes can be deleted, highlighted on the page, and copied to the clipboard.
+Right-click highlighted text on any webpage to quote it. Quotes appear in the sidebar (ALT+Q to open the sidebar). Quotes can be deleted, highlighted on the page, and copied to the clipboard.
 
 ## Prerequisites
 

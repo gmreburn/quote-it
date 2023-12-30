@@ -64,7 +64,7 @@
 		"description": "A title shown in a notification hen the user creates a new quote from highlighted text on a webpage."
 	},
 	"QuoteAddedMessage": {
-		"message": "Access the quote in the quote sidebar (CTRL+Q).",
+		"message": "Access the quote in the quote sidebar (ALT+Q).",
 		"description": "A paragraph shown in a notification when the user creates a new quote from highlighted text on a webpage."
 	},
 	"btnAnnotate": {

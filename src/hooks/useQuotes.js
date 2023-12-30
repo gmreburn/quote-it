@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import QuoteAPI from "../api/QuoteAPI.js";
 
-function useQuotes(tab) {
+function useQuotes(url) {
 	const [quotes, setQuotes] = useState([]);
 	const api = QuoteAPI();
 
 	const runtimeMessageReducer = useCallback(
 		function (msg) {
-			if (tab === undefined || tab.url === msg.quote.tab.url) {
+			// TODO: why is url === undefined correct? b.c when on addon homepage
+			if (url === undefined || url === msg.quote.tab.url) {
 				switch (msg.type) {
 					case "QUOTE_DELETED":
 						setQuotes(quotes.filter((q) => q.id !== msg.quote.id));
@@ -30,7 +31,7 @@ function useQuotes(tab) {
 				}
 			}
 		},
-		[tab, quotes]
+		[url, quotes]
 	);
 	const deleteQuote = (quote) =>
 		api.delete(quote).then(() => {
@@ -71,15 +72,15 @@ function useQuotes(tab) {
 	};
 
 	useEffect(() => {
-		api.get(tab?.url).then(setQuotes);
-	}, [tab]);
+		api.get(url).then(setQuotes);
+	}, [url]);
 
 	useEffect(() => {
 		browser.runtime.onMessage.addListener(runtimeMessageReducer);
 		return () => {
 			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
 		};
-	}, [tab, quotes]);
+	}, [url, quotes]);
 
 	return [quotes, saveAnnotation, saveHighlighterColor, deleteQuote];
 }

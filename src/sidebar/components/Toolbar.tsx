@@ -3,13 +3,20 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import {
-	ClipboardCopyIcon,
-	DocumentSearchIcon,
+	DocumentDuplicateIcon,
+	DocumentMagnifyingGlassIcon,
 	TrashIcon,
-} from "@heroicons/react/outline";
-import classNames from "../../util/classNames.js";
+} from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
-export default function Toolbar({ quote, deleteQuote }) {
+export default function Toolbar({
+	quote,
+	deleteQuote,
+}: {
+	quote: Quote;
+	// TODO: fix any type
+	deleteQuote: any;
+}) {
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -60,15 +67,16 @@ export default function Toolbar({ quote, deleteQuote }) {
 						<Menu.Item>
 							{({ active }) => (
 								<a
+									// TODO: can this be a button instead of <a />? Check rest of project for this issue also
 									href='#'
-									className={classNames(
+									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
 										"group flex items-center px-4 py-2 text-sm"
 									)}
 									onClick={onCopyClicked}
 									title={browser.i18n.getMessage("btnCopyQuote")}
 								>
-									<ClipboardCopyIcon
+									<DocumentDuplicateIcon
 										className='mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 										aria-hidden='true'
 									/>
@@ -80,14 +88,14 @@ export default function Toolbar({ quote, deleteQuote }) {
 							{({ active }) => (
 								<a
 									href='#'
-									className={classNames(
+									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
 										"group flex items-center px-4 py-2 text-sm"
 									)}
 									onClick={onFindClicked}
 									title={browser.i18n.getMessage("btnHighlightQuote")}
 								>
-									<DocumentSearchIcon
+									<DocumentMagnifyingGlassIcon
 										className='mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 										aria-hidden='true'
 									/>
@@ -99,7 +107,7 @@ export default function Toolbar({ quote, deleteQuote }) {
 							{({ active }) => (
 								<a
 									href='#'
-									className={classNames(
+									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
 										"group flex items-center px-4 py-2 text-sm"
 									)}

@@ -2,15 +2,15 @@ import React from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { SwatchIcon } from "@heroicons/react/24/outline";
-import classNames from "../util/classNames";
+import clsx from "clsx";
 
-export default function LabelSelector({ onChange }) {
+export default function HighlighterSelector({ onChange }: { onChange: any }) {
 	const highlighters = [
 		{ color: "bg-yellow-300", label: "Review" },
 		{ color: "bg-green-300", label: "Term" },
 		{ color: "bg-pink-300", label: "Important" },
 	];
-	const onHighlighterChanged = (color) => {
+	const onHighlighterChanged = (color: any) => {
 		onChange(color.split("-")[1]);
 	};
 
@@ -38,7 +38,7 @@ export default function LabelSelector({ onChange }) {
 							{({ active }) => (
 								<a
 									href='#'
-									className={classNames(
+									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
 										"block px-4 py-2 text-sm space-x-2"
 									)}
@@ -53,14 +53,14 @@ export default function LabelSelector({ onChange }) {
 								{({ active }) => (
 									<a
 										href='#'
-										className={classNames(
+										className={clsx(
 											active ? "bg-gray-100 text-gray-900" : "text-gray-700",
 											"block px-4 py-2 text-sm space-x-2"
 										)}
 										onClick={() => onHighlighterChanged(highlighter.color)}
 									>
 										<span
-											className={classNames(
+											className={clsx(
 												highlighter.color,
 												"flex-shrink-0 inline-block h-2 w-2 rounded-full"
 											)}

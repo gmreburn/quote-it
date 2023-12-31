@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import SidebarQuote from "./SidebarQuote.jsx";
-import useQuotes from "../../hooks/useQuotes.js";
-import NoQuotesYet from "./NoQuotesYet.jsx";
+import SidebarQuote from "./SidebarQuote";
+import useQuotes from "../../hooks/useQuotes";
+import NoQuotesYet from "./NoQuotesYet";
 
-function Sidebar({ tab: t }) {
+function Sidebar({ tab: t }: { tab: browser.tabs.Tab }) {
 	const [tab, setTab] = useState(t);
-	const [quotes, saveAnnotation, saveHighlighterColor, deleteQuote] =
-		useQuotes(tab);
+	const [quotes, saveAnnotation, saveHighlighterColor, deleteQuote] = useQuotes(
+		tab.url
+	);
 
 	const handleActiveTabChange = useCallback(
-		(activeInfo) => {
+		(activeInfo: browser.tabs._OnActivatedActiveInfo) => {
 			console.debug("handleActiveTabChange", activeInfo);
 			if (activeInfo.windowId === tab.windowId) {
 				browser.tabs.get(activeInfo.tabId).then(setTab);
@@ -18,7 +19,11 @@ function Sidebar({ tab: t }) {
 		[tab]
 	);
 	const handleOnUpdated = useCallback(
-		(tabId, changeInfo, tab) => {
+		(
+			tabId: number,
+			changeInfo: browser.tabs._OnUpdatedChangeInfo,
+			tab: browser.tabs.Tab
+		) => {
 			console.debug("handleOnUpdated", tab);
 			if (tab.windowId === tab.windowId) {
 				setTab(tab);
@@ -40,9 +45,9 @@ function Sidebar({ tab: t }) {
 		};
 	}, []);
 
-	if (quotes === false) {
+	if (!Array.isArray(quotes)) {
 		return null;
-	} else if (Array.isArray(quotes) && quotes.length === 0) {
+	} else if (quotes.length === 0) {
 		return <NoQuotesYet />;
 	} else {
 		return (

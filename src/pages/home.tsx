@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HomeQuote from "../components/HomeQuote.jsx";
-import useQuotes from "../hooks/useQuotes";
+import HomeQuote from "components/HomeQuote";
+import useQuotes from "hooks/useQuotes";
 import "../tailwind.css";
-import NoQuotesYet from "../sidebar/components/NoQuotesYet.jsx";
+import NoQuotesYet from "sidebar/components/NoQuotesYet";
 
 function Home() {
 	const [quotes, , , deleteQuote] = useQuotes();
 
+	if (!Array.isArray(quotes)) {
+		return null;
+	}
 	return (
 		<div className='bg-white pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8'>
 			<div className='relative max-w-lg mx-auto divide-y-2 divide-gray-200 lg:max-w-7xl'>

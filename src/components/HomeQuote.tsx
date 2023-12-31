@@ -1,9 +1,9 @@
 import React from "react";
-import DeleteQuoteButton from "../components/DeleteQuoteButton.jsx";
-import ExportQuoteButton from "../components/ExportQuoteButton.jsx";
-import TextHighlighter from "./TextHighlighter.jsx";
+import DeleteQuoteButton from "./DeleteQuoteButton";
+import ExportQuoteButton from "./ExportQuoteButton";
+import TextHighlighter from "./TextHighlighter";
 
-function HomeQuote({ quote, deleteQuote }) {
+function HomeQuote({ quote, deleteQuote }: { quote: Quote; deleteQuote: any }) {
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -27,7 +27,7 @@ function HomeQuote({ quote, deleteQuote }) {
 			 {quote.highlighter && (
 				<a href="#" className="inline-block">
 					<span
-						className={classNames(
+						className={clsx(
 							quote.highlighter.color,
 							"inline-flex bg-green-300 items-center px-3 py-0.5 rounded-full text-sm font-medium"
 						)}
@@ -37,25 +37,21 @@ function HomeQuote({ quote, deleteQuote }) {
 				</a>
 			)} */}
 
-			<a
-				href={quote.tab.url}
-				className="block mt-4 text-gray-500"
-				target="_blank"
-			>
-				<p>{quote.tab.url}</p>
-				<p className="text-xl font-semibold text-gray-500">
+			<a href={quote.url} className='block mt-4 text-gray-500' target='_blank'>
+				<p>{quote.url}</p>
+				<p className='text-xl font-semibold text-gray-500'>
 					{quote.websiteTitle}
 				</p>
-				<p className="mt-3 text-base text-gray-900">
-					{quote.published} &mdash;{" "}
+				<p className='mt-3 text-base text-gray-900'>
+					{quote.created} &mdash;{" "}
 					<TextHighlighter color={quote?.highlighter?.color}>
-						<span className="italic">"{quote.text}"</span>
+						<span className='italic'>"{quote.text}"</span>
 					</TextHighlighter>
 				</p>
 			</a>
 			{quote.annotation && <p>{quote.annotation.text}</p>}
 
-			<div className="flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500 ">
+			<div className='flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500 '>
 				<ExportQuoteButton onClick={onCopyClicked} />
 				<DeleteQuoteButton onClick={onDeleteClicked} />
 			</div>

@@ -40,21 +40,23 @@ function useQuotes(url?: string) {
 		},
 		[url, quotes]
 	);
-	const deleteQuote = (quote: Quote) =>
+	const deleteQuote = (quote: string) =>
 		api.delete(quote).then(() => {
-			notify({ type: "QUOTE_DELETED", quote: quote.id });
+			notify({ type: "QUOTE_DELETED", quote: quote });
 
 			browser.notifications
-				.create(`${quote.id}-deleted`, {
+				.create(`${quote}-deleted`, {
 					type: "basic",
 					title: browser.i18n.getMessage("QuoteDeletedTitle"),
 					message: browser.i18n.getMessage("QuoteDeleted"),
 				})
 				.then(() =>
 					setTimeout(() => {
-						browser.notifications.clear(`${quote.id}-deleted`);
+						browser.notifications.clear(`${quote}-deleted`);
 					}, 7000)
 				);
+
+			return;
 		});
 	const saveAnnotation = (quote: Quote, annotationText: string) => {
 		return QuoteAPI()

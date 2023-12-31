@@ -14,8 +14,7 @@ export default function Toolbar({
 	deleteQuote,
 }: {
 	quote: Quote;
-	// TODO: fix any type
-	deleteQuote: any;
+	deleteQuote: (quote: string) => Promise<void>;
 }) {
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
@@ -31,7 +30,7 @@ export default function Toolbar({
 	};
 	const onDeleteClicked = () => {
 		// TODO: confirm delete before delete or add undo button to notification
-		deleteQuote(quote);
+		deleteQuote(quote.id);
 	};
 	const onFindClicked = () => {
 		browser.find

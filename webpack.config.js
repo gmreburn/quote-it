@@ -10,6 +10,7 @@ const manifest_pages = [
 	{ page_action: manifest?.page_action?.default_popup },
 	{ browser_action: manifest?.browser_action?.default_popup },
 	{ devtools_page: manifest?.devtools_page?.devtools_page },
+	{ background_page: manifest?.background?.page },
 ].filter((manifest_page) => {
 	const file = manifest_page[Object.keys(manifest_page)[0]];
 	return file && fs.existsSync(path.resolve(__dirname, "src", file));
@@ -96,18 +97,24 @@ module.exports = {
 					transform: (content) => {
 						const manifest = JSON.parse(content.toString());
 						manifest.version = pkg.version;
+
+						if (Array.isArray(manifest.background.scripts)) {
+							manifest.background.scripts = manifest.background.scripts.map(
+								(script) => script.replace(".ts", ".js")
+							);
+						}
+
 						manifest_pages.forEach((page) => {
 							const key = Object.keys(page)[0];
 							console.log(key);
 
 							switch (key) {
-								case "sidebar_action":
-									manifest[key].default_panel = page[key].replace(
-										".tsx",
-										".html"
-									);
+								case "background":
+									// TODO: need to test this, I don't need it so not testing it
+									manifest[key].page = page[key].replace(".tsx", ".html");
 									break;
 
+								case "sidebar_action":
 								case "devtools_page":
 									manifest[key].default_panel = page[key].replace(
 										".tsx",

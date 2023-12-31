@@ -19,7 +19,7 @@
 	},
 
 	"background": {
-		"scripts": ["background.js", "omnibox.js"],
+		"scripts": ["background.ts", "omnibox.ts"],
 		"persistent": false
 	},
 

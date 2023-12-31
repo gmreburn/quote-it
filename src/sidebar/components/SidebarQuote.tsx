@@ -19,7 +19,7 @@ function SidebarQuote({
 	// TODO: fix any type
 	saveHighlighterColor: any;
 	// TODO: fix any type
-	deleteQuote: any;
+	deleteQuote: (quote: string) => Promise<void>;
 }) {
 	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
 	const onAnnotationBlurred = (quoteText: string) => {

@@ -7,11 +7,8 @@ function Annotation({
 	onAnnotationBlurred,
 }: {
 	quote: Quote;
-	// TODO: fix any type to correct type
 	showAnnotationInput: boolean;
-	// TODO: fix any type to correct type
 	setShowAnnotationInput: React.Dispatch<React.SetStateAction<boolean>>;
-	// TODO: fix any type to correct type
 	onAnnotationBlurred: (quoteText: string) => void;
 }) {
 	const { annotation } = quote;

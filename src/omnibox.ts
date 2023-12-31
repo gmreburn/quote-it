@@ -1,7 +1,7 @@
 import QuoteAPI from "./api/QuoteAPI";
 const api = QuoteAPI();
-const quotes = [];
-let promise;
+const quotes: Quote[] = [];
+let promise: Promise<number | void>;
 
 browser.omnibox.onInputStarted.addListener(() => {
 	promise = api.get().then((q) => quotes.push(...q));

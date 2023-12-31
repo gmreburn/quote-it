@@ -167,8 +167,8 @@ module.exports = {
 				use: ["style-loader", "css-loader", "postcss-loader"],
 			},
 			{
-				test: /\.m?tsx?$/,
-				exclude: /(node_modules|bower_components)/,
+				test: /\.tsx?$/,
+				exclude: /node_modules/,
 				use: {
 					loader: "babel-loader",
 					options: {

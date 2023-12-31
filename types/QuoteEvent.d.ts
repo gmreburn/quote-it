@@ -1,0 +1,3 @@
+type QuoteEvent = {
+	url: string;
+};

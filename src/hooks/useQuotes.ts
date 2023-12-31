@@ -3,7 +3,6 @@ import QuoteAPI from "../api/QuoteAPI";
 
 function useQuotes(url?: string) {
 	const [quotes, setQuotes] = useState<Quote[]>([]);
-	const api = QuoteAPI();
 
 	const runtimeMessageReducer = useCallback(
 		function (
@@ -13,8 +12,7 @@ function useQuotes(url?: string) {
 				| QuoteDeletedEvent
 				| QuoteHighlightedEvent
 		) {
-			if (url === undefined) {
-				// TODO: this probably needs added back to the if block || url === event.quote.tab.url) {
+			if (url === undefined || url === event.url) {
 				switch (event.type) {
 					case "QUOTE_DELETED":
 						setQuotes((prevQuotes) =>
@@ -22,13 +20,14 @@ function useQuotes(url?: string) {
 						);
 						break;
 					case "QUOTE_ADDED":
+						console.log("event", "QUOTE_ADDED", event);
 						setQuotes((prevQuotes) => [...prevQuotes, event.quote]);
 						break;
 					case "QUOTE_ANNOTATED":
 						setQuotes((prevQuotes) =>
 							prevQuotes.map((q) =>
-								q.id === event.quote
-									? { ...q, annotation: event.annotationText }
+								q.id === event.quoteId
+									? { ...q, annotation: event.annotation }
 									: q
 							)
 						);
@@ -36,7 +35,9 @@ function useQuotes(url?: string) {
 					case "QUOTE_HIGHLIGHTED":
 						setQuotes((prevQuotes) =>
 							prevQuotes.map((q) =>
-								q.id === event.quote ? { ...q, color: event.color } : q
+								q.id === event.quoteId
+									? { ...q, highlighter: event.highlighter }
+									: q
 							)
 						);
 						break;
@@ -49,9 +50,10 @@ function useQuotes(url?: string) {
 		},
 		[url]
 	);
-	const deleteQuote = (quoteId: string) =>
-		api.delete(quoteId).then(() => {
-			notify({ type: "QUOTE_DELETED", quote: quoteId });
+	const deleteQuote = async (url: string, quoteId: string) => {
+		const quote = await QuoteAPI.get(quoteId);
+		QuoteAPI.delete(url, quoteId).then(() => {
+			notify({ type: "QUOTE_DELETED", quote: quoteId, url });
 
 			browser.notifications
 				.create(`${quoteId}-deleted`, {
@@ -67,24 +69,26 @@ function useQuotes(url?: string) {
 
 			return;
 		});
+	};
 	const saveAnnotation = (quote: Quote, annotationText: string) => {
-		return QuoteAPI()
-			.saveAnnotation(quote, annotationText)
-			.then(({ quotes, quote }) =>
-				notify({ type: "QUOTE_ANNOTATED", quote: quote.id, annotationText })
-			);
+		return QuoteAPI.saveAnnotation(quote, annotationText).then((annotation) =>
+			notify({
+				type: "QUOTE_ANNOTATED",
+				quoteId: quote.id,
+				annotation,
+				url: quote.url,
+			})
+		);
 	};
 	const saveHighlighterColor = (quote: Quote, newColor: HighlighterColor) => {
-		return QuoteAPI()
-			.saveHighlighterColor(quote, newColor)
-			.then(({ quotes, quote }) =>
-				notify({
-					type: "QUOTE_HIGHLIGHTED",
-					quote: quote.id,
-					// TODO: this probably wrong property name
-					color: quote.color,
-				})
-			);
+		return QuoteAPI.saveHighlighterColor(quote, newColor).then((highlighter) =>
+			notify({
+				type: "QUOTE_HIGHLIGHTED",
+				quoteId: quote.id,
+				highlighter,
+				url: quote.url,
+			})
+		);
 	};
 	const notify = (
 		event:
@@ -101,7 +105,7 @@ function useQuotes(url?: string) {
 	};
 
 	useEffect(() => {
-		api.get(url).then(setQuotes);
+		QuoteAPI.get(url).then(setQuotes);
 	}, [url]);
 
 	useEffect(() => {

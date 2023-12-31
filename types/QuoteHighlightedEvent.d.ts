@@ -1,5 +1,5 @@
-type QuoteHighlightedEvent = {
+type QuoteHighlightedEvent = QuoteEvent & {
 	type: "QUOTE_HIGHLIGHTED";
-	quote: string;
-	color: HighlighterColor;
+	quoteId: string;
+	highlighter: Highlighter;
 };

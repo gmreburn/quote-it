@@ -3,12 +3,9 @@ type Quote = {
 	text: string;
 	/** The canonical URL of where the quote came from */
 	url: string;
-	websiteTitle: string;
-	annotation?: string;
-	highlighter: {
-		color: HighlighterColor;
-		label: string;
-	};
+	websiteTitle?: string;
+	annotation?: QuoteAnnotation;
+	highlighter?: Highlighter;
 	created: string;
-	updated: string;
+	updated?: string;
 };

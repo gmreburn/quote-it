@@ -1,5 +1,5 @@
-type QuoteAnnotatedEvent = {
+type QuoteAnnotatedEvent = QuoteEvent & {
 	type: "QUOTE_ANNOTATED";
-	quote: string;
-	annotationText: string;
+	quoteId: string;
+	annotation: QuoteAnnotation;
 };

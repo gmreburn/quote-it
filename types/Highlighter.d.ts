@@ -1,6 +1,6 @@
 type Highlighter = {
 	color: HighlighterColor;
-	label: string;
+	// label: string;
 	created: string;
 	updated?: string;
 };

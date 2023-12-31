@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import QuoteAPI from "../api/QuoteAPI";
+import useTab from "./useTab";
 
-function useQuotes(url?: string) {
+function useQuotes() {
+	const { tab } = useTab();
 	const [quotes, setQuotes] = useState<Quote[]>([]);
 
 	const runtimeMessageReducer = useCallback(
@@ -12,11 +14,15 @@ function useQuotes(url?: string) {
 				| QuoteDeletedEvent
 				| QuoteHighlightedEvent
 		) {
-			if (url === undefined || url === event.url) {
+			if (
+				tab === undefined ||
+				tab.canonical === event.url ||
+				tab.url === event.url
+			) {
 				switch (event.type) {
 					case "QUOTE_DELETED":
 						setQuotes((prevQuotes) =>
-							prevQuotes.filter((q) => q.id !== event.quote)
+							prevQuotes.filter((q) => q.id !== event.quoteId)
 						);
 						break;
 					case "QUOTE_ADDED":
@@ -48,12 +54,11 @@ function useQuotes(url?: string) {
 				}
 			}
 		},
-		[url]
+		[tab]
 	);
-	const deleteQuote = async (url: string, quoteId: string) => {
-		const quote = await QuoteAPI.get(quoteId);
-		QuoteAPI.delete(url, quoteId).then(() => {
-			notify({ type: "QUOTE_DELETED", quote: quoteId, url });
+	const deleteQuote = async (quoteId: string) => {
+		QuoteAPI.delete(tab.canonical, quoteId).then(() => {
+			notify({ type: "QUOTE_DELETED", quoteId: quoteId, url: tab.canonical });
 
 			browser.notifications
 				.create(`${quoteId}-deleted`, {
@@ -76,7 +81,7 @@ function useQuotes(url?: string) {
 				type: "QUOTE_ANNOTATED",
 				quoteId: quote.id,
 				annotation,
-				url: quote.url,
+				url: tab.canonical,
 			})
 		);
 	};
@@ -86,7 +91,7 @@ function useQuotes(url?: string) {
 				type: "QUOTE_HIGHLIGHTED",
 				quoteId: quote.id,
 				highlighter,
-				url: quote.url,
+				url: tab.canonical,
 			})
 		);
 	};
@@ -105,15 +110,12 @@ function useQuotes(url?: string) {
 	};
 
 	useEffect(() => {
-		QuoteAPI.get(url).then(setQuotes);
-	}, [url]);
-
-	useEffect(() => {
+		QuoteAPI.get(tab.canonical).then(setQuotes);
 		browser.runtime.onMessage.addListener(runtimeMessageReducer);
 		return () => {
 			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
 		};
-	}, [url]);
+	}, [tab]);
 
 	return [quotes, saveAnnotation, saveHighlighterColor, deleteQuote] as const;
 }

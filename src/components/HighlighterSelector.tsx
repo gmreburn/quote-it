@@ -2,16 +2,19 @@ import React from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { SwatchIcon } from "@heroicons/react/24/outline";
+import useQuote from "hooks/useQuote";
 import clsx from "clsx";
 
-export default function HighlighterSelector({ onChange }: { onChange: any }) {
+export default function HighlighterSelector() {
+	const { saveHighlighterColor } = useQuote();
 	const highlighters = [
 		{ color: "bg-yellow-300", label: "Review" },
 		{ color: "bg-green-300", label: "Term" },
 		{ color: "bg-pink-300", label: "Important" },
 	];
+	// TODO: remove `any` usage
 	const onHighlighterChanged = (color: any) => {
-		onChange(color.split("-")[1]);
+		saveHighlighterColor(color.split("-")[1]);
 	};
 
 	return (

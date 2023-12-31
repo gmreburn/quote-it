@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "tailwind.css";
 import Sidebar from "./components/Sidebar";
+import TabProvider from "./TabProvider";
 
 function setSidebarStyle(theme: browser._manifest.ThemeType) {
 	if (theme.colors) {
@@ -16,7 +17,12 @@ browser.windows.getCurrent({ populate: true }).then((windowInfo) => {
 		if (windowInfo.tabs) {
 			const tab = windowInfo.tabs.find((tab) => tab.active);
 			if (tab) {
-				ReactDOM.render(<Sidebar tab={tab} />, document.body);
+				ReactDOM.render(
+					<TabProvider tab={tab}>
+						<Sidebar />
+					</TabProvider>,
+					document.body
+				);
 			}
 		}
 		browser.theme.onUpdated.addListener(({ theme, windowId }) => {

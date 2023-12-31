@@ -75,23 +75,27 @@ class QuoteAPI {
 		return quotes;
 	}
 
-	async create(quoteText: string, tab: browser.tabs.Tab): Promise<Quote> {
+	async create(
+		url: string,
+		quoteText: string,
+		tab: browser.tabs.Tab
+	): Promise<Quote> {
 		console.debug("api create", quoteText);
 
-		if (!quoteText || !tab || !tab.url) {
+		if (!quoteText || !tab || !url) {
 			throw new Error("Invalid parameters. E4892");
 		}
-		const pageId = this.getPageId(tab.url);
+		const pageId = this.getPageId(url);
 
 		const quote: Quote = {
 			id: nanoid(),
 			text: quoteText.trim(),
 			created: new Date().toISOString(),
 			websiteTitle: tab.title,
-			url: tab.url,
+			url: url,
 		};
 
-		const quotes = await this.get(tab.url);
+		const quotes = await this.get(url);
 		quotes.push(quote);
 
 		await browser.storage.local.set({ [pageId]: quotes });

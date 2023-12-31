@@ -6,31 +6,17 @@ import Annotation from "components/Annotation";
 import HighlighterSelector from "components/HighlighterSelector";
 import Toolbar from "./Toolbar";
 import TextHighlighter from "components/TextHighlighter";
+import useQuote from "hooks/useQuote";
 
-function SidebarQuote({
-	quote,
-	saveAnnotation,
-	saveHighlighterColor,
-	deleteQuote,
-}: {
-	quote: Quote;
-	saveAnnotation: (quote: Quote, quoteText: string) => Promise<void>;
-	saveHighlighterColor: (
-		quote: Quote,
-		color: HighlighterColor
-	) => Promise<void>;
-	deleteQuote: (quoteId: string) => Promise<void>;
-}) {
+function SidebarQuote() {
+	const { quote, saveAnnotation } = useQuote();
 	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
 	const onAnnotationBlurred = (quoteText: string) => {
-		saveAnnotation(quote, quoteText);
+		saveAnnotation(quoteText);
 		setShowAnnotationInput(false);
 	};
 	const onAnnotationClicked = () => {
 		setShowAnnotationInput(true);
-	};
-	const onHighlighterChanged = (newColor: HighlighterColor) => {
-		saveHighlighterColor(quote, newColor);
 	};
 
 	if (!quote) return null;
@@ -69,8 +55,8 @@ function SidebarQuote({
 					>
 						<ChatBubbleBottomCenterTextIcon className='h-6 w-6' />
 					</Button>
-					<HighlighterSelector onChange={onHighlighterChanged} />
-					<Toolbar quote={quote} deleteQuote={deleteQuote} />
+					<HighlighterSelector />
+					<Toolbar quote={quote} />
 				</div>
 			</div>
 

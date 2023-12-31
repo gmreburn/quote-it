@@ -7,10 +7,17 @@ browser.menus.create({
 });
 
 browser.menus.onClicked.addListener(function (info, tab) {
-	console.log("plz save selection");
 	if (info.menuItemId == "save-selection" && info.selectionText && tab) {
 		console.debug("save selection", info, tab);
-		QuoteAPI.create(info.selectionText, tab).then((quote) => {
+
+		const canonical =
+			(document.querySelector('link[rel="canonical"]') as HTMLLinkElement)
+				?.href || tab?.url;
+		if (!canonical) {
+			return;
+		}
+
+		QuoteAPI.create(canonical, info.selectionText, tab).then((quote) => {
 			browser.runtime.sendMessage({
 				type: "QUOTE_ADDED",
 				quote,

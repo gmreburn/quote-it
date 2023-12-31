@@ -6,7 +6,7 @@ function TextHighlighter({
 	color,
 }: {
 	children: ReactNode;
-	color: HighlighterColor;
+	color?: HighlighterColor;
 }) {
 	return (
 		<span

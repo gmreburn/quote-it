@@ -8,14 +8,10 @@ import {
 	TrashIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
+import useQuotes from "hooks/useQuotes";
 
-export default function Toolbar({
-	quote,
-	deleteQuote,
-}: {
-	quote: Quote;
-	deleteQuote: (quote: string) => Promise<void>;
-}) {
+export default function Toolbar({ quote }: { quote: Quote }) {
+	const [, , , deleteQuote] = useQuotes();
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 

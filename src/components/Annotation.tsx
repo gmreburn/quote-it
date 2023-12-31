@@ -12,9 +12,7 @@ function Annotation({
 	onAnnotationBlurred: (quoteText: string) => void;
 }) {
 	const { annotation } = quote;
-	const [annotationText, setAnnotationText] = useState(
-		quote.annotation?.text || ""
-	);
+	const [annotationText, setAnnotationText] = useState(quote.annotation || "");
 
 	if (showAnnotationInput) {
 		return (
@@ -30,7 +28,7 @@ function Annotation({
 	} else if (annotation) {
 		return (
 			<div className='mt-2' onClick={() => setShowAnnotationInput(true)}>
-				&mdash; {annotation?.text}
+				&mdash; {annotation}
 			</div>
 		);
 	} else {

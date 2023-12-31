@@ -25,13 +25,20 @@ function useQuotes(url?: string) {
 						setQuotes((prevQuotes) => [...prevQuotes, event.quote]);
 						break;
 					case "QUOTE_ANNOTATED":
+						setQuotes((prevQuotes) =>
+							prevQuotes.map((q) =>
+								q.id === event.quote
+									? { ...q, annotation: event.annotationText }
+									: q
+							)
+						);
+						break;
 					case "QUOTE_HIGHLIGHTED":
-						// TODO: find and update object
-						// setQuotes(
-						// 	quotes.map(
-						// 		(obj) => event.quotes.find((o) => o.id === obj.id) || obj
-						// 	)
-						// );
+						setQuotes((prevQuotes) =>
+							prevQuotes.map((q) =>
+								q.id === event.quote ? { ...q, color: event.color } : q
+							)
+						);
 						break;
 
 					default:

@@ -14,12 +14,12 @@ function SidebarQuote({
 	deleteQuote,
 }: {
 	quote: Quote;
-	// TODO: fix any type
-	saveAnnotation: any;
-	// TODO: fix any type
-	saveHighlighterColor: any;
-	// TODO: fix any type
-	deleteQuote: (quote: string) => Promise<void>;
+	saveAnnotation: (quote: Quote, quoteText: string) => Promise<void>;
+	saveHighlighterColor: (
+		quote: Quote,
+		color: HighlighterColor
+	) => Promise<void>;
+	deleteQuote: (quoteId: string) => Promise<void>;
 }) {
 	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
 	const onAnnotationBlurred = (quoteText: string) => {

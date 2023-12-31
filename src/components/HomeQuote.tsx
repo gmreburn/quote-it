@@ -49,7 +49,7 @@ function HomeQuote({ quote, deleteQuote }: { quote: Quote; deleteQuote: any }) {
 					</TextHighlighter>
 				</p>
 			</a>
-			{quote.annotation && <p>{quote.annotation.text}</p>}
+			{quote.annotation && <p>{quote.annotation}</p>}
 
 			<div className='flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500 '>
 				<ExportQuoteButton onClick={onCopyClicked} />

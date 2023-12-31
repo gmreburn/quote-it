@@ -4,9 +4,7 @@ type Quote = {
 	/** The canonical URL of where the quote came from */
 	url: string;
 	websiteTitle: string;
-	annotation: {
-		text: string;
-	};
+	annotation?: string;
 	highlighter: {
 		color: HighlighterColor;
 		label: string;

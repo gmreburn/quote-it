@@ -1,19 +1,21 @@
 import React, { MouseEventHandler, ReactNode } from "react";
 import clsx, { ClassValue } from "clsx";
 
+interface Props {
+	onClick?: MouseEventHandler<HTMLButtonElement>;
+	children: ReactNode;
+	title: string;
+	className?: ClassValue;
+	type?: "button" | "submit" | "reset";
+}
+
 function Button({
 	onClick,
 	children,
 	title,
 	className,
 	type = "button",
-}: {
-	onClick?: MouseEventHandler<HTMLButtonElement>;
-	children: ReactNode;
-	title: string;
-	className?: ClassValue;
-	type?: "button" | "submit" | "reset";
-}) {
+}: Props) {
 	return (
 		<button
 			title={title}

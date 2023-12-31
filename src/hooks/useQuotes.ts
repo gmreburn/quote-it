@@ -17,10 +17,12 @@ function useQuotes(url?: string) {
 				// TODO: this probably needs added back to the if block || url === event.quote.tab.url) {
 				switch (event.type) {
 					case "QUOTE_DELETED":
-						setQuotes(quotes.filter((q) => q.id !== event.quote));
+						setQuotes((prevQuotes) =>
+							prevQuotes.filter((q) => q.id !== event.quote)
+						);
 						break;
 					case "QUOTE_ADDED":
-						setQuotes([...quotes, event.quote]);
+						setQuotes((prevQuotes) => [...prevQuotes, event.quote]);
 						break;
 					case "QUOTE_ANNOTATED":
 					case "QUOTE_HIGHLIGHTED":
@@ -38,21 +40,21 @@ function useQuotes(url?: string) {
 				}
 			}
 		},
-		[url, quotes]
+		[url]
 	);
-	const deleteQuote = (quote: string) =>
-		api.delete(quote).then(() => {
-			notify({ type: "QUOTE_DELETED", quote: quote });
+	const deleteQuote = (quoteId: string) =>
+		api.delete(quoteId).then(() => {
+			notify({ type: "QUOTE_DELETED", quote: quoteId });
 
 			browser.notifications
-				.create(`${quote}-deleted`, {
+				.create(`${quoteId}-deleted`, {
 					type: "basic",
 					title: browser.i18n.getMessage("QuoteDeletedTitle"),
 					message: browser.i18n.getMessage("QuoteDeleted"),
 				})
 				.then(() =>
 					setTimeout(() => {
-						browser.notifications.clear(`${quote}-deleted`);
+						browser.notifications.clear(`${quoteId}-deleted`);
 					}, 7000)
 				);
 
@@ -100,9 +102,9 @@ function useQuotes(url?: string) {
 		return () => {
 			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
 		};
-	}, [url, quotes]);
+	}, [url]);
 
-	return [quotes, saveAnnotation, saveHighlighterColor, deleteQuote];
+	return [quotes, saveAnnotation, saveHighlighterColor, deleteQuote] as const;
 }
 
 export default useQuotes;

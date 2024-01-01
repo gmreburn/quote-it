@@ -24,14 +24,17 @@ function SidebarQuote() {
 	return (
 		<li className='relative py-5 px-4'>
 			<div className='flex justify-between space-x-3'>
-				{/* <div className='min-w-0 flex-1'>
-					<a href='#' className='block focus:outline-none'>
+				<div className='min-w-0 flex-1'>
+					<a href={quote.url} className='block focus:outline-none'>
 						<p className='text-sm font-medium text-gray-900 truncate'>
-							{quote.author}
+							{/* {quote.author} */}Top Authors Share Their Must Reads of 2023
 						</p>
-						<p className='text-sm text-gray-500 truncate'>{quote.subject}</p>
+						<p className='text-sm text-gray-500 truncate'>
+							{/* {quote.subject} */}
+							{quote.url}
+						</p>
 					</a>
-				</div> */}
+				</div>
 				<Moment
 					className='flex-shrink-0 whitespace-nowrap text-sm text-gray-500'
 					fromNow
@@ -42,7 +45,7 @@ function SidebarQuote() {
 			<div className='mt-1'>
 				<p className='italic'>
 					<TextHighlighter color={quote?.highlighter?.color}>
-						"{quote.text}"
+						&quot;{quote.text}&quot;
 					</TextHighlighter>
 				</p>
 			</div>

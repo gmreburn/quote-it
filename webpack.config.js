@@ -44,6 +44,23 @@ const tsxEntries = manifest_pages
 		};
 	});
 
+// Assuming manifest has a 'content_scripts' property
+const content_scripts = manifest.content_scripts || [];
+
+const csEntries = content_scripts.map((resource) => {
+	if (resource.js && resource.js.length > 0) {
+		// Assuming there's only one JS file in the array, you might need to adjust if there are multiple
+		const jsFileName = resource.js[0];
+		const key = path.parse(jsFileName).name;
+
+		return {
+			[key]: path.resolve(__dirname, "./src", jsFileName),
+		};
+	}
+
+	return {};
+});
+
 module.exports = {
 	mode: process.env.npm_package_config_mode, // development - see https://webpack.js.org/configuration/devtool/
 	devtool:
@@ -57,6 +74,7 @@ module.exports = {
 	entry: Object.assign(
 		{},
 		...tsxEntries,
+		...csEntries,
 		...(manifest["background"] &&
 			Array.isArray(manifest["background"].scripts) &&
 			manifest["background"].scripts.map((script, i) => ({
@@ -103,10 +121,15 @@ module.exports = {
 								(script) => script.replace(".ts", ".js")
 							);
 						}
+						if (Array.isArray(manifest.content_scripts)) {
+							manifest.content_scripts = manifest.content_scripts.map((cs) => ({
+								...cs,
+								js: cs.js.map((script) => script.replace(".ts", ".js")),
+							}));
+						}
 
 						manifest_pages.forEach((page) => {
 							const key = Object.keys(page)[0];
-							console.log(key);
 
 							switch (key) {
 								case "background":

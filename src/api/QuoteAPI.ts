@@ -1,17 +1,11 @@
 import { nanoid } from "nanoid";
 
 class QuoteAPI {
-	getPageId(uri: string): string {
-		const url = new URL(uri);
-		return url.hostname + url.pathname;
-	}
-
 	async saveHighlighterColor(
 		quote: Quote,
 		color: HighlighterColor
 	): Promise<Highlighter> {
 		const quotes = await this.get(quote.url);
-		const pageId = this.getPageId(quote.url);
 
 		const updatedQuotes = quotes.map((q) => {
 			if (q.id === quote.id) {
@@ -24,7 +18,7 @@ class QuoteAPI {
 			return q;
 		});
 
-		await browser.storage.local.set({ [pageId]: updatedQuotes });
+		await browser.storage.local.set({ [quote.url]: updatedQuotes });
 
 		const updatedQuote = updatedQuotes.find((q) => q.id === quote.id);
 		if (!updatedQuote?.highlighter) {
@@ -39,7 +33,6 @@ class QuoteAPI {
 		annotationText: string
 	): Promise<QuoteAnnotation> {
 		const quotes = await this.get(quote.url);
-		const pageId = this.getPageId(quote.url);
 
 		const updatedQuotes = quotes.map((q) => {
 			if (q.id === quote.id) {
@@ -52,7 +45,7 @@ class QuoteAPI {
 			return q;
 		});
 
-		await browser.storage.local.set({ [pageId]: updatedQuotes });
+		await browser.storage.local.set({ [quote.url]: updatedQuotes });
 
 		const updatedQuote = updatedQuotes.find((q) => q.id === quote.id);
 		if (!updatedQuote?.annotation) {
@@ -64,8 +57,7 @@ class QuoteAPI {
 
 	async get(url?: string): Promise<Quote[]> {
 		console.debug("api get", url);
-		const pageId = url ? this.getPageId(url) : "";
-		const storedInfo = (await browser.storage.local.get(pageId)) as {
+		const storedInfo = (await browser.storage.local.get(url)) as {
 			[key: string]: Quote[];
 		};
 		const quotes = Object.keys(storedInfo).flatMap((key) =>
@@ -85,20 +77,19 @@ class QuoteAPI {
 		if (!quoteText || !tab || !url) {
 			throw new Error("Invalid parameters. E4892");
 		}
-		const pageId = this.getPageId(url);
 
 		const quote: Quote = {
 			id: nanoid(),
 			text: quoteText.trim(),
 			created: new Date().toISOString(),
 			websiteTitle: tab.title,
-			url: url,
+			url,
 		};
 
 		const quotes = await this.get(url);
 		quotes.push(quote);
 
-		await browser.storage.local.set({ [pageId]: quotes });
+		await browser.storage.local.set({ [url]: quotes });
 
 		return quote;
 	}
@@ -110,10 +101,9 @@ class QuoteAPI {
 			throw new Error("Invalid parameters. E4894");
 		}
 
-		const pageId = this.getPageId(url);
 		const quotes = await this.get(url);
 		const updatedQuotes = quotes.filter((q) => q.id !== quoteId);
-		const contentToStore = { [pageId]: updatedQuotes };
+		const contentToStore = { [url]: updatedQuotes };
 
 		await browser.storage.local.set(contentToStore);
 

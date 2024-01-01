@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "tailwind.css";
 import Sidebar from "./components/Sidebar";
 import TabProvider from "./TabProvider";
+import "tailwind.css";
 
 function setSidebarStyle(theme: browser._manifest.ThemeType) {
 	if (theme.colors) {
@@ -17,6 +17,7 @@ browser.windows.getCurrent({ populate: true }).then((windowInfo) => {
 		if (windowInfo.tabs) {
 			const tab = windowInfo.tabs.find((tab) => tab.active);
 			if (tab) {
+				// TODO: get canonical url before rendering?
 				ReactDOM.render(
 					<TabProvider tab={tab}>
 						<Sidebar />

@@ -1,28 +1,25 @@
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import tabContext from "contexts/tabContext";
+import tabContext, { TabContext } from "contexts/tabContext";
 type Props = { children: ReactNode; tab: browser.tabs.Tab };
-// TODO: need to set an event listener for <link/> canonical change.. also probably for tab's url change
+// TODO: need to set an event listener for <link/> canonical change..
 const TabProvider = ({ tab: initialTab, ...props }: Props) => {
-	const [tab, setTab] = useState<TabWithCanonical>(() => {
-		const canonical =
-			(document.querySelector('link[rel="canonical"]') as HTMLLinkElement)
-				?.href ||
-			initialTab?.url ||
-			"";
-		return { ...initialTab, canonical };
-	});
+	const [tab, setTab] = useState<TabWithCanonical | undefined>();
 
 	const handleActiveTabChange = useCallback(
 		(activeInfo: browser.tabs._OnActivatedActiveInfo) => {
 			console.debug("handleActiveTabChange", activeInfo);
-			if (activeInfo.windowId === tab.windowId) {
-				browser.tabs.get(activeInfo.tabId).then((tab) => {
-					const canonical =
-						(document.querySelector('link[rel="canonical"]') as HTMLLinkElement)
-							?.href ||
-						initialTab?.url ||
-						"";
-					setTab({ ...tab, canonical });
+
+			if (tab && activeInfo.windowId === tab.windowId) {
+				browser.tabs.get(activeInfo.tabId).then(async (tab) => {
+					if (tab.id) {
+						const response = await browser.tabs.sendMessage(tab.id, {
+							action: "getCanonicalURL",
+						});
+
+						if (response && response.canonicalURL) {
+							setTab({ ...tab, canonical: response.canonicalURL });
+						}
+					}
 				});
 			}
 		},
@@ -35,21 +32,27 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 			tab: browser.tabs.Tab
 		) => {
 			console.debug("handleOnUpdated", tab);
-			if (tab.windowId === tab.windowId) {
-				const canonical =
-					(document.querySelector('link[rel="canonical"]') as HTMLLinkElement)
-						?.href ||
-					initialTab?.url ||
-					"";
-				setTab({ ...tab, canonical });
+			if (tab.windowId === tab.windowId && tab.id) {
+				getCanonicalURL();
 			}
 		},
 		[tab]
 	);
-
+	async function getCanonicalURL() {
+		if (initialTab.id) {
+			const response = await browser.tabs.sendMessage(initialTab.id, {
+				action: "getCanonicalURL",
+			});
+			if (response && response.canonical) {
+				setTab({ ...initialTab, canonical: response.canonical });
+			}
+		}
+	}
 	useEffect(() => {
+		getCanonicalURL();
+
 		browser.tabs.onUpdated.addListener(handleOnUpdated, {
-			windowId: tab.windowId,
+			windowId: initialTab.windowId,
 			properties: ["url"],
 		});
 		browser.tabs.onActivated.addListener(handleActiveTabChange);
@@ -58,13 +61,18 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 			browser.tabs.onUpdated.removeListener(handleOnUpdated);
 			browser.tabs.onActivated.removeListener(handleActiveTabChange);
 		};
-	}, []);
+	}, [initialTab]);
+
 	//--
-	const [value, setValue] = useState({ tab });
+	const [value, setValue] = useState<TabContext>();
 	const { Provider } = tabContext;
 
 	useEffect(() => {
-		setValue({ tab });
+		if (tab) {
+			setValue({ tab });
+		} else {
+			setValue(undefined);
+		}
 	}, [tab]);
 
 	return <Provider value={value} {...props} />;

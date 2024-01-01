@@ -1,67 +1,67 @@
 {
 	"extensionName": {
 		"message": "Quote It",
-		"description": "Name of the extension."
+		"description": "The name of the extension."
 	},
 	"menuItemSaveQuote": {
-		"message": "Save quote",
-		"description": "Title of context menu item that saves the selected text when clicked."
+		"message": "Save Quote",
+		"description": "Title of the context menu item that saves the selected text when clicked."
 	},
 	"btnHighlightQuote": {
-		"message": "Highlight occurrences on page",
+		"message": "Highlight Occurrences on Page",
 		"description": "A button that highlights all occurrences of the quote on the page."
 	},
 	"mnuHighlightQuote": {
-		"message": "Highlight occurrences",
-		"description": "A menu item button that highlights all occurrences of the quote on the page. Needs to be short to display properly."
+		"message": "Highlight Occurrences",
+		"description": "A menu item button that highlights all occurrences of the quote on the page. Needs to be short for proper display."
 	},
 	"btnCopyQuote": {
-		"message": "Copy to clipboard",
+		"message": "Copy to Clipboard",
 		"description": "A button that copies a quote to the user's clipboard."
 	},
 	"btnDeleteQuote": {
-		"message": "Delete this quote",
+		"message": "Delete This Quote",
 		"description": "A button that deletes a quote."
 	},
 	"QuoteCopiedTitle": {
-		"message": "Quote copied",
+		"message": "Quote Copied",
 		"description": "A title shown in a notification when the user copies a quote to their clipboard."
 	},
 	"QuoteCopied": {
-		"message": "The quote was copied to your clipboard.",
+		"message": "The quote has been copied to your clipboard.",
 		"description": "A paragraph shown in a notification when the user copies a quote to their clipboard."
 	},
 	"QuoteDeletedTitle": {
-		"message": "Quote deleted",
-		"description": "A title shown in a notification when the user copies a quote to their clipboard."
+		"message": "Quote Deleted",
+		"description": "A title shown in a notification when the user deletes a quote."
 	},
 	"QuoteDeleted": {
-		"message": "The quote was deleted",
-		"description": "A paragraph shown in a notification when the user copies a quote to their clipboard."
+		"message": "The quote has been deleted.",
+		"description": "A paragraph shown in a notification when the user deletes a quote."
 	},
 	"NoQuotesYet": {
-		"message": "No quotes yet",
-		"description": "Title shown in sidebar when the current page does not have any quotes saved yet."
+		"message": "No Quotes Yet",
+		"description": "Title shown in the sidebar when the current page does not have any saved quotes."
 	},
 	"NoQuotes_GetStarted": {
 		"message": "Get started by selecting text on the page.",
-		"description": "Paragraph shown in sidebar when page does not have any quotes yet."
+		"description": "Paragraph shown in the sidebar when the page does not have any saved quotes yet."
 	},
 	"CloseDialog": {
 		"message": "Close",
 		"description": "Caption for screen readers to close a dialog."
 	},
 	"DefaultSuggestion": {
-		"message": "Start typing to find a quote.",
-		"description": "Shown when the user activates the extension omnibox"
+		"message": "Start typing to find a Quote",
+		"description": "Shown when the user activates the extension omnibox."
 	},
-	"View saved quotes": {
-		"message": "View saved quotes",
-		"description": "Browser action hover title. Takes user to homepage showing quotes that have been saved on any webpage."
+	"ViewSavedQuotes": {
+		"message": "View Saved Quotes",
+		"description": "Browser action hover title. Takes the user to the homepage showing saved quotes on any webpage."
 	},
-	"QuoteaddedTitle": {
-		"message": "Quote saved",
-		"description": "A title shown in a notification hen the user creates a new quote from highlighted text on a webpage."
+	"QuoteAddedTitle": {
+		"message": "Quote Saved",
+		"description": "A title shown in a notification when the user creates a new quote from highlighted text on a webpage."
 	},
 	"QuoteAddedMessage": {
 		"message": "Access the quote in the quote sidebar (CTRL+Q).",
@@ -69,10 +69,10 @@
 	},
 	"btnAnnotate": {
 		"message": "Annotate",
-		"description": "Title for button when clicked opens an input text box for user to type notes about the quote."
+		"description": "Title for the button; when clicked, opens an input text box for the user to type notes about the quote."
 	},
-	"Quotes from across the web": {
-		"message": "Quotes from across the web",
-		"description": "Title on homepage"
+	"QuotesFromAcrossTheWeb": {
+		"message": "Quotes From Across the Web",
+		"description": "Title on the homepage."
 	}
 }

@@ -18,7 +18,11 @@ export default function HighlighterSelector() {
 	};
 
 	return (
-		<Menu as='div' className='relative inline-block text-left z-10'>
+		<Menu
+			as='div'
+			className='relative inline-block text-left z-10'
+			title={browser.i18n.getMessage("HighlightThisQuote")}
+		>
 			<div>
 				<Menu.Button className='flex items-center hover:text-gray-600'>
 					<span className='sr-only'>Open highlighter options</span>

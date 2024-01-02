@@ -7,6 +7,6 @@ export type QuoteContext = {
 	saveHighlighterColor: (newColor: HighlighterColor) => Promise<Highlighter>;
 };
 
-const quoteContext = createContext<QuoteContext | undefined>(undefined);
+const quoteContext = createContext<QuoteContext>({} as QuoteContext);
 
 export default quoteContext;

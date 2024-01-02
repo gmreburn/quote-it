@@ -4,7 +4,7 @@
 	"description": "",
 	"private": true,
 	"config": {
-		"start_url": "http://test.com",
+		"start_url": "https://github.com/gmreburn",
 		"mode": "production"
 	},
 	"scripts": {
@@ -17,7 +17,7 @@
 		"watch": "webpack --watch",
 		"prestart": "npm run-script build",
 		"start": "run-p start:firefox watch",
-		"start:firefox": "web-ext run --source-dir addon --pref startup.homepage_welcome_url=%npm_package_config_start_url%",
+		"start:firefox": "web-ext run --source-dir addon --pref startup.homepage_welcome_url=$npm_package_config_start_url",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],

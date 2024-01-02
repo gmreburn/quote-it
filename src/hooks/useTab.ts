@@ -6,6 +6,6 @@ function useTab() {
 	if (!context) {
 		throw new Error("useTab must be used within a TabProvider");
 	}
-	return context;
+	return [context.tab];
 }
 export default useTab;

@@ -1,53 +1,73 @@
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import quoteContext from "contexts/quoteContext";
+import quoteContext, { QuoteContext } from "contexts/quoteContext";
 import QuoteAPI from "api/QuoteAPI";
 import useTab from "hooks/useTab";
 type Props = { children: ReactNode; quote: Quote };
 // TODO: need to set an event listener for <link/> canonical change.. also probably for tab's url change
 const QuoteProvider = ({ quote, ...props }: Props) => {
-	const { tab } = useTab();
+	const [tab] = useTab();
 	const deleteQuote = async () => {
-		QuoteAPI.delete(tab.canonical, quote.id).then(() => {
-			notify({ type: "QUOTE_DELETED", quoteId: quote.id, url: tab.canonical });
-
-			browser.notifications
-				.create(`${quote.id}-deleted`, {
-					type: "basic",
-					title: browser.i18n.getMessage("QuoteDeletedTitle"),
-					message: browser.i18n.getMessage("QuoteDeleted"),
-				})
-				.then(() =>
-					setTimeout(() => {
-						browser.notifications.clear(`${quote.id}-deleted`);
-					}, 7000)
-				);
-
+		if (!tab || !tab.url) {
+			// If tab or tab.url is undefined, exit the function
 			return;
-		});
-	};
-	const saveAnnotation = (annotationText: string) => {
-		return QuoteAPI.saveAnnotation(quote, annotationText).then((annotation) => {
-			notify({
-				type: "QUOTE_ANNOTATED",
-				quoteId: quote.id,
-				annotation,
-				url: tab.canonical,
+		}
+
+		const { url } = tab;
+
+		try {
+			await QuoteAPI.delete(url, quote.id);
+
+			notify({ type: "QUOTE_DELETED", quoteId: quote.id, url });
+
+			const notificationId = `${quote.id}-deleted`;
+
+			browser.notifications.create(notificationId, {
+				type: "basic",
+				title: browser.i18n.getMessage("QuoteDeletedTitle"),
+				message: browser.i18n.getMessage("QuoteDeleted"),
 			});
-			return annotation;
-		});
+
+			setTimeout(() => {
+				browser.notifications.clear(notificationId);
+			}, 7000);
+		} catch (error) {
+			console.error("Error deleting quote:", error);
+			// Handle the error as needed
+		}
 	};
-	const saveHighlighterColor = (newColor: HighlighterColor) => {
-		return QuoteAPI.saveHighlighterColor(quote, newColor).then(
-			(highlighter) => {
-				notify({
-					type: "QUOTE_HIGHLIGHTED",
-					quoteId: quote.id,
-					highlighter,
-					url: tab.canonical,
-				});
-				return highlighter;
-			}
-		);
+	// saveAnnotation: (annotationText: string) => Promise<QuoteAnnotation>;
+	const saveAnnotation = async (annotationText: string) => {
+		if (!tab || !tab.url) {
+			// If tab or tab.url is undefined, return undefined
+			throw new Error("The tab or tab's URL is undefined.");
+		}
+
+		const annotation = await QuoteAPI.saveAnnotation(quote, annotationText);
+
+		notify({
+			type: "QUOTE_ANNOTATED",
+			quoteId: quote.id,
+			annotation,
+			url: tab.url,
+		});
+
+		return annotation;
+	};
+	const saveHighlighterColor = async (newColor: HighlighterColor) => {
+		if (!tab || !tab.url) {
+			// If tab or tab.url is undefined, return undefined
+			throw new Error("The tab or tab's URL is undefined.");
+		}
+
+		const highlighter = await QuoteAPI.saveHighlighterColor(quote, newColor);
+
+		notify({
+			type: "QUOTE_HIGHLIGHTED",
+			quoteId: quote.id,
+			highlighter,
+			url: tab.url,
+		});
+		return highlighter;
 	};
 	//--
 	const notify = (
@@ -61,8 +81,7 @@ const QuoteProvider = ({ quote, ...props }: Props) => {
 		browser.runtime.sendMessage(event);
 	};
 
-	const [value, setValue] = useState({
-		tab,
+	const [value, setValue] = useState<QuoteContext>({
 		quote,
 		deleteQuote,
 		saveAnnotation,
@@ -71,8 +90,8 @@ const QuoteProvider = ({ quote, ...props }: Props) => {
 	const { Provider } = quoteContext;
 
 	useEffect(() => {
-		setValue({ tab, quote, deleteQuote, saveAnnotation, saveHighlighterColor });
-	}, [tab]);
+		setValue({ quote, deleteQuote, saveAnnotation, saveHighlighterColor });
+	}, [quote]);
 
 	return <Provider value={value} {...props} />;
 };

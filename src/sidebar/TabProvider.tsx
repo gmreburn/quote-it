@@ -3,7 +3,7 @@ import tabContext, { TabContext } from "contexts/tabContext";
 type Props = { children: ReactNode; tab: browser.tabs.Tab };
 // TODO: need to set an event listener for <link/> canonical change..
 const TabProvider = ({ tab: initialTab, ...props }: Props) => {
-	const [tab, setTab] = useState<TabWithCanonical | undefined>();
+	const [tab, setTab] = useState<browser.tabs.Tab>(initialTab);
 
 	const handleActiveTabChange = useCallback(
 		(activeInfo: browser.tabs._OnActivatedActiveInfo) => {
@@ -12,12 +12,12 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 			if (tab && activeInfo.windowId === tab.windowId) {
 				browser.tabs.get(activeInfo.tabId).then(async (tab) => {
 					if (tab.id) {
-						const response = await browser.tabs.sendMessage(tab.id, {
+						const url = await browser.tabs.sendMessage(tab.id, {
 							action: "getCanonicalURL",
 						});
 
-						if (response && response.canonicalURL) {
-							setTab({ ...tab, canonical: response.canonicalURL });
+						if (url) {
+							setTab({ ...tab, url });
 						}
 					}
 				});
@@ -40,17 +40,15 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 	);
 	async function getCanonicalURL() {
 		if (initialTab.id) {
-			const response = await browser.tabs.sendMessage(initialTab.id, {
+			const url = await browser.tabs.sendMessage(initialTab.id, {
 				action: "getCanonicalURL",
 			});
-			if (response && response.canonical) {
-				setTab({ ...initialTab, canonical: response.canonical });
+			if (url) {
+				setTab({ ...initialTab, url });
 			}
 		}
 	}
 	useEffect(() => {
-		getCanonicalURL();
-
 		browser.tabs.onUpdated.addListener(handleOnUpdated, {
 			windowId: initialTab.windowId,
 			properties: ["url"],
@@ -64,15 +62,11 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 	}, [initialTab]);
 
 	//--
-	const [value, setValue] = useState<TabContext>();
+	const [value, setValue] = useState<TabContext>({ tab });
 	const { Provider } = tabContext;
 
 	useEffect(() => {
-		if (tab) {
-			setValue({ tab });
-		} else {
-			setValue(undefined);
-		}
+		setValue({ tab });
 	}, [tab]);
 
 	return <Provider value={value} {...props} />;

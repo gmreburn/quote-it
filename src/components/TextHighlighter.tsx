@@ -11,9 +11,11 @@ function TextHighlighter({
 	return (
 		<span
 			className={clsx(
-				color === "yellow" && "bg-yellow-300", // class name expanded for minifier
-				color === "green" && "bg-green-300",
-				color === "pink" && "bg-pink-300"
+				color === "yellow" && "bg-yellow-300 dark:bg-yellow-700", // class name expanded for minifier
+				color === "green" && "bg-green-300 dark:bg-green-700",
+				color === "pink" && "bg-pink-300 dark:bg-pink-700",
+				"px-1",
+				color && "dark:text-gray-900"
 			)}
 		>
 			{children}

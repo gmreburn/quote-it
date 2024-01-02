@@ -3,8 +3,10 @@ import ReactDOM from "react-dom";
 import Sidebar from "./components/Sidebar";
 import TabProvider from "./TabProvider";
 import "tailwind.css";
+import Layout from "./layout";
 
 function setSidebarStyle(theme: browser._manifest.ThemeType) {
+	console.log("theme info", theme);
 	if (theme.colors) {
 		document.body.style.cssText = `background: ${theme.colors.frame}; color: ${theme.colors.sidebar_text}; border-color: ${theme.colors.sidebar_border}`;
 	} else {
@@ -40,9 +42,11 @@ browser.tabs
 				console.debug("getCanonicalURL2", url);
 
 				ReactDOM.render(
-					<TabProvider tab={{ ...tab, url }}>
-						<Sidebar />
-					</TabProvider>,
+					<Layout>
+						<TabProvider tab={{ ...tab, url }}>
+							<Sidebar />
+						</TabProvider>
+					</Layout>,
 					document.body
 				);
 			}

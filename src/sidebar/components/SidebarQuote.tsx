@@ -26,7 +26,7 @@ function SidebarQuote() {
 			<div className='flex justify-between space-x-3'>
 				<div className='min-w-0 flex-1'>
 					<a href={quote.url} className='block focus:outline-none'>
-						<p className='text-sm font-medium text-gray-900 truncate'>
+						<p className='text-sm font-medium text-gray-900x truncate'>
 							{quote.websiteTitle}
 						</p>
 						<p className='text-sm text-gray-500 truncate'>{quote.url}</p>

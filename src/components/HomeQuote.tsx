@@ -41,10 +41,10 @@ function HomeQuote() {
 
 			<a href={quote.url} className='block mt-4 text-gray-500' target='_blank'>
 				<p>{quote.url}</p>
-				<p className='text-xl font-semibold text-gray-900'>
+				<p className='text-xl font-semibold text-gray-900 dark:text-gray-100'>
 					{quote.websiteTitle}
 				</p>
-				<p className='mt-3 text-base text-gray-900'>
+				<p className='mt-3 text-base text-gray-900 dark:text-gray-100'>
 					<TextHighlighter color={quote?.highlighter?.color}>
 						<span className='italic'>"{quote.text}"</span>
 					</TextHighlighter>{" "}
@@ -60,7 +60,7 @@ function HomeQuote() {
 			</a>
 			{quote.annotation && <p>{quote.annotation.text}</p>}
 
-			<div className='flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500 '>
+			<div className='flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500'>
 				<ExportQuoteButton onClick={onCopyClicked} />
 				<DeleteQuoteButton />
 			</div>

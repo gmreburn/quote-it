@@ -3,9 +3,11 @@ import SidebarQuote from "./SidebarQuote";
 import useQuotes from "../../hooks/useQuotes";
 import NoQuotesYet from "./NoQuotesYet";
 import QuoteProvider from "providers/QuoteProvider";
+import useTab from "hooks/useTab";
 
 function Sidebar() {
-	const [quotes] = useQuotes();
+	const [tab] = useTab();
+	const [quotes] = useQuotes(tab.url);
 
 	if (!Array.isArray(quotes)) {
 		return null;

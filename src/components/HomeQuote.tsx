@@ -2,8 +2,11 @@ import React from "react";
 import DeleteQuoteButton from "./DeleteQuoteButton";
 import ExportQuoteButton from "./ExportQuoteButton";
 import TextHighlighter from "./TextHighlighter";
+import useQuote from "hooks/useQuote";
+import Moment from "react-moment";
 
-function HomeQuote({ quote }: { quote: Quote }) {
+function HomeQuote() {
+	const { quote } = useQuote();
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -38,14 +41,21 @@ function HomeQuote({ quote }: { quote: Quote }) {
 
 			<a href={quote.url} className='block mt-4 text-gray-500' target='_blank'>
 				<p>{quote.url}</p>
-				<p className='text-xl font-semibold text-gray-500'>
+				<p className='text-xl font-semibold text-gray-900'>
 					{quote.websiteTitle}
 				</p>
 				<p className='mt-3 text-base text-gray-900'>
-					{quote.created} &mdash;{" "}
 					<TextHighlighter color={quote?.highlighter?.color}>
 						<span className='italic'>"{quote.text}"</span>
-					</TextHighlighter>
+					</TextHighlighter>{" "}
+					&mdash;{" "}
+					<Moment
+						className='flex-shrink-0 whitespace-nowrap text-sm text-gray-500'
+						fromNow
+						withTitle
+					>
+						{quote.created}
+					</Moment>
 				</p>
 			</a>
 			{quote.annotation && <p>{quote.annotation.text}</p>}

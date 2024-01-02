@@ -12,13 +12,15 @@ function Home() {
 	if (!Array.isArray(quotes)) {
 		return null;
 	}
+
 	return (
 		<div className='bg-white pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8'>
 			<div className='relative max-w-lg mx-auto divide-y-2 divide-gray-200 lg:max-w-7xl'>
 				<div>
 					<h2 className='text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl'>
-						{browser.i18n.getMessage("Quotes From Across the Web")}
+						{browser.i18n.getMessage("QuotesFromAcrossTheWeb")}
 					</h2>
+					{/* TODO: refine this description */}
 					{/* <p className='mt-3 text-xl text-gray-500 sm:mt-4'>
 						Revisit moments of inspiration effortlessly, and let your unique
 						tapestry of wisdom be a source of motivation and insight.
@@ -29,7 +31,7 @@ function Home() {
 					{quotes.length > 0 &&
 						quotes?.map((quote) => (
 							<QuoteProvider quote={quote} key={quote.id}>
-								<HomeQuote key={quote.id} quote={quote} />
+								<HomeQuote key={quote.id} />
 							</QuoteProvider>
 						))}
 				</div>

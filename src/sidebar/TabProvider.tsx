@@ -12,13 +12,7 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 			if (tab && activeInfo.windowId === tab.windowId) {
 				browser.tabs.get(activeInfo.tabId).then(async (tab) => {
 					if (tab.id) {
-						const url = await browser.tabs.sendMessage(tab.id, {
-							action: "getCanonicalURL",
-						});
-
-						if (url) {
-							setTab({ ...tab, url });
-						}
+						setTabAsync(tab.id, tab);
 					}
 				});
 			}
@@ -31,21 +25,22 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 			changeInfo: browser.tabs._OnUpdatedChangeInfo,
 			tab: browser.tabs.Tab
 		) => {
-			console.debug("handleOnUpdated", tab);
-			if (tab.windowId === tab.windowId && tab.id) {
-				getCanonicalURL();
+			console.debug("handleOnUpdated", tabId, tab.id);
+			if (tab.windowId === tab.windowId && tabId) {
+				setTabAsync(tabId, tab);
 			}
 		},
 		[tab]
 	);
-	async function getCanonicalURL() {
-		if (initialTab.id) {
-			const url = await browser.tabs.sendMessage(initialTab.id, {
+	async function setTabAsync(tabId: number, tab: browser.tabs.Tab) {
+		let url = tab.url;
+		try {
+			url = await browser.tabs.sendMessage(tabId, {
 				action: "getCanonicalURL",
 			});
-			if (url) {
-				setTab({ ...initialTab, url });
-			}
+		} catch {
+		} finally {
+			setTab({ ...tab, url });
 		}
 	}
 	useEffect(() => {

@@ -63,7 +63,7 @@ class QuoteAPI {
 		const quotes = Object.keys(storedInfo).flatMap((key) =>
 			storedInfo[key].map((quote) => ({ ...quote, url: key }))
 		);
-
+		console.log("quotes", quotes);
 		return quotes;
 	}
 

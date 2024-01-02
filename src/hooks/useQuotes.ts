@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import QuoteAPI from "../api/QuoteAPI";
-import useTab from "./useTab";
 
-function useQuotes() {
-	const [tab] = useTab();
+function useQuotes(url?: string) {
 	const [quotes, setQuotes] = useState<Quote[]>([]);
 	const runtimeMessageReducer = useCallback(
 		function (
@@ -14,10 +12,12 @@ function useQuotes() {
 				| QuoteHighlightedEvent
 		) {
 			if (
-				tab === undefined ||
+				// url === undefined ||
 				// TODO: how to fix this?
 				// tab.canonical === event.url ||
-				tab.url === event.url
+				url === event.url
+				// TODO: or if page == moz-extension://{extension-id}/pages/home.html
+				// this updates the sidebar to show all quotes when displaying the quote page
 			) {
 				switch (event.type) {
 					case "QUOTE_DELETED":
@@ -54,17 +54,15 @@ function useQuotes() {
 				}
 			}
 		},
-		[tab]
+		[url]
 	);
 	useEffect(() => {
-		if (tab?.url) {
-			QuoteAPI.get(tab.url).then(setQuotes);
-			browser.runtime.onMessage.addListener(runtimeMessageReducer);
-			return () => {
-				browser.runtime.onMessage.removeListener(runtimeMessageReducer);
-			};
-		}
-	}, [tab]);
+		QuoteAPI.get(url).then(setQuotes);
+		browser.runtime.onMessage.addListener(runtimeMessageReducer);
+		return () => {
+			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
+		};
+	}, [url]);
 
 	return [quotes] as const;
 }

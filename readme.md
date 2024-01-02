@@ -4,7 +4,7 @@ Right-click highlighted text on any webpage to quote it. Quotes appear in the si
 
 ## Prerequisites
 
-- [nodejs v14](https://nodejs.org/en/)
+- [nodejs v18](https://nodejs.org/en/)
 
 ## Quick Overview
 
@@ -27,7 +27,7 @@ npm run package
 
 # Development Guide
 
-You’ll need to have Node v14 or later version on your local development machine to compile the sources. I recommend using the latest LTS version. You can use nvm (macOS/Linux) or nvm-windows to switch Node versions between different projects.
+You’ll need to have Node v18 or later version on your local development machine to compile the sources. I recommend using the latest LTS version. You can use nvm (macOS/Linux) or nvm-windows to switch Node versions between different projects.
 
 ## API Pages
 

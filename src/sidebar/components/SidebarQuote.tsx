@@ -27,17 +27,15 @@ function SidebarQuote() {
 				<div className='min-w-0 flex-1'>
 					<a href={quote.url} className='block focus:outline-none'>
 						<p className='text-sm font-medium text-gray-900 truncate'>
-							{/* {quote.author} */}Top Authors Share Their Must Reads of 2023
+							{quote.websiteTitle}
 						</p>
-						<p className='text-sm text-gray-500 truncate'>
-							{/* {quote.subject} */}
-							{quote.url}
-						</p>
+						<p className='text-sm text-gray-500 truncate'>{quote.url}</p>
 					</a>
 				</div>
 				<Moment
 					className='flex-shrink-0 whitespace-nowrap text-sm text-gray-500'
 					fromNow
+					withTitle
 				>
 					{quote.created}
 				</Moment>

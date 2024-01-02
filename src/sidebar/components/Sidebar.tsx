@@ -15,7 +15,7 @@ function Sidebar() {
 		return <NoQuotesYet />;
 	} else {
 		return (
-			<ul role='list' className='divide-y'>
+			<ul role='list' className='divide-y divide-gray-200 dark:divide-gray-800'>
 				{quotes.map((quote) => (
 					<QuoteProvider quote={quote} key={quote.id}>
 						<SidebarQuote />

@@ -3,7 +3,7 @@ import DeleteQuoteButton from "./DeleteQuoteButton";
 import ExportQuoteButton from "./ExportQuoteButton";
 import TextHighlighter from "./TextHighlighter";
 
-function HomeQuote({ quote, deleteQuote }: { quote: Quote; deleteQuote: any }) {
+function HomeQuote({ quote }: { quote: Quote }) {
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -19,7 +19,6 @@ function HomeQuote({ quote, deleteQuote }: { quote: Quote; deleteQuote: any }) {
 				}, 7000)
 			);
 	};
-	const onDeleteClicked = () => deleteQuote(quote);
 
 	return (
 		<div>
@@ -53,7 +52,7 @@ function HomeQuote({ quote, deleteQuote }: { quote: Quote; deleteQuote: any }) {
 
 			<div className='flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500 '>
 				<ExportQuoteButton onClick={onCopyClicked} />
-				<DeleteQuoteButton onClick={onDeleteClicked} />
+				<DeleteQuoteButton />
 			</div>
 			{/* TODO: add citation metadata
 			 {quote.author && (

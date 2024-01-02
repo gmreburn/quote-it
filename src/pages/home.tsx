@@ -4,9 +4,10 @@ import HomeQuote from "components/HomeQuote";
 import useQuotes from "hooks/useQuotes";
 import "../tailwind.css";
 import NoQuotesYet from "sidebar/components/NoQuotesYet";
+import QuoteProvider from "providers/QuoteProvider";
 
 function Home() {
-	const [quotes, , , deleteQuote] = useQuotes();
+	const [quotes] = useQuotes();
 
 	if (!Array.isArray(quotes)) {
 		return null;
@@ -27,11 +28,9 @@ function Home() {
 					{quotes.length === 0 && <NoQuotesYet />}
 					{quotes.length > 0 &&
 						quotes?.map((quote) => (
-							<HomeQuote
-								key={quote.id}
-								quote={quote}
-								deleteQuote={deleteQuote}
-							/>
+							<QuoteProvider quote={quote} key={quote.id}>
+								<HomeQuote key={quote.id} quote={quote} />
+							</QuoteProvider>
 						))}
 				</div>
 			</div>

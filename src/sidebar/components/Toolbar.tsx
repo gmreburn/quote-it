@@ -8,10 +8,10 @@ import {
 	TrashIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import useQuotes from "hooks/useQuotes";
+import useQuote from "hooks/useQuote";
 
 export default function Toolbar({ quote }: { quote: Quote }) {
-	const [, , , deleteQuote] = useQuotes();
+	const { deleteQuote } = useQuote();
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -23,10 +23,6 @@ export default function Toolbar({ quote }: { quote: Quote }) {
 		setTimeout(() => {
 			browser.notifications.clear(`${quote.id}-copied`);
 		}, 7000);
-	};
-	const onDeleteClicked = () => {
-		// TODO: confirm delete before delete or add undo button to notification
-		deleteQuote(quote.id);
 	};
 	const onFindClicked = () => {
 		browser.find
@@ -61,12 +57,10 @@ export default function Toolbar({ quote }: { quote: Quote }) {
 					<div className='py-1'>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									// TODO: can this be a button instead of <a />? Check rest of project for this issue also
-									href='#'
+								<button
 									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"group flex items-center px-4 py-2 text-sm"
+										"group flex w-full items-center px-4 py-2 text-sm"
 									)}
 									onClick={onCopyClicked}
 									title={browser.i18n.getMessage("btnCopyQuote")}
@@ -76,16 +70,15 @@ export default function Toolbar({ quote }: { quote: Quote }) {
 										aria-hidden='true'
 									/>
 									{browser.i18n.getMessage("btnCopyQuote")}
-								</a>
+								</button>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<button
 									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"group flex items-center px-4 py-2 text-sm"
+										"group flex w-full items-center px-4 py-2 text-sm"
 									)}
 									onClick={onFindClicked}
 									title={browser.i18n.getMessage("btnHighlightQuote")}
@@ -95,18 +88,17 @@ export default function Toolbar({ quote }: { quote: Quote }) {
 										aria-hidden='true'
 									/>
 									{browser.i18n.getMessage("mnuHighlightQuote")}
-								</a>
+								</button>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<button
 									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"group flex items-center px-4 py-2 text-sm"
+										"group flex w-full items-center px-4 py-2 text-sm"
 									)}
-									onClick={onDeleteClicked}
+									onClick={deleteQuote}
 									title={browser.i18n.getMessage("btnDeleteQuote")}
 								>
 									<TrashIcon
@@ -114,7 +106,7 @@ export default function Toolbar({ quote }: { quote: Quote }) {
 										aria-hidden='true'
 									/>
 									{browser.i18n.getMessage("btnDeleteQuote")}
-								</a>
+								</button>
 							)}
 						</Menu.Item>
 					</div>

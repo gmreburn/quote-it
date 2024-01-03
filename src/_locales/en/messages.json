@@ -78,5 +78,9 @@
 	"HighlightThisQuote": {
 		"message": "Highlight this quote",
 		"description": "button title shown when covering over the selector that set the highlight color of quoted text."
+	},
+	"RevisitSavedQuotesParagraph": {
+		"message": "Revisit moments of inspiration gathered from various web pages.",
+		"description": "Paragraph comes after HighlightThisQuote displayed on the homepage that lists all quotes the user has saved."
 	}
 }

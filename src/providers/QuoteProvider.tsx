@@ -8,9 +8,9 @@ const QuoteProvider = ({ quote: initalValue, ...props }: Props) => {
 	const [tab] = useTab();
 	const [quote, setQuote] = useState(initalValue);
 	const runtimeMessageReducer = useCallback(
-		function (event: QuoteAnnotatedEvent | QuoteHighlightedEvent) {
-			console.table(event);
-			console.table(quote);
+		function (
+			event: QuoteAnnotatedEvent | QuoteDeletedEvent | QuoteHighlightedEvent
+		) {
 			if (event.quoteId === quote.id) {
 				switch (event.type) {
 					case "QUOTE_ANNOTATED":
@@ -22,10 +22,6 @@ const QuoteProvider = ({ quote: initalValue, ...props }: Props) => {
 								event.annotation
 							),
 						}));
-						console.debug("quote updated", {
-							...quote,
-							annotation: Object.assign({}, quote.annotation, event.annotation),
-						});
 						break;
 					case "QUOTE_HIGHLIGHTED":
 						setQuote((prevQuote) => ({
@@ -39,7 +35,7 @@ const QuoteProvider = ({ quote: initalValue, ...props }: Props) => {
 						break;
 
 					default:
-						console.debug("no such type", event);
+						console.debug("Unsupported event type", event);
 						break;
 				}
 			}
@@ -82,7 +78,6 @@ const QuoteProvider = ({ quote: initalValue, ...props }: Props) => {
 			// Handle the error as needed
 		}
 	};
-	// saveAnnotation: (annotationText: string) => Promise<QuoteAnnotation>;
 	const saveAnnotation = async (annotationText: string) => {
 		if (!tab || !tab.url) {
 			// If tab or tab.url is undefined, return undefined
@@ -117,9 +112,13 @@ const QuoteProvider = ({ quote: initalValue, ...props }: Props) => {
 		return highlighter;
 	};
 	//--
-	const notify = (event: QuoteAnnotatedEvent | QuoteHighlightedEvent) => {
-		// Inform self
-		runtimeMessageReducer(event);
+	const notify = (
+		event: QuoteAnnotatedEvent | QuoteDeletedEvent | QuoteHighlightedEvent
+	) => {
+		if (event.quoteId) {
+			// Inform self
+			runtimeMessageReducer(event);
+		}
 
 		// Inform other tabs or homepage
 		browser.runtime.sendMessage(event);

@@ -20,9 +20,8 @@ function Home() {
 					<h2 className='text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl'>
 						{browser.i18n.getMessage("QuotesFromAcrossTheWeb")}
 					</h2>
-					{/* TODO: refine this description */}
 					<p className='mt-3 text-xl text-gray-500 sm:mt-4'>
-						Revisit moments of inspiration gathered from various web pages.
+						{browser.i18n.getMessage("RevisitSavedQuotesParagraph")}
 					</p>
 				</div>
 				<div className='mt-12 grid gap-16 pt-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12'>

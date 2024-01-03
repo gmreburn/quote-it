@@ -24,7 +24,6 @@ browser.tabs
 			const tab = tabs[0];
 
 			if (tab && tab.id) {
-				console.debug("getCanonicalURL1", tab);
 				let url: string;
 				try {
 					url = await Promise.race([
@@ -39,7 +38,6 @@ browser.tabs
 					console.error("Error or Timeout:", error);
 					url = tab.url || "";
 				}
-				console.debug("getCanonicalURL2", url);
 
 				ReactDOM.render(
 					<Layout>

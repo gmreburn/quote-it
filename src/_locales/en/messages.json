@@ -40,11 +40,11 @@
 		"description": "A paragraph shown in a notification when the user deletes a quote."
 	},
 	"NoQuotesYet": {
-		"message": "No Quotes Yet for This Page",
+		"message": "No Saved Quotes on This Page",
 		"description": "Title shown in the sidebar when the current page does not have any saved quotes."
 	},
 	"NoQuotes_GetStarted": {
-		"message": "Get started by selecting text on this page to save quotes.",
+		"message": "Start your collection by selecting and saving inspiring quotes from this page. Right-click on any interesting text, choose 'save quote,' and watch your curated library grow with valuable insights from across the web.",
 		"description": "Paragraph shown in the sidebar when the page does not have any saved quotes yet."
 	},
 	"CloseDialog": {

@@ -4,8 +4,55 @@ import QuoteAPI from "api/QuoteAPI";
 import useTab from "hooks/useTab";
 type Props = { children: ReactNode; quote: Quote };
 // TODO: need to set an event listener for <link/> canonical change.. also probably for tab's url change
-const QuoteProvider = ({ quote, ...props }: Props) => {
+const QuoteProvider = ({ quote: initalValue, ...props }: Props) => {
 	const [tab] = useTab();
+	const [quote, setQuote] = useState(initalValue);
+	const runtimeMessageReducer = useCallback(
+		function (event: QuoteAnnotatedEvent | QuoteHighlightedEvent) {
+			console.table(event);
+			console.table(quote);
+			if (event.quoteId === quote.id) {
+				switch (event.type) {
+					case "QUOTE_ANNOTATED":
+						setQuote((prevQuote) => ({
+							...prevQuote,
+							annotation: Object.assign(
+								{},
+								prevQuote.annotation,
+								event.annotation
+							),
+						}));
+						console.debug("quote updated", {
+							...quote,
+							annotation: Object.assign({}, quote.annotation, event.annotation),
+						});
+						break;
+					case "QUOTE_HIGHLIGHTED":
+						setQuote((prevQuote) => ({
+							...prevQuote,
+							highlighter: Object.assign(
+								{},
+								prevQuote.highlighter,
+								event.highlighter
+							),
+						}));
+						break;
+
+					default:
+						console.debug("no such type", event);
+						break;
+				}
+			}
+		},
+		[quote]
+	);
+	// useEffect(() => {
+	// 	browser.runtime.onMessage.addListener(runtimeMessageReducer);
+	// 	return () => {
+	// 		browser.runtime.onMessage.removeListener(runtimeMessageReducer);
+	// 	};
+	// }, [quote]);
+
 	const deleteQuote = async () => {
 		if (!tab || !tab.url) {
 			// If tab or tab.url is undefined, exit the function
@@ -70,13 +117,10 @@ const QuoteProvider = ({ quote, ...props }: Props) => {
 		return highlighter;
 	};
 	//--
-	const notify = (
-		event:
-			| QuoteAddedEvent
-			| QuoteAnnotatedEvent
-			| QuoteDeletedEvent
-			| QuoteHighlightedEvent
-	) => {
+	const notify = (event: QuoteAnnotatedEvent | QuoteHighlightedEvent) => {
+		// Inform self
+		runtimeMessageReducer(event);
+
 		// Inform other tabs or homepage
 		browser.runtime.sendMessage(event);
 	};

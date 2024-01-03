@@ -46,7 +46,7 @@ function HomeQuote() {
 				</p>
 				<p className='mt-3 text-base text-gray-900 dark:text-gray-100'>
 					<TextHighlighter color={quote?.highlighter?.color}>
-						<span className='italic'>"{quote.text}"</span>
+						<span className='italic text-lg'>"{quote.text}"</span>
 					</TextHighlighter>{" "}
 					&mdash;{" "}
 					<Moment
@@ -58,7 +58,9 @@ function HomeQuote() {
 					</Moment>
 				</p>
 			</a>
-			{quote.annotation && <p>{quote.annotation.text}</p>}
+			{quote.annotation && (
+				<p className='dark:text-slate-100 mt-2'>{quote.annotation.text}</p>
+			)}
 
 			<div className='flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500'>
 				<ExportQuoteButton onClick={onCopyClicked} />

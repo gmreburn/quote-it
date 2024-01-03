@@ -11,6 +11,7 @@ function useQuotes(url?: string) {
 				| QuoteDeletedEvent
 				| QuoteHighlightedEvent
 		) {
+			console.debug("quoteit event", event);
 			if (
 				// url === undefined ||
 				// TODO: how to fix this?
@@ -57,6 +58,7 @@ function useQuotes(url?: string) {
 		[url]
 	);
 	useEffect(() => {
+		console.debug("quoteit", "here");
 		QuoteAPI.get(url).then(setQuotes);
 		browser.runtime.onMessage.addListener(runtimeMessageReducer);
 		return () => {

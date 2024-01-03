@@ -14,17 +14,16 @@ function Home() {
 	}
 
 	return (
-		<div className='bg-white dark:bg-slate-900 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8'>
+		<div className=' pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8'>
 			<div className='relative max-w-lg mx-auto divide-y-2 divide-gray-200 dark:divide-gray-800 lg:max-w-7xl'>
 				<div>
 					<h2 className='text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl'>
 						{browser.i18n.getMessage("QuotesFromAcrossTheWeb")}
 					</h2>
 					{/* TODO: refine this description */}
-					{/* <p className='mt-3 text-xl text-gray-500 sm:mt-4'>
-						Revisit moments of inspiration effortlessly, and let your unique
-						tapestry of wisdom be a source of motivation and insight.
-					</p> */}
+					<p className='mt-3 text-xl text-gray-500 sm:mt-4'>
+						Revisit moments of inspiration gathered from various web pages.
+					</p>
 				</div>
 				<div className='mt-12 grid gap-16 pt-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12'>
 					{quotes.length === 0 && <NoQuotesYet />}
@@ -42,3 +41,4 @@ function Home() {
 
 ReactDOM.render(<Home />, document.body);
 document.title = "Saved quotes";
+document.body.className = "bg-slate-100 dark:bg-slate-900";

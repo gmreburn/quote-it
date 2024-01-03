@@ -9,12 +9,8 @@ import TextHighlighter from "components/TextHighlighter";
 import useQuote from "hooks/useQuote";
 
 function SidebarQuote() {
-	const { quote, saveAnnotation } = useQuote();
+	const { quote } = useQuote();
 	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
-	const onAnnotationBlurred = (quoteText: string) => {
-		saveAnnotation(quoteText);
-		setShowAnnotationInput(false);
-	};
 	const onAnnotationClicked = () => {
 		setShowAnnotationInput(true);
 	};
@@ -62,10 +58,8 @@ function SidebarQuote() {
 			</div>
 
 			<Annotation
-				quote={quote}
 				showAnnotationInput={showAnnotationInput}
 				setShowAnnotationInput={setShowAnnotationInput}
-				onAnnotationBlurred={onAnnotationBlurred}
 			/>
 		</li>
 	);

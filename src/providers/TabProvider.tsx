@@ -12,6 +12,7 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 			if (tab && activeInfo.windowId === tab.windowId) {
 				browser.tabs.get(activeInfo.tabId).then(async (tab) => {
 					if (tab.id) {
+						console.debug("handlingActiveTabChange", tab);
 						setTabAsync(tab.id, tab);
 					}
 				});
@@ -27,6 +28,7 @@ const TabProvider = ({ tab: initialTab, ...props }: Props) => {
 		) => {
 			console.debug("handleOnUpdated", tabId, tab.id);
 			if (tab.windowId === tab.windowId && tabId) {
+				console.debug("handlingOnUpdated", tabId, tab.id);
 				setTabAsync(tabId, tab);
 			}
 		},

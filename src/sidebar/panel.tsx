@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Sidebar from "./components/Sidebar";
-import TabProvider from "./TabProvider";
+import TabProvider from "providers/TabProvider";
 import "tailwind.css";
 import Layout from "./layout";
 
@@ -37,7 +37,7 @@ browser.tabs
 					]);
 				} catch (error) {
 					console.error("Error or Timeout:", error);
-					url = "";
+					url = tab.url || "";
 				}
 				console.debug("getCanonicalURL2", url);
 

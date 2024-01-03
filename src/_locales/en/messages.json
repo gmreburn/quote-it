@@ -44,7 +44,7 @@
 		"description": "Title shown in the sidebar when the current page does not have any saved quotes."
 	},
 	"NoQuotes_GetStarted": {
-		"message": "Start your collection by selecting and saving inspiring quotes from this page. Right-click on any interesting text, choose 'save quote,' and watch your curated library grow with valuable insights from across the web.",
+		"message": "Start your collection by selecting and saving inspiring quotes from this page. Right-click on any text, choose 'save quote,' and watch your curated library grow with valuable insights from across the web.",
 		"description": "Paragraph shown in the sidebar when the page does not have any saved quotes yet."
 	},
 	"CloseDialog": {

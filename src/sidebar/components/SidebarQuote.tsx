@@ -37,7 +37,7 @@ function SidebarQuote() {
 				</Moment>
 			</div>
 			<div className='mt-1'>
-				<p className='italic'>
+				<p className='italic text-lg'>
 					<TextHighlighter color={quote?.highlighter?.color}>
 						&quot;{quote.text}&quot;
 					</TextHighlighter>

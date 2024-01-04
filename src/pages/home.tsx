@@ -38,6 +38,8 @@ function Home() {
 	);
 }
 
-ReactDOM.render(<Home />, document.body);
+const containerElement = document.createElement("div");
+document.body.appendChild(containerElement);
+ReactDOM.render(<Home />, containerElement);
 document.title = "Saved quotes";
 document.body.className = "bg-slate-100 dark:bg-slate-900";

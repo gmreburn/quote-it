@@ -6,7 +6,6 @@ import "tailwind.css";
 import Layout from "./layout";
 
 function setSidebarStyle(theme: browser._manifest.ThemeType) {
-	console.log("theme info", theme);
 	if (theme.colors) {
 		document.body.style.cssText = `background: ${theme.colors.frame}; color: ${theme.colors.sidebar_text}; border-color: ${theme.colors.sidebar_border}`;
 	} else {
@@ -39,13 +38,15 @@ browser.tabs
 					url = tab.url || "";
 				}
 
+				const containerElement = document.createElement("div");
+				document.body.appendChild(containerElement);
 				ReactDOM.render(
 					<Layout>
 						<TabProvider tab={{ ...tab, url }}>
 							<Sidebar />
 						</TabProvider>
 					</Layout>,
-					document.body
+					containerElement
 				);
 			}
 		}

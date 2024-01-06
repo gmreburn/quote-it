@@ -16,9 +16,14 @@ try {
 				tab.id
 			) {
 				// Use tabs.sendMessage to communicate with content scripts
-				const url = await browser.tabs.sendMessage(tab.id, {
-					action: "getCanonicalURL",
-				});
+				let url = tab.url;
+				try {
+					url = await browser.tabs.sendMessage(tab.id, {
+						action: "getCanonicalURL",
+					});
+				} catch {
+					url = tab.url;
+				}
 
 				if (url) {
 					const quote = await QuoteAPI.create(url, info.selectionText, tab);

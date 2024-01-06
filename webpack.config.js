@@ -10,26 +10,27 @@ const manifest_pages = [
 	{ page_action: manifest?.page_action?.default_popup },
 	{ browser_action: manifest?.browser_action?.default_popup },
 	{ devtools_page: manifest?.devtools_page?.devtools_page },
+	{ background_page: manifest?.background?.page },
 ].filter((manifest_page) => {
 	const file = manifest_page[Object.keys(manifest_page)[0]];
 	return file && fs.existsSync(path.resolve(__dirname, "src", file));
 });
 
-// Creates HTML pages from JSX files located in ./src/pages
+// Creates HTML pages from TSX files located in ./src/pages
 const pages_path = path.resolve(__dirname, "./src/pages");
 if (fs.existsSync(pages_path)) {
 	manifest_pages.push(
 		...fs
 			.readdirSync(pages_path)
-			.filter((path) => path.endsWith(".jsx"))
+			.filter((path) => path.endsWith(".tsx"))
 			.map((page_path) => ({
 				[path.parse(page_path).name]: path.join("pages", page_path),
 			}))
 	);
 }
 
-const jsxEntries = manifest_pages
-	.filter((page) => path.extname(page[Object.keys(page)[0]]) === ".jsx")
+const tsxEntries = manifest_pages
+	.filter((page) => path.extname(page[Object.keys(page)[0]]) === ".tsx")
 	.map((page) => {
 		const key = Object.keys(page)[0];
 
@@ -43,15 +44,37 @@ const jsxEntries = manifest_pages
 		};
 	});
 
+// Assuming manifest has a 'content_scripts' property
+const content_scripts = manifest.content_scripts || [];
+
+const csEntries = content_scripts.map((resource) => {
+	if (resource.js && resource.js.length > 0) {
+		// Assuming there's only one JS file in the array, you might need to adjust if there are multiple
+		const jsFileName = resource.js[0];
+		const key = path.parse(jsFileName).name;
+
+		return {
+			[key]: path.resolve(__dirname, "./src", jsFileName),
+		};
+	}
+
+	return {};
+});
+
 module.exports = {
 	mode: process.env.npm_package_config_mode, // development - see https://webpack.js.org/configuration/devtool/
 	devtool:
 		process.env.npm_package_config_mode === "production"
 			? false
 			: "cheap-module-source-map",
+	resolve: {
+		extensions: [".tsx", ".ts", ".js"],
+		modules: [path.resolve(__dirname, "src"), "node_modules"],
+	},
 	entry: Object.assign(
 		{},
-		...jsxEntries,
+		...tsxEntries,
+		...csEntries,
 		...(manifest["background"] &&
 			Array.isArray(manifest["background"].scripts) &&
 			manifest["background"].scripts.map((script, i) => ({
@@ -67,14 +90,14 @@ module.exports = {
 		...manifest_pages
 			.filter((manifest_page) => {
 				const file = manifest_page[Object.keys(manifest_page)[0]];
-				return path.extname(file) === ".jsx";
+				return path.extname(file) === ".tsx";
 			})
 			.map((page) => {
 				const key = Object.keys(page)[0];
 
 				return new HtmlWebpackPlugin({
 					title: manifest[key]?.default_title || key,
-					filename: page[key].replace(".jsx", ".html"),
+					filename: page[key].replace(".tsx", ".html"),
 					chunks: [key],
 					inject: "body",
 					meta: {
@@ -92,21 +115,32 @@ module.exports = {
 					transform: (content) => {
 						const manifest = JSON.parse(content.toString());
 						manifest.version = pkg.version;
+
+						if (Array.isArray(manifest.background.scripts)) {
+							manifest.background.scripts = manifest.background.scripts.map(
+								(script) => script.replace(".ts", ".js")
+							);
+						}
+						if (Array.isArray(manifest.content_scripts)) {
+							manifest.content_scripts = manifest.content_scripts.map((cs) => ({
+								...cs,
+								js: cs.js.map((script) => script.replace(".ts", ".js")),
+							}));
+						}
+
 						manifest_pages.forEach((page) => {
 							const key = Object.keys(page)[0];
-							console.log(key);
 
 							switch (key) {
-								case "sidebar_action":
-									manifest[key].default_panel = page[key].replace(
-										".jsx",
-										".html"
-									);
+								case "background":
+									// TODO: need to test this, I don't need it so not testing it
+									manifest[key].page = page[key].replace(".tsx", ".html");
 									break;
 
+								case "sidebar_action":
 								case "devtools_page":
 									manifest[key].default_panel = page[key].replace(
-										".jsx",
+										".tsx",
 										".html"
 									);
 									break;
@@ -114,7 +148,7 @@ module.exports = {
 								case "page_action":
 								case "browser_action":
 									manifest[key].default_popup = page[key].replace(
-										".jsx",
+										".tsx",
 										".html"
 									);
 
@@ -130,7 +164,7 @@ module.exports = {
 					to: "pages",
 					noErrorOnMissing: true,
 					globOptions: {
-						ignore: ["**/*.jsx"],
+						ignore: ["**/*.tsx"],
 					},
 				},
 				...manifest_pages
@@ -156,12 +190,16 @@ module.exports = {
 				use: ["style-loader", "css-loader", "postcss-loader"],
 			},
 			{
-				test: /\.m?jsx?$/,
-				exclude: /(node_modules|bower_components)/,
+				test: /\.tsx?$/,
+				exclude: /node_modules/,
 				use: {
 					loader: "babel-loader",
 					options: {
-						presets: ["@babel/preset-env", "@babel/preset-react"],
+						presets: [
+							"@babel/preset-env",
+							"@babel/preset-react",
+							"@babel/preset-typescript",
+						],
 						cacheDirectory: true,
 					},
 				},

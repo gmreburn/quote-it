@@ -4,7 +4,7 @@ Right-click highlighted text on any webpage to quote it. Quotes appear in the si
 
 ## Prerequisites
 
-- [nodejs v14](https://nodejs.org/en/)
+- [nodejs v18](https://nodejs.org/en/)
 
 ## Quick Overview
 
@@ -27,26 +27,26 @@ npm run package
 
 # Development Guide
 
-You’ll need to have Node v14 or later version on your local development machine to compile the sources. I recommend using the latest LTS version. You can use nvm (macOS/Linux) or nvm-windows to switch Node versions between different projects.
+You’ll need to have Node v18 or later version on your local development machine to compile the sources. I recommend using the latest LTS version. You can use nvm (macOS/Linux) or nvm-windows to switch Node versions between different projects.
 
 ## API Pages
 
-Some [manifest.json](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json) options require an HTML template to render properly. Paths defined in the manifest are relative to `./src/manifest.json` and this build system supports `HTML` and `JSX`.
+Some [manifest.json](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json) options require an HTML template to render properly. Paths defined in the manifest are relative to `./src/manifest.json` and this build system supports `HTML` and `TSX`.
 
-An HTML page will be compiled from the JSX found in the corresponding src file.
+An HTML page will be compiled from the TSX found in the corresponding src file.
 
 ```js
 // ./src/manifest.json
 ...
 	"sidebar_action": {
-		"default_panel": "sidebar/panel.jsx" // outputs to ./addon/sidebar/panel.html
+		"default_panel": "sidebar/panel.tsx" // outputs to ./addon/sidebar/panel.html
 	},
 ...
 ```
 
 ## Custom Pages
 
-You can create custom pages from JSX or HTML syntax by placing them in the `./src/pages` directory. JSX assets found here will be compiled; otherwise, assets are copied as-is into the addon. This is useful for creating a homepage, install or uninstall page.
+You can create custom pages from TSX or HTML syntax by placing them in the `./src/pages` directory. TSX assets found here will be compiled; otherwise, assets are copied as-is into the addon. This is useful for creating a homepage, install or uninstall page.
 
 ## Debugging
 

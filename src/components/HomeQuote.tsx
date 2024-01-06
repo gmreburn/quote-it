@@ -1,9 +1,12 @@
 import React from "react";
-import DeleteQuoteButton from "../components/DeleteQuoteButton.jsx";
-import ExportQuoteButton from "../components/ExportQuoteButton.jsx";
-import TextHighlighter from "./TextHighlighter.jsx";
+import DeleteQuoteButton from "./DeleteQuoteButton";
+import ExportQuoteButton from "./ExportQuoteButton";
+import TextHighlighter from "./TextHighlighter";
+import useQuote from "hooks/useQuote";
+import Moment from "react-moment";
 
-function HomeQuote({ quote, deleteQuote }) {
+function HomeQuote() {
+	const { quote } = useQuote();
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -19,7 +22,6 @@ function HomeQuote({ quote, deleteQuote }) {
 				}, 7000)
 			);
 	};
-	const onDeleteClicked = () => deleteQuote(quote);
 
 	return (
 		<div>
@@ -27,7 +29,7 @@ function HomeQuote({ quote, deleteQuote }) {
 			 {quote.highlighter && (
 				<a href="#" className="inline-block">
 					<span
-						className={classNames(
+						className={clsx(
 							quote.highlighter.color,
 							"inline-flex bg-green-300 items-center px-3 py-0.5 rounded-full text-sm font-medium"
 						)}
@@ -37,27 +39,32 @@ function HomeQuote({ quote, deleteQuote }) {
 				</a>
 			)} */}
 
-			<a
-				href={quote.tab.url}
-				className="block mt-4 text-gray-500"
-				target="_blank"
-			>
-				<p>{quote.tab.url}</p>
-				<p className="text-xl font-semibold text-gray-500">
+			<a href={quote.url} className='block mt-4 text-gray-500' target='_blank'>
+				<p>{quote.url}</p>
+				<p className='text-xl font-semibold text-gray-900 dark:text-gray-100'>
 					{quote.websiteTitle}
 				</p>
-				<p className="mt-3 text-base text-gray-900">
-					{quote.published} &mdash;{" "}
+				<p className='mt-3 text-base text-gray-900 dark:text-gray-100'>
 					<TextHighlighter color={quote?.highlighter?.color}>
-						<span className="italic">"{quote.text}"</span>
-					</TextHighlighter>
+						<span className='italic text-lg'>"{quote.text}"</span>
+					</TextHighlighter>{" "}
+					&mdash;{" "}
+					<Moment
+						className='flex-shrink-0 whitespace-nowrap text-sm text-gray-500'
+						fromNow
+						withTitle
+					>
+						{quote.created}
+					</Moment>
 				</p>
 			</a>
-			{quote.annotation && <p>{quote.annotation.text}</p>}
+			{quote.annotation && (
+				<p className='dark:text-slate-100 mt-2'>{quote.annotation.text}</p>
+			)}
 
-			<div className="flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500 ">
+			<div className='flex flex-shrink-0 whitespace-nowrap space-x-2 justify-end text-gray-500'>
 				<ExportQuoteButton onClick={onCopyClicked} />
-				<DeleteQuoteButton onClick={onDeleteClicked} />
+				<DeleteQuoteButton />
 			</div>
 			{/* TODO: add citation metadata
 			 {quote.author && (

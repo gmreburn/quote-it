@@ -3,13 +3,15 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import {
-	ClipboardCopyIcon,
-	DocumentSearchIcon,
+	DocumentDuplicateIcon,
+	DocumentMagnifyingGlassIcon,
 	TrashIcon,
-} from "@heroicons/react/outline";
-import classNames from "../../util/classNames.js";
+} from "@heroicons/react/24/outline";
+import clsx from "clsx";
+import useQuote from "hooks/useQuote";
 
-export default function Toolbar({ quote, deleteQuote }) {
+export default function Toolbar({ quote }: { quote: Quote }) {
+	const { deleteQuote } = useQuote();
 	const onCopyClicked = () => {
 		navigator.clipboard.writeText(quote.text);
 
@@ -21,10 +23,6 @@ export default function Toolbar({ quote, deleteQuote }) {
 		setTimeout(() => {
 			browser.notifications.clear(`${quote.id}-copied`);
 		}, 7000);
-	};
-	const onDeleteClicked = () => {
-		// TODO: confirm delete before delete or add undo button to notification
-		deleteQuote(quote);
 	};
 	const onFindClicked = () => {
 		browser.find
@@ -59,51 +57,48 @@ export default function Toolbar({ quote, deleteQuote }) {
 					<div className='py-1'>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
-									className={classNames(
+								<button
+									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"group flex items-center px-4 py-2 text-sm"
+										"group flex w-full items-center px-4 py-2 text-sm"
 									)}
 									onClick={onCopyClicked}
 									title={browser.i18n.getMessage("btnCopyQuote")}
 								>
-									<ClipboardCopyIcon
+									<DocumentDuplicateIcon
 										className='mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 										aria-hidden='true'
 									/>
 									{browser.i18n.getMessage("btnCopyQuote")}
-								</a>
+								</button>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
-									className={classNames(
+								<button
+									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"group flex items-center px-4 py-2 text-sm"
+										"group flex w-full items-center px-4 py-2 text-sm"
 									)}
 									onClick={onFindClicked}
 									title={browser.i18n.getMessage("btnHighlightQuote")}
 								>
-									<DocumentSearchIcon
+									<DocumentMagnifyingGlassIcon
 										className='mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 										aria-hidden='true'
 									/>
 									{browser.i18n.getMessage("mnuHighlightQuote")}
-								</a>
+								</button>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
-									className={classNames(
+								<button
+									className={clsx(
 										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"group flex items-center px-4 py-2 text-sm"
+										"group flex w-full items-center px-4 py-2 text-sm"
 									)}
-									onClick={onDeleteClicked}
+									onClick={deleteQuote}
 									title={browser.i18n.getMessage("btnDeleteQuote")}
 								>
 									<TrashIcon
@@ -111,7 +106,7 @@ export default function Toolbar({ quote, deleteQuote }) {
 										aria-hidden='true'
 									/>
 									{browser.i18n.getMessage("btnDeleteQuote")}
-								</a>
+								</button>
 							)}
 						</Menu.Item>
 					</div>

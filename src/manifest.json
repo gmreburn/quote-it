@@ -19,7 +19,7 @@
 	},
 
 	"background": {
-		"scripts": ["background.js", "omnibox.js"],
+		"scripts": ["background.ts", "omnibox.ts"],
 		"persistent": false
 	},
 
@@ -61,7 +61,7 @@
 	"sidebar_action": {
 		"default_icon": "icons/quotes-16.png",
 		"default_title": "Quotes",
-		"default_panel": "sidebar/panel.jsx"
+		"default_panel": "sidebar/panel.tsx"
 	},
 
 	"omnibox": {
@@ -74,5 +74,7 @@
 				"default": "Ctrl+Q"
 			}
 		}
-	}
+	},
+
+	"content_scripts": [{ "matches": ["<all_urls>"], "js": ["content.ts"] }]
 }

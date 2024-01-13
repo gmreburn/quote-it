@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HomeQuote from "components/HomeQuote";
 import useQuotes from "hooks/useQuotes";
 import "../tailwind.css";
 import NoQuotesYet from "sidebar/components/NoQuotesYet";
 import QuoteProvider from "providers/QuoteProvider";
+import QuoteCard from "components/QuoteCard";
 
 function Home() {
 	const [quotes] = useQuotes();
@@ -29,7 +29,7 @@ function Home() {
 					{quotes.length > 0 &&
 						quotes?.map((quote) => (
 							<QuoteProvider quote={quote} key={quote.id}>
-								<HomeQuote key={quote.id} />
+								<QuoteCard />
 							</QuoteProvider>
 						))}
 				</div>

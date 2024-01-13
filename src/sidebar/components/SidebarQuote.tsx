@@ -1,19 +1,13 @@
-import Button from "components/Button";
-import React, { useState } from "react";
-import Moment from "react-moment";
-import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
+import React from "react";
 import Annotation from "components/Annotation";
 import HighlighterSelector from "components/HighlighterSelector";
 import Toolbar from "./Toolbar";
 import TextHighlighter from "components/TextHighlighter";
 import useQuote from "hooks/useQuote";
+import { calculateRelativeTime } from "lib/utils";
 
 function SidebarQuote() {
 	const { quote } = useQuote();
-	const [showAnnotationInput, setShowAnnotationInput] = useState(false);
-	const onAnnotationClicked = () => {
-		setShowAnnotationInput(true);
-	};
 
 	if (!quote) return null;
 
@@ -28,13 +22,7 @@ function SidebarQuote() {
 						<p className='text-sm text-gray-500 truncate'>{quote.url}</p>
 					</a>
 				</div>
-				<Moment
-					className='flex-shrink-0 whitespace-nowrap text-sm text-gray-500'
-					fromNow
-					withTitle
-				>
-					{quote.created}
-				</Moment>
+				{calculateRelativeTime(quote.created)}
 			</div>
 			<div className='mt-1'>
 				<p className='italic text-lg'>
@@ -46,21 +34,12 @@ function SidebarQuote() {
 			<div className='flex justify-between space-x-3 mt-2'>
 				<div className='min-w-0 flex-1'></div>
 				<div className='flex flex-shrink-0 whitespace-nowrap space-x-2'>
-					<Button
-						onClick={onAnnotationClicked}
-						title={browser.i18n.getMessage("btnAnnotate")}
-					>
-						<ChatBubbleBottomCenterTextIcon className='h-6 w-6' />
-					</Button>
 					<HighlighterSelector />
 					<Toolbar quote={quote} />
 				</div>
 			</div>
 
-			<Annotation
-				showAnnotationInput={showAnnotationInput}
-				setShowAnnotationInput={setShowAnnotationInput}
-			/>
+			<Annotation />
 		</li>
 	);
 }

@@ -16,11 +16,11 @@
 		"description": "A menu item button that highlights all occurrences of the quote on the page. Needs to be short for proper display."
 	},
 	"btnCopyQuote": {
-		"message": "Copy to Clipboard",
+		"message": "Copy quote to clipboard",
 		"description": "A button that copies a quote to the user's clipboard."
 	},
 	"btnDeleteQuote": {
-		"message": "Delete This Quote",
+		"message": "Delete this quote",
 		"description": "A button that deletes a quote."
 	},
 	"QuoteCopiedTitle": {
@@ -72,7 +72,7 @@
 		"description": "Title for the button; when clicked, opens an input text box for the user to type notes about the quote."
 	},
 	"QuotesFromAcrossTheWeb": {
-		"message": "Quotes From Across the Web",
+		"message": "Saved Quotes",
 		"description": "Title on the homepage."
 	},
 	"HighlightThisQuote": {
@@ -80,7 +80,7 @@
 		"description": "button title shown when covering over the selector that set the highlight color of quoted text."
 	},
 	"RevisitSavedQuotesParagraph": {
-		"message": "Revisit moments of inspiration gathered from various web pages.",
-		"description": "Paragraph comes after HighlightThisQuote displayed on the homepage that lists all quotes the user has saved."
+		"message": "Revisit quotes from across the web.",
+		"description": "Paragraph comes after QuotesFromAcrossTheWeb displayed on the homepage that lists all quotes the user has saved."
 	}
 }

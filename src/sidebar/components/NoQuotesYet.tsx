@@ -3,7 +3,7 @@ import { FolderPlusIcon } from "@heroicons/react/24/outline";
 
 function NoQuotesYet() {
 	return (
-		<div className='flex justify-center items-center h-full'>
+		<div className='flex justify-center items-center h-full dark:text-gray-100'>
 			<div>
 				<FolderPlusIcon className='mx-auto h-12 w-12' />
 				<h3 className='mt-2x font-bold text-center text-xl'>

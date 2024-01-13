@@ -12,7 +12,7 @@ function useQuotes(url?: string) {
 				| QuoteHighlightedEvent
 		) {
 			if (
-				// url === undefined ||
+				url === undefined ||
 				// TODO: how to fix this?
 				// tab.canonical === event.url ||
 				url === event.url
@@ -26,7 +26,6 @@ function useQuotes(url?: string) {
 						);
 						break;
 					case "QUOTE_ADDED":
-						console.log("event", "QUOTE_ADDED", event);
 						setQuotes((prevQuotes) => [...prevQuotes, event.quote]);
 						break;
 					case "QUOTE_ANNOTATED":

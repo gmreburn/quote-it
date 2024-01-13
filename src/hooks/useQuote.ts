@@ -1,5 +1,5 @@
 import quoteContext from "contexts/quoteContext";
-import { useCallback, useContext, useEffect } from "react";
+import { useContext } from "react";
 
 function useQuote() {
 	const context = useContext(quoteContext);

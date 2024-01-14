@@ -12,7 +12,7 @@
 		"description": "A button that highlights all occurrences of the quote on the page."
 	},
 	"mnuHighlightQuote": {
-		"message": "Highlight Occurrences",
+		"message": "Highlight on Page",
 		"description": "A menu item button that highlights all occurrences of the quote on the page. Needs to be short for proper display."
 	},
 	"btnCopyQuote": {
@@ -80,7 +80,7 @@
 		"description": "Paragraph comes after QuotesFromAcrossTheWeb displayed on the homepage that lists all quotes the user has saved."
 	},
 	"AnnotationPlaceholderText": {
-		"message": "Add your thoughts, reflections, or context here&hellip;",
+		"message": "Add your own thoughts, reflections, or context.",
 		"description": "The textarea's placeholder text that displays when the user doens't have an annotation yet."
 	}
 }

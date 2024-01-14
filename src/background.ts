@@ -1,6 +1,12 @@
 import QuoteAPI from "./api/QuoteAPI";
+import { QueryClient } from "@tanstack/react-query";
 
 try {
+	const queryClient = new QueryClient();
+
+	// Make the queryClient accessible to other scripts or contexts
+	window.queryClient = queryClient;
+
 	browser.menus.create({
 		id: "save-selection",
 		title: browser.i18n.getMessage("menuItemSaveQuote"),
@@ -52,7 +58,7 @@ try {
 				console.error("No active tab found.");
 			}
 		} catch (error) {
-			console.error("Error:", error);
+			console.error(error);
 		}
 	});
 
@@ -60,5 +66,5 @@ try {
 		browser.tabs.create({ url: "/pages/home.html" });
 	});
 } catch (e) {
-	console.error("gmr", e);
+	console.error(e);
 }

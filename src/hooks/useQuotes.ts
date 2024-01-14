@@ -11,16 +11,10 @@ function useQuotes(url?: string) {
 				| QuoteDeletedEvent
 				| QuoteHighlightedEvent
 		) {
-			if (
-				url === undefined ||
-				// TODO: how to fix this?
-				// tab.canonical === event.url ||
-				url === event.url
-				// TODO: or if page == moz-extension://{extension-id}/pages/home.html
-				// this updates the sidebar to show all quotes when displaying the quote page
-			) {
+			if (url === undefined || url === event.url) {
 				switch (event.type) {
 					case "QUOTE_DELETED":
+						console.debug("gmr", quotes);
 						setQuotes((prevQuotes) =>
 							prevQuotes.filter((q) => q.id !== event.quoteId)
 						);
@@ -62,6 +56,10 @@ function useQuotes(url?: string) {
 			browser.runtime.onMessage.removeListener(runtimeMessageReducer);
 		};
 	}, [url]);
+
+	useEffect(() => {
+		browser.runtime.connect();
+	}, []);
 
 	return [quotes] as const;
 }

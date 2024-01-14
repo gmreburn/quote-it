@@ -5,6 +5,7 @@ import "../tailwind.css";
 import NoQuotesYet from "sidebar/components/NoQuotesYet";
 import QuoteProvider from "providers/QuoteProvider";
 import QuoteCard from "components/QuoteCard";
+import RootLayout from "layout";
 
 function Home() {
 	const [quotes] = useQuotes();
@@ -40,6 +41,11 @@ function Home() {
 
 const containerElement = document.createElement("div");
 document.body.appendChild(containerElement);
-ReactDOM.render(<Home />, containerElement);
+ReactDOM.render(
+	<RootLayout>
+		<Home />
+	</RootLayout>,
+	containerElement
+);
 document.title = "Saved quotes";
 document.body.className = "bg-slate-100 dark:bg-slate-900";

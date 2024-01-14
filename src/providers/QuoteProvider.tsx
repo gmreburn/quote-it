@@ -112,6 +112,10 @@ const QuoteProvider = ({ quote: initalValue, ...props }: Props) => {
 	const { Provider } = quoteContext;
 
 	useEffect(() => {
+		browser.runtime.connect();
+	}, []);
+
+	useEffect(() => {
 		setValue({ quote, deleteQuote, saveAnnotation, saveHighlighterColor });
 	}, [quote]);
 
